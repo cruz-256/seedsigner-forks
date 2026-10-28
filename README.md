@@ -128,7 +128,7 @@ cd opt
 - `dtoverlay=dwc2,dr_mode=host` on both boot configs, so the single OTG port enters host mode even when the adapter does not ground the ID pin
 - ISO-8859-1 so FAT filenames have a code page
 
-It does **not** enable networking, USB HID, USB serial, or USB gadget mode. mdev still auto-mounts only `mmcblk0p1` (the OS card, read-mostly via the existing `nodirty` mount). USB volumes are mounted by the app, and only after you confirm.
+On the Pi Zero image the patch does **not** enable USB HID, USB serial, USB gadget mode, or USB ethernet. The Pi Zero 2 W defconfig already had USB, HID, and USB serial (upstream shares that config with the Pi 3); this fork adds mass storage and UAS on top of that. IP, packet sockets, Unix sockets, cfg80211, and Bluetooth stay off. Buildroot's mdev fixup still sets the `CONFIG_NET` symbol, which upstream images do too; there is no IP stack behind it. mdev still auto-mounts only `mmcblk0p1` (the OS card, read-mostly via the existing `nodirty` mount). USB volumes are mounted by the app, and only after you confirm.
 
 A full buildroot run needs on the order of 20–30 GB of disk and a long compile. If it cannot finish, the app, the patch, and the commands above are still enough to build the image on another machine.
 
@@ -144,7 +144,7 @@ sudo dd if=seedsigner_os.main.pi0.img of=/dev/sdX bs=4M conv=fsync status=progre
 
 Raspberry Pi Imager's "Use custom" can write the `.img` as well. Boot the Pi with the display and camera attached. After the UI is up you may remove the OS card; plug the backup reader in only when you are ready to export or import.
 
-The `pi0` image is the Raspberry Pi Zero and Zero W target (arm1176). The `pi02w` image is the Zero 2 W target upstream also uses for the Pi 3. Zero W's radio is unused: this kernel has `CONFIG_NET` off, and the Zero 2 W config keeps `dtoverlay=disable-wifi` and `dtoverlay=disable-bt`.
+The `pi0` image is the Raspberry Pi Zero and Zero W target (arm1176). The `pi02w` image is the Zero 2 W target upstream also uses for the Pi 3. The Zero 2 W config keeps `dtoverlay=disable-wifi` and `dtoverlay=disable-bt`. Neither image enables `CONFIG_INET`.
 
 ---
 
