@@ -8,6 +8,12 @@ from PIL import Image, ImageDraw, ImageFilter
 from typing import List
 
 from seedsigner.hardware.buttons import HardwareButtons, HardwareButtonsConstants
+from seedsigner.hardware.input_select import (
+    key1_is_select,
+    next_match_index,
+    next_passphrase_layout,
+    select_pressed,
+)
 from seedsigner.helpers.qr import QR
 from seedsigner.gui.components import (Button, FontAwesomeIconConstants, Fonts, FormattedAddress, IconButton,
     IconTextLine, SeedSignerIconConstants, TextArea, GUIConstants, reflow_text_into_pages)
@@ -106,8 +112,11 @@ class SeedMnemonicEntryScreen(BaseTopNavScreen):
 
         arrow_button_width = GUIConstants.BUTTON_HEIGHT + GUIConstants.EDGE_PADDING
         arrow_button_height = int(0.75*GUIConstants.BUTTON_HEIGHT)
+        # No-click hardware uses the top side button to type the highlighted letter.
+        # The chevron-up control moves to wrapping KEY3 (see _run).
+        self.key1_select = key1_is_select()
         self.matches_list_up_button = IconButton(
-            icon_name=FontAwesomeIconConstants.ANGLE_UP,
+            icon_name=FontAwesomeIconConstants.KEYBOARD if self.key1_select else FontAwesomeIconConstants.ANGLE_UP,
             icon_size=GUIConstants.ICON_INLINE_FONT_SIZE + 2,
             is_text_centered=False,
             screen_x=self.canvas_width - arrow_button_width + GUIConstants.COMPONENT_PADDING,
@@ -257,8 +266,8 @@ class SeedMnemonicEntryScreen(BaseTopNavScreen):
 
             with self.renderer.lock:
                 if self.is_input_in_top_nav:
-                    if input == HardwareButtonsConstants.KEY_PRESS:
-                        # User clicked the "back" arrow
+                    if select_pressed(input):
+                        # User clicked the "back" arrow (joystick click or KEY1)
                         return RET_CODE__BACK_BUTTON
 
                     elif input == HardwareButtonsConstants.KEY_UP:
@@ -287,7 +296,7 @@ class SeedMnemonicEntryScreen(BaseTopNavScreen):
                     self.top_nav.left_button.render()
 
                 elif ret_val in Keyboard.ADDITIONAL_KEYS:
-                    if input == HardwareButtonsConstants.KEY_PRESS and ret_val == Keyboard.KEY_BACKSPACE["code"]:
+                    if select_pressed(input) and ret_val == Keyboard.KEY_BACKSPACE["code"]:
                         self.letters = self.letters[:-2]
                         self.letters.append(" ")
 
@@ -307,8 +316,8 @@ class SeedMnemonicEntryScreen(BaseTopNavScreen):
 
                 # Has the user made a final selection of a candidate word?
                 final_selection = None
-                if input == HardwareButtonsConstants.KEY1 and self.possible_words:
-                    # Scroll the list up
+                if input == HardwareButtonsConstants.KEY1 and self.possible_words and not self.key1_select:
+                    # Scroll the list up. In KEY1-select mode this button types a letter instead.
                     self.selected_possible_words_index -= 1
                     if self.selected_possible_words_index < 0:
                         self.selected_possible_words_index = 0
@@ -323,10 +332,12 @@ class SeedMnemonicEntryScreen(BaseTopNavScreen):
                         final_selection = self.possible_words[self.selected_possible_words_index]
 
                 elif input == HardwareButtonsConstants.KEY3 and self.possible_words:
-                    # Scroll the list down
-                    self.selected_possible_words_index += 1
-                    if self.selected_possible_words_index >= len(self.possible_words):
-                        self.selected_possible_words_index = len(self.possible_words) - 1
+                    # Scroll the list down. KEY1-select mode wraps so the old "up" action stays reachable.
+                    self.selected_possible_words_index = next_match_index(
+                        self.selected_possible_words_index,
+                        len(self.possible_words),
+                        wrap=self.key1_select,
+                    )
 
                     if not self.arrow_down_is_active:
                         # Flash the down arrow as selected
@@ -353,7 +364,7 @@ class SeedMnemonicEntryScreen(BaseTopNavScreen):
 
                     return final_selection
 
-                elif input == HardwareButtonsConstants.KEY_PRESS and ret_val in self.possible_alphabet:
+                elif select_pressed(input) and ret_val in self.possible_alphabet:
                     # User has locked in the current letter
                     if self.letters[-1] != " ":
                         # We'll save that locked in letter next but for now update the
@@ -662,6 +673,8 @@ class SeedAddPassphraseScreen(BaseTopNavScreen):
     KEYBOARD__DIGITS_BUTTON_TEXT = "123"
     KEYBOARD__SYMBOLS_1_BUTTON_TEXT = "!@#"
     KEYBOARD__SYMBOLS_2_BUTTON_TEXT = "*[]"
+    # Shown on the top side button when that button types the highlighted key.
+    KEYBOARD__TYPE_BUTTON_TEXT = "OK"
 
 
     def __post_init__(self):
@@ -810,8 +823,17 @@ class SeedAddPassphraseScreen(BaseTopNavScreen):
         # Calc center button position first
         hw_button_y = int((self.canvas_height - GUIConstants.BUTTON_HEIGHT)/2)
 
+        self.key1_select = key1_is_select()
+        # Default keyboard is lowercase. KEY2's label is the layout that button will open.
+        if self.key1_select:
+            initial_key1 = self.KEYBOARD__TYPE_BUTTON_TEXT
+            initial_key2 = "ABC"
+        else:
+            initial_key1 = self.KEYBOARD__UPPERCASE_BUTTON_TEXT
+            initial_key2 = self.KEYBOARD__DIGITS_BUTTON_TEXT
+
         self.hw_button1 = Button(
-            text=self.KEYBOARD__UPPERCASE_BUTTON_TEXT,
+            text=initial_key1,
             is_text_centered=False,
             font_name=GUIConstants.FIXED_WIDTH_EMPHASIS_FONT_NAME,
             font_size=GUIConstants.get_button_font_size() + 4,
@@ -822,7 +844,7 @@ class SeedAddPassphraseScreen(BaseTopNavScreen):
         )
 
         self.hw_button2 = Button(
-            text=self.KEYBOARD__DIGITS_BUTTON_TEXT,
+            text=initial_key2,
             is_text_centered=False,
             font_name=GUIConstants.FIXED_WIDTH_EMPHASIS_FONT_NAME,
             font_size=GUIConstants.get_button_font_size() + 4,
@@ -842,28 +864,50 @@ class SeedAddPassphraseScreen(BaseTopNavScreen):
         )
 
 
+    def _passphrase_keyboards(self):
+        return {
+            "abc": self.keyboard_abc,
+            "ABC": self.keyboard_ABC,
+            "123": self.keyboard_digits,
+            "sym1": self.keyboard_symbols_1,
+            "sym2": self.keyboard_symbols_2,
+        }
+
+
+    def _passphrase_layout_id(self, keyboard) -> str:
+        for layout_id, candidate in self._passphrase_keyboards().items():
+            if candidate is keyboard:
+                return layout_id
+        return "abc"
+
+
+    def _initial_layout_id(self) -> str:
+        return {
+            self.KEYBOARD__UPPERCASE_BUTTON_TEXT: "ABC",
+            self.KEYBOARD__DIGITS_BUTTON_TEXT: "123",
+            self.KEYBOARD__SYMBOLS_1_BUTTON_TEXT: "sym1",
+            self.KEYBOARD__SYMBOLS_2_BUTTON_TEXT: "sym2",
+        }.get(self.initial_keyboard, "abc")
+
+
     def _render(self):
         super()._render()
 
         # Change from the default lowercase keyboard for the screenshot generator
-        if self.initial_keyboard == self.KEYBOARD__UPPERCASE_BUTTON_TEXT:
-            cur_keyboard = self.keyboard_ABC
+        layout_id = self._initial_layout_id()
+        cur_keyboard = self._passphrase_keyboards()[layout_id]
+        if self.key1_select:
+            # Top button types. Middle button's label is the layout it will open.
+            self.hw_button1.text = self.KEYBOARD__TYPE_BUTTON_TEXT
+            self.hw_button2.text = next_passphrase_layout(layout_id)[1]
+        elif layout_id == "ABC":
             self.hw_button1.text = self.KEYBOARD__LOWERCASE_BUTTON_TEXT
-
-        elif self.initial_keyboard == self.KEYBOARD__DIGITS_BUTTON_TEXT:
-            cur_keyboard = self.keyboard_digits
+        elif layout_id == "123":
             self.hw_button2.text = self.KEYBOARD__SYMBOLS_1_BUTTON_TEXT
-
-        elif self.initial_keyboard == self.KEYBOARD__SYMBOLS_1_BUTTON_TEXT:
-            cur_keyboard = self.keyboard_symbols_1
+        elif layout_id == "sym1":
             self.hw_button2.text = self.KEYBOARD__SYMBOLS_2_BUTTON_TEXT
-
-        elif self.initial_keyboard == self.KEYBOARD__SYMBOLS_2_BUTTON_TEXT:
-            cur_keyboard = self.keyboard_symbols_2
+        elif layout_id == "sym2":
             self.hw_button2.text = self.KEYBOARD__DIGITS_BUTTON_TEXT
-        
-        else:
-            cur_keyboard = self.keyboard_abc
 
         self.text_entry_display.render()
         self.hw_button1.render()
@@ -877,8 +921,12 @@ class SeedAddPassphraseScreen(BaseTopNavScreen):
     def _run(self):
         cursor_position = len(self.passphrase)
         cur_keyboard = self.keyboard_abc
-        cur_button1_text = self.KEYBOARD__UPPERCASE_BUTTON_TEXT
-        cur_button2_text = self.KEYBOARD__DIGITS_BUTTON_TEXT
+        if self.key1_select:
+            cur_button1_text = self.KEYBOARD__TYPE_BUTTON_TEXT
+            cur_button2_text = next_passphrase_layout("abc")[1]
+        else:
+            cur_button1_text = self.KEYBOARD__UPPERCASE_BUTTON_TEXT
+            cur_button2_text = self.KEYBOARD__DIGITS_BUTTON_TEXT
 
         # Start the interactive update loop
         while True:
@@ -897,12 +945,12 @@ class SeedAddPassphraseScreen(BaseTopNavScreen):
                     self.renderer.show_image()
                     return dict(passphrase=self.passphrase)
 
-                elif input == HardwareButtonsConstants.KEY_PRESS and self.top_nav.is_selected:
-                    # Back button clicked
+                elif select_pressed(input) and self.top_nav.is_selected:
+                    # Back button clicked (joystick click, or KEY1 when that is Select)
                     return dict(passphrase=self.passphrase, is_back_button=True)
 
-                # Check for keyboard swaps
-                if input == HardwareButtonsConstants.KEY1:
+                # Check for keyboard swaps. KEY1 keeps its ABC toggle only when it is not Select.
+                if input == HardwareButtonsConstants.KEY1 and not self.key1_select:
                     # First light up key1
                     self.hw_button1.is_selected = True
                     self.hw_button1.render()
@@ -940,28 +988,37 @@ class SeedAddPassphraseScreen(BaseTopNavScreen):
                     # And reset for next redraw
                     self.hw_button2.is_selected = False
 
-                    # Return to the same button1 keyboard, if applicable
-                    if cur_keyboard == self.keyboard_abc:
-                        cur_button1_text = self.KEYBOARD__LOWERCASE_BUTTON_TEXT
-                    elif cur_keyboard == self.keyboard_ABC:
-                        cur_button1_text = self.KEYBOARD__UPPERCASE_BUTTON_TEXT
+                    if self.key1_select:
+                        # One button walks abc -> ABC -> 123 -> symbols, since KEY1 now types.
+                        layout_id = self._passphrase_layout_id(cur_keyboard)
+                        next_id, _next_label = next_passphrase_layout(layout_id)
+                        next_keyboard = self._passphrase_keyboards()[next_id]
+                        next_keyboard.set_selected_key_indices(x=cur_keyboard.selected_key["x"], y=cur_keyboard.selected_key["y"])
+                        cur_keyboard = next_keyboard
+                        cur_keyboard.render_keys()
+                        # The label is the layout the next press will open.
+                        cur_button2_text = next_passphrase_layout(next_id)[1]
+                        cur_button1_text = self.KEYBOARD__TYPE_BUTTON_TEXT
+                    else:
+                        # Stock: KEY2 only cycles digits and the two symbol sets.
+                        if cur_keyboard == self.keyboard_abc:
+                            cur_button1_text = self.KEYBOARD__LOWERCASE_BUTTON_TEXT
+                        elif cur_keyboard == self.keyboard_ABC:
+                            cur_button1_text = self.KEYBOARD__UPPERCASE_BUTTON_TEXT
 
-                    if cur_button2_text == self.KEYBOARD__DIGITS_BUTTON_TEXT:
-                        self.keyboard_digits.set_selected_key_indices(x=cur_keyboard.selected_key["x"], y=cur_keyboard.selected_key["y"])
-                        cur_keyboard = self.keyboard_digits
+                        if cur_button2_text == self.KEYBOARD__DIGITS_BUTTON_TEXT:
+                            self.keyboard_digits.set_selected_key_indices(x=cur_keyboard.selected_key["x"], y=cur_keyboard.selected_key["y"])
+                            cur_keyboard = self.keyboard_digits
+                            cur_button2_text = self.KEYBOARD__SYMBOLS_1_BUTTON_TEXT
+                        elif cur_button2_text == self.KEYBOARD__SYMBOLS_1_BUTTON_TEXT:
+                            self.keyboard_symbols_1.set_selected_key_indices(x=cur_keyboard.selected_key["x"], y=cur_keyboard.selected_key["y"])
+                            cur_keyboard = self.keyboard_symbols_1
+                            cur_button2_text = self.KEYBOARD__SYMBOLS_2_BUTTON_TEXT
+                        elif cur_button2_text == self.KEYBOARD__SYMBOLS_2_BUTTON_TEXT:
+                            self.keyboard_symbols_2.set_selected_key_indices(x=cur_keyboard.selected_key["x"], y=cur_keyboard.selected_key["y"])
+                            cur_keyboard = self.keyboard_symbols_2
+                            cur_button2_text = self.KEYBOARD__DIGITS_BUTTON_TEXT
                         cur_keyboard.render_keys()
-                        cur_button2_text = self.KEYBOARD__SYMBOLS_1_BUTTON_TEXT
-                    elif cur_button2_text == self.KEYBOARD__SYMBOLS_1_BUTTON_TEXT:
-                        self.keyboard_symbols_1.set_selected_key_indices(x=cur_keyboard.selected_key["x"], y=cur_keyboard.selected_key["y"])
-                        cur_keyboard = self.keyboard_symbols_1
-                        cur_keyboard.render_keys()
-                        cur_button2_text = self.KEYBOARD__SYMBOLS_2_BUTTON_TEXT
-                    elif cur_button2_text == self.KEYBOARD__SYMBOLS_2_BUTTON_TEXT:
-                        self.keyboard_symbols_2.set_selected_key_indices(x=cur_keyboard.selected_key["x"], y=cur_keyboard.selected_key["y"])
-                        cur_keyboard = self.keyboard_symbols_2
-                        cur_keyboard.render_keys()
-                        cur_button2_text = self.KEYBOARD__DIGITS_BUTTON_TEXT
-                    cur_keyboard.render_keys()
 
                     # Show the changes; this loop will have two renders
                     self.renderer.show_image()
@@ -992,7 +1049,7 @@ class SeedAddPassphraseScreen(BaseTopNavScreen):
                     self.top_nav.is_selected = True
                     self.top_nav.render_buttons()
 
-                elif ret_val in Keyboard.ADDITIONAL_KEYS and input == HardwareButtonsConstants.KEY_PRESS:
+                elif ret_val in Keyboard.ADDITIONAL_KEYS and select_pressed(input):
                     if ret_val == Keyboard.KEY_BACKSPACE["code"]:
                         if cursor_position == 0:
                             pass
@@ -1023,7 +1080,7 @@ class SeedAddPassphraseScreen(BaseTopNavScreen):
                     # Update the text entry display and cursor
                     self.text_entry_display.render(self.passphrase, cursor_position)
 
-                elif input == HardwareButtonsConstants.KEY_PRESS and ret_val not in Keyboard.ADDITIONAL_KEYS:
+                elif select_pressed(input) and ret_val not in Keyboard.ADDITIONAL_KEYS:
                     # User has locked in the current letter
                     if cursor_position == len(self.passphrase):
                         self.passphrase += ret_val

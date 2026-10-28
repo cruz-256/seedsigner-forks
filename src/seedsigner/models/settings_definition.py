@@ -336,6 +336,7 @@ class SettingsConstants:
 
     SETTING__DISPLAY_CONFIGURATION = "display_config"
     SETTING__DISPLAY_COLOR_INVERTED = "color_inverted"
+    SETTING__INPUT_SELECT = "input_select"
 
     SETTING__NETWORK = "network"
     SETTING__QR_DENSITY = "qr_density"
@@ -356,6 +357,19 @@ class SettingsConstants:
 
     SETTING__DEBUG = "debug"
 
+
+    # How a highlighted keyboard letter is typed. KEY1 is the top button on the right.
+    # "key1" is the default so hardware with no joystick click can enter a passphrase.
+    # Joystick click still types a letter in either mode.
+    INPUT_SELECT__KEY1 = "key1"
+    INPUT_SELECT__JOYSTICK = "click"
+    ALL_INPUT_SELECT = [
+        # TRANSLATOR_NOTE: The top of the three buttons to the right of the screen types the highlighted letter
+        (INPUT_SELECT__KEY1, _mft("Top button")),
+        # TRANSLATOR_NOTE: The center press of the directional joystick types the highlighted letter
+        (INPUT_SELECT__JOYSTICK, _mft("Joystick click")),
+    ]
+    INPUT_SELECT__HELP_TEXT = _mft("Top button types the highlighted letter when the joystick does not click. A real click still works.")
 
     # Hardware config settings
     DISPLAY_CONFIGURATION__ST7789__240x240 = "st7789_240x240"  # default; original Waveshare 1.3" display hat
@@ -736,6 +750,17 @@ class SettingsDefinition:
                       type=SettingsConstants.TYPE__ENABLED_DISABLED,
                       visibility=SettingsConstants.VISIBILITY__HARDWARE,
                       default_value=SettingsConstants.OPTION__DISABLED),
+
+        SettingsEntry(category=SettingsConstants.CATEGORY__SYSTEM,
+                      attr_name=SettingsConstants.SETTING__INPUT_SELECT,
+                      abbreviated_name="sel_key",
+                      # TRANSLATOR_NOTE: Which control types the highlighted keyboard letter
+                      display_name=_mft("Select button"),
+                      help_text=SettingsConstants.INPUT_SELECT__HELP_TEXT,
+                      type=SettingsConstants.TYPE__SELECT_1,
+                      visibility=SettingsConstants.VISIBILITY__HARDWARE,
+                      selection_options=SettingsConstants.ALL_INPUT_SELECT,
+                      default_value=SettingsConstants.INPUT_SELECT__KEY1),
 
 
         # Developer options

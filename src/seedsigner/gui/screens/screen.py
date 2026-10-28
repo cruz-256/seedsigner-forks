@@ -13,6 +13,7 @@ from seedsigner.gui.components import (GUIConstants,
     SeedSignerIconConstants, TopNav, TextArea, load_image)
 from seedsigner.gui.keyboard import Keyboard, TextEntryDisplay
 from seedsigner.hardware.buttons import HardwareButtonsConstants, HardwareButtons
+from seedsigner.hardware.input_select import select_pressed
 from seedsigner.models.encode_qr import BaseQrEncoder
 from seedsigner.models.settings import SettingsConstants
 from seedsigner.models.threads import BaseThread, ThreadsafeCounter
@@ -1224,14 +1225,18 @@ class KeyboardScreen(BaseTopNavScreen):
         # Start the interactive update loop
         while True:
             input = self.hw_inputs.wait_for(
-                HardwareButtonsConstants.KEYS__LEFT_RIGHT_UP_DOWN + [HardwareButtonsConstants.KEY_PRESS, HardwareButtonsConstants.KEY3]
+                HardwareButtonsConstants.KEYS__LEFT_RIGHT_UP_DOWN + [
+                    HardwareButtonsConstants.KEY_PRESS,
+                    HardwareButtonsConstants.KEY1,
+                    HardwareButtonsConstants.KEY3,
+                ]
             )
 
             with self.renderer.lock:
                 # Track if we need to update the title after input changes
                 title_needs_update = False
-                # Check possible exit conditions   
-                if self.top_nav.is_selected and input == HardwareButtonsConstants.KEY_PRESS:
+                # Check possible exit conditions
+                if self.top_nav.is_selected and select_pressed(input):
                     return RET_CODE__BACK_BUTTON
 
                 elif self.show_save_button and input == HardwareButtonsConstants.KEY3:
@@ -1270,14 +1275,14 @@ class KeyboardScreen(BaseTopNavScreen):
                     self.top_nav.is_selected = True
                     self.top_nav.render_buttons()
 
-                elif ret_val in Keyboard.ADDITIONAL_KEYS and input == HardwareButtonsConstants.KEY_PRESS:
+                elif ret_val in Keyboard.ADDITIONAL_KEYS and select_pressed(input):
                     if ret_val == Keyboard.KEY_BACKSPACE["code"]:
                         if len(self.user_input) > 0:
                             self.user_input = self.user_input[:-1]
                             self.cursor_position -= 1
                             title_needs_update = True
                             
-                elif input == HardwareButtonsConstants.KEY_PRESS and ret_val not in Keyboard.ADDITIONAL_KEYS:
+                elif select_pressed(input) and ret_val not in Keyboard.ADDITIONAL_KEYS:
                     # User has locked in the current letter
                     if self.keys_to_values:
                         # Map the Key display char to its output value (e.g. dice icon to digit)

@@ -28,6 +28,38 @@ The Pi Zero (and Zero 2 W) has **one** microSD slot. That slot is the OS card. T
 
 Power the Pi as usual (the power micro-USB, or the GPIO), with the OTG adapter on the data port.
 
+## Buttons when the joystick does not click
+
+This image defaults to **Select button → Top button** (Settings → Hardware). A real joystick click still types a letter, so a normal five-way stick is not blocked. Hardware with only a directional control plus the three right-hand buttons can do every action. To restore the stock labels (top button switches to ABC, middle button switches to 123), set **Select button** to **Joystick click**.
+
+The three buttons are KEY1 (top), KEY2 (middle), and KEY3 (bottom).
+
+**Menus, warnings, and status screens** (unchanged either way): directions move the highlight. KEY1, KEY2, KEY3, or a joystick click activates it, including Back when the back arrow is highlighted.
+
+**Passphrase keyboard** (encryption and decryption), with Top button selected:
+
+| Control | Action |
+| --- | --- |
+| Directions | Move the orange highlight |
+| KEY1, labeled **OK** | Type the highlighted letter, space, backspace, or cursor move. On the back arrow, this goes back |
+| KEY2 | Next layout. The label is the layout you will open: `ABC`, then `123`, `!@#`, `*[]`, then `abc` |
+| KEY3, green check | Save the passphrase |
+| Joystick click, if you have one | Same as KEY1 |
+
+**Seed word entry**, with Top button selected:
+
+| Control | Action |
+| --- | --- |
+| Directions | Move between letters |
+| KEY1 | Type the highlighted letter, or backspace when that key is highlighted. On the back arrow, this goes back |
+| KEY2 | Accept the highlighted matching word |
+| KEY3 | Next matching word. At the bottom of the list it wraps to the first, which replaces the old KEY1 "scroll up" |
+| Joystick click, if you have one | Same as KEY1 |
+
+**Other keyboards** (dice rolls, BIP-85 index, custom derivation): KEY1 or a joystick click types the highlighted key. KEY3 is still the green check when that screen has one. Backspace is a key on the keyboard, activated the same way as a letter.
+
+With **Joystick click** selected, passphrase KEY1/KEY2 go back to the stock ABC and 123 switches, and seed-word KEY1 scrolls the match list up instead of typing.
+
 ## Using it on the device
 
 Export, from a seed that is already in memory:
