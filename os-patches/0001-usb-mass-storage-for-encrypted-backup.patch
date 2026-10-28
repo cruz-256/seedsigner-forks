@@ -1,0 +1,165 @@
+diff --git a/opt/build.sh b/opt/build.sh
+index 310bbf9..a547996 100755
+--- a/opt/build.sh
++++ b/opt/build.sh
+@@ -164,6 +164,7 @@ delete_unnecessary_files() {
+   rm -rf ${rootfs_overlay}/opt/src/seedsigner/resources/seedsigner-translations/tools
+   rm -rf ${rootfs_overlay}/opt/tests
+   rm -rf ${rootfs_overlay}/opt/tools
++  rm -rf ${rootfs_overlay}/opt/os-patches
+   # files
+   rm -rf ${rootfs_overlay}/opt/.git*
+   rm -rf ${rootfs_overlay}/opt/docker-compose.yml
+diff --git a/opt/pi0/board/boot_config.txt b/opt/pi0/board/boot_config.txt
+index 702bd4c..6a9a886 100644
+--- a/opt/pi0/board/boot_config.txt
++++ b/opt/pi0/board/boot_config.txt
+@@ -16,4 +16,8 @@ dtparam=spi=on
+ # Set the bootloader delay to 0 seconds. The default is 1s if not specified
+ boot_delay=0
+ disable_splash=1
+-force_turbo=1
+\ No newline at end of file
++force_turbo=1
++
++# USB host mode for a second card on the micro-USB OTG port.
++# Mass storage only: HID, serial, gadget, and networking stay off.
++dtoverlay=dwc2,dr_mode=host
+diff --git a/opt/pi0/board/kernel.config b/opt/pi0/board/kernel.config
+index 36397f6..6ed42b3 100644
+--- a/opt/pi0/board/kernel.config
++++ b/opt/pi0/board/kernel.config
+@@ -474,9 +474,9 @@ CONFIG_BLK_DEV_LOOP=y
+ # CONFIG_EEPROM_AT24=m
+ # CONFIG_EEPROM_AT25=m
+ # CONFIG_TI_ST=m
+-# CONFIG_SCSI=y
++CONFIG_SCSI=y
+ # CONFIG_SCSI_PROC_FS is not set
+-# CONFIG_BLK_DEV_SD=y
++CONFIG_BLK_DEV_SD=y
+ # CONFIG_CHR_DEV_ST=m
+ # CONFIG_BLK_DEV_SR=m
+ # CONFIG_CHR_DEV_SG=m
+@@ -1129,13 +1129,13 @@ CONFIG_LOGO=y
+ # CONFIG_HID_ZYDACRON=m
+ # CONFIG_HID_PID=y			# KEYBOARD
+ # CONFIG_USB_HIDDEV=y		    # KEYBOARD
+-# CONFIG_USB=y                # KEYBOARD
++CONFIG_USB=y
+ # CONFIG_USB_ANNOUNCE_NEW_DEVICES=y
+ # CONFIG_USB_MON=m
+-# CONFIG_USB_DWCOTG=y		    # KEYBOARD
++CONFIG_USB_DWCOTG=y
+ # CONFIG_USB_PRINTER=m
+ # CONFIG_USB_TMC=m
+-# CONFIG_USB_STORAGE=y
++CONFIG_USB_STORAGE=y
+ # CONFIG_USB_STORAGE_REALTEK=m
+ # CONFIG_USB_STORAGE_DATAFAB=m
+ # CONFIG_USB_STORAGE_FREECOM=m
+@@ -1149,14 +1149,17 @@ CONFIG_LOGO=y
+ # CONFIG_USB_STORAGE_KARMA=m
+ # CONFIG_USB_STORAGE_CYPRESS_ATACB=m
+ # CONFIG_USB_STORAGE_ENE_UB6250=m
+-# CONFIG_USB_UAS=m
++CONFIG_USB_UAS=y
+ # CONFIG_USB_MDC800=m
+ # CONFIG_USB_MICROTEK=m
+ # CONFIG_USBIP_CORE=m
+ # CONFIG_USBIP_VHCI_HCD=m
+ # CONFIG_USBIP_HOST=m
+ # CONFIG_USBIP_VUDC=m
+-# CONFIG_USB_DWC2=m
++CONFIG_USB_DWC2=y
++CONFIG_USB_DWC2_HOST=y
++# CONFIG_USB_DWC2_PERIPHERAL is not set
++# CONFIG_USB_DWC2_DUAL_ROLE is not set
+ # CONFIG_USB_SERIAL=m		      # KEYBOARD
+ # CONFIG_USB_SERIAL_GENERIC=y   # KEYBOARD
+ # CONFIG_USB_SERIAL_AIRCABLE=m
+@@ -1523,7 +1526,7 @@ CONFIG_NLS_CODEPAGE_437=y
+ # CONFIG_NLS_CODEPAGE_1250=m
+ # CONFIG_NLS_CODEPAGE_1251=m
+ CONFIG_NLS_ASCII=y
+-# CONFIG_NLS_ISO8859_1=m
++CONFIG_NLS_ISO8859_1=y
+ # CONFIG_NLS_ISO8859_2=m
+ # CONFIG_NLS_ISO8859_3=m
+ # CONFIG_NLS_ISO8859_4=m
+diff --git a/opt/pi02w/board/boot_config.txt b/opt/pi02w/board/boot_config.txt
+index 1310193..f4013e5 100644
+--- a/opt/pi02w/board/boot_config.txt
++++ b/opt/pi02w/board/boot_config.txt
+@@ -20,4 +20,8 @@ disable_splash=1
+ # raspberry firmware config to disable wifi and bluetooth 
+ # https://github.com/raspberrypi/firmware/blob/master/boot/overlays/README
+ dtoverlay=disable-wifi
+-dtoverlay=disable-bt
+\ No newline at end of file
++dtoverlay=disable-bt
++
++# USB host mode for a second card on the micro-USB OTG port.
++# Mass storage only: HID, serial, gadget, and networking stay off.
++dtoverlay=dwc2,dr_mode=host
+diff --git a/opt/pi02w/board/kernel.config b/opt/pi02w/board/kernel.config
+index f64bfb4..65fd2bd 100644
+--- a/opt/pi02w/board/kernel.config
++++ b/opt/pi02w/board/kernel.config
+@@ -478,9 +478,9 @@ CONFIG_BLK_DEV_LOOP=y
+ # CONFIG_EEPROM_AT24=m
+ # CONFIG_EEPROM_AT25=m
+ # CONFIG_TI_ST=m
+-# CONFIG_SCSI=y
++CONFIG_SCSI=y
+ # CONFIG_SCSI_PROC_FS is not set
+-# CONFIG_BLK_DEV_SD=y
++CONFIG_BLK_DEV_SD=y
+ # CONFIG_CHR_DEV_ST=m
+ # CONFIG_BLK_DEV_SR=m
+ # CONFIG_CHR_DEV_SG=m
+@@ -1141,7 +1141,7 @@ CONFIG_USB=y
+ CONFIG_USB_DWCOTG=y
+ # CONFIG_USB_PRINTER=m
+ # CONFIG_USB_TMC=m
+-# CONFIG_USB_STORAGE=y
++CONFIG_USB_STORAGE=y
+ # CONFIG_USB_STORAGE_REALTEK=m
+ # CONFIG_USB_STORAGE_DATAFAB=m
+ # CONFIG_USB_STORAGE_FREECOM=m
+@@ -1155,7 +1155,7 @@ CONFIG_USB_DWCOTG=y
+ # CONFIG_USB_STORAGE_KARMA=m
+ # CONFIG_USB_STORAGE_CYPRESS_ATACB=m
+ # CONFIG_USB_STORAGE_ENE_UB6250=m
+-# CONFIG_USB_UAS=m
++CONFIG_USB_UAS=y
+ # CONFIG_USB_MDC800=m
+ # CONFIG_USB_MICROTEK=m
+ # CONFIG_USBIP_CORE=m
+@@ -1163,6 +1163,9 @@ CONFIG_USB_DWCOTG=y
+ # CONFIG_USBIP_HOST=m
+ # CONFIG_USBIP_VUDC=m
+ CONFIG_USB_DWC2=y
++CONFIG_USB_DWC2_HOST=y
++# CONFIG_USB_DWC2_PERIPHERAL is not set
++# CONFIG_USB_DWC2_DUAL_ROLE is not set
+ CONFIG_USB_SERIAL=y
+ CONFIG_USB_SERIAL_GENERIC=y
+ # CONFIG_USB_SERIAL_AIRCABLE=m
+@@ -1530,7 +1533,7 @@ CONFIG_NLS_CODEPAGE_437=y
+ # CONFIG_NLS_CODEPAGE_1250=m
+ # CONFIG_NLS_CODEPAGE_1251=m
+ CONFIG_NLS_ASCII=y
+-# CONFIG_NLS_ISO8859_1=m
++CONFIG_NLS_ISO8859_1=y
+ # CONFIG_NLS_ISO8859_2=m
+ # CONFIG_NLS_ISO8859_3=m
+ # CONFIG_NLS_ISO8859_4=m
+diff --git a/opt/rootfs-overlay/etc/mdev.conf b/opt/rootfs-overlay/etc/mdev.conf
+index 303c844..6097ab5 100644
+--- a/opt/rootfs-overlay/etc/mdev.conf
++++ b/opt/rootfs-overlay/etc/mdev.conf
+@@ -1 +1,3 @@
++# USB mass-storage (sd*) is not mounted here.
++# The app mounts a backup card only after an explicit export or import.
+ mmcblk0p1 root:root 777 */etc/mdev/mdev.sh

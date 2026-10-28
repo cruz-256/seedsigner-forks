@@ -1,0 +1,1621 @@
+# Translations template for seedsigner.
+# Copyright (C) 2026 ORGANIZATION
+# This file is distributed under the same license as the seedsigner project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+# 
+# Translators:
+# Keith Mukai, 2025
+# Tung D. DAO, 2025
+# Anh La, 2026
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: seedsigner 0.8.7\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2026-03-05 22:02+0000\n"
+"PO-Revision-Date: 2022-04-29 13:50+0000\n"
+"Last-Translator: Anh La, 2026\n"
+"Language-Team: Vietnamese (https://app.transifex.com/seedsigner/teams/135832/vi/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+"Language: vi\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#. Testnet bitcoin
+#: src/seedsigner/gui/components.py
+msgid "tBtc"
+msgstr "tBtc"
+
+#. Testnet sats
+#: src/seedsigner/gui/components.py
+msgid "tSats"
+msgstr "tSats"
+
+#: src/seedsigner/gui/components.py src/seedsigner/gui/screens/psbt_screens.py
+msgid "btc"
+msgstr "btc"
+
+#: src/seedsigner/gui/components.py src/seedsigner/gui/screens/psbt_screens.py
+#: src/seedsigner/models/settings_definition.py
+msgid "sats"
+msgstr "sats"
+
+#: src/seedsigner/gui/toast.py
+msgid ""
+"You can remove\n"
+"the SD card now"
+msgstr ""
+"Bây giờ bạn có thể\n"
+"lấy thẻ SD ra"
+
+#: src/seedsigner/gui/toast.py
+msgid "SD card removed"
+msgstr "thẻ SD đã tháo"
+
+#: src/seedsigner/gui/toast.py
+msgid "SD card inserted"
+msgstr "thẻ SD đã cài"
+
+#: src/seedsigner/gui/screens/psbt_screens.py
+msgid "Review Transaction"
+msgstr "Kiểm tra giao dịch"
+
+#: src/seedsigner/gui/screens/psbt_screens.py
+msgid "Review details"
+msgstr "Kiểm tra thông tin"
+
+#: src/seedsigner/gui/screens/psbt_screens.py
+msgid "1 input"
+msgstr "1 đầu vào"
+
+#: src/seedsigner/gui/screens/psbt_screens.py
+msgid "input 1"
+msgstr "đầu vào 1"
+
+#: src/seedsigner/gui/screens/psbt_screens.py
+msgid "input 2"
+msgstr "đầu vào 2"
+
+#. Indicates that items have been omitted from a series: e.g. "1, 2, 3, [...],
+#. 8"
+#: src/seedsigner/gui/screens/psbt_screens.py
+msgid "[ ... ]"
+msgstr "[ ... ]"
+
+#. Input number will be inserted (e.g. "input 3")
+#: src/seedsigner/gui/screens/psbt_screens.py
+msgid "input {}"
+msgstr "Đầu vào {}"
+
+#. Ellipsis ("...") characters used to truncate an address (e.g. "bc1qabc...")
+#: src/seedsigner/gui/screens/psbt_screens.py
+msgid "..."
+msgstr "..."
+
+#: src/seedsigner/gui/screens/psbt_screens.py
+#: src/seedsigner/views/psbt_views.py
+msgid "self-transfer"
+msgstr "tự chuyển"
+
+#: src/seedsigner/gui/screens/psbt_screens.py
+msgid "recipient 1"
+msgstr "người nhận 1"
+
+#. Inserts the recipient number (e.g. the fifth one is: "recipient 5")
+#: src/seedsigner/gui/screens/psbt_screens.py
+msgid "recipient {}"
+msgstr "người nhận {}"
+
+#: src/seedsigner/gui/screens/psbt_screens.py
+msgid "fee"
+msgstr "phí"
+
+#. Technical term, should probably NOT be translated in most languages
+#: src/seedsigner/gui/screens/psbt_screens.py
+#: src/seedsigner/views/psbt_views.py
+msgid "OP_RETURN"
+msgstr "OP_RETURN"
+
+#. Label for a change output in the PSBT Overview flow diagram
+#: src/seedsigner/gui/screens/psbt_screens.py
+#: src/seedsigner/views/psbt_views.py
+msgid "change"
+msgstr "thay đổi"
+
+#: src/seedsigner/gui/screens/psbt_screens.py
+msgid "Transaction Math"
+msgstr "Tính toán giao dịch"
+
+#: src/seedsigner/gui/screens/psbt_screens.py
+msgid "Review recipients"
+msgstr "Kiểm tra người nhận"
+
+#: src/seedsigner/gui/screens/psbt_screens.py
+msgid "input"
+msgid_plural "inputs"
+msgstr[0] "Các đầu vào"
+
+#: src/seedsigner/gui/screens/psbt_screens.py
+msgid "recipient"
+msgid_plural "recipients"
+msgstr[0] "Những người nhận"
+
+#. Denonination is inserted (e.g. your "btc change" or "sats change")
+#: src/seedsigner/gui/screens/psbt_screens.py
+msgid "{} change"
+msgstr "{} thay đổi"
+
+#. Describes the address type (change or receive)
+#: src/seedsigner/gui/screens/psbt_screens.py
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "change address"
+msgstr "thay đổi địa chỉ"
+
+#. Describes the address type (change or receive)
+#: src/seedsigner/gui/screens/psbt_screens.py
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "receive address"
+msgstr "nhận địa chỉ"
+
+#. Symbol for index number, e.g. "address #3"
+#: src/seedsigner/gui/screens/psbt_screens.py
+msgid "#"
+msgstr "#"
+
+#: src/seedsigner/gui/screens/psbt_screens.py
+msgid "Address verified!"
+msgstr "Địa chỉ đã xác nhận!"
+
+#. Shown when displaying OP_RETURN as non-human-readable hexadecimal data
+#: src/seedsigner/gui/screens/psbt_screens.py
+msgid "raw hex data"
+msgstr "dữ liệu hex thô"
+
+#: src/seedsigner/gui/screens/psbt_screens.py
+msgid "Sign Transaction"
+msgstr "Ký giao dịch"
+
+#: src/seedsigner/gui/screens/psbt_screens.py
+msgid "Click to approve this transaction"
+msgstr "Nhấn vào để chấp thuận giao dịch"
+
+#: src/seedsigner/gui/screens/scan_screens.py
+#: src/seedsigner/gui/screens/tools_screens.py
+msgid "back"
+msgstr "quay lại"
+
+#. Inserts the percentage value of the animated QR scan progress
+#: src/seedsigner/gui/screens/scan_screens.py
+msgid "{}%"
+msgstr "{}%"
+
+#. Increase QR code screen brightness
+#: src/seedsigner/gui/screens/screen.py
+msgid "Brighter"
+msgstr "Tăng độ sáng"
+
+#. Decrease QR code screen brightness
+#: src/seedsigner/gui/screens/screen.py
+msgid "Darker"
+msgstr "Giảm độ sáng"
+
+#: src/seedsigner/gui/screens/screen.py
+#: src/seedsigner/gui/screens/seed_screens.py
+#: src/seedsigner/views/seed_views.py
+msgid "Success!"
+msgstr "Thành công!"
+
+#: src/seedsigner/gui/screens/screen.py
+#: src/seedsigner/gui/screens/seed_screens.py
+#: src/seedsigner/views/seed_views.py
+msgid "OK"
+msgstr "OK"
+
+#: src/seedsigner/gui/screens/screen.py
+msgid "Caution"
+msgstr "Cảnh báo"
+
+#: src/seedsigner/gui/screens/screen.py src/seedsigner/views/seed_views.py
+msgid "Privacy Leak!"
+msgstr "Rò rỉ bảo mật!"
+
+#: src/seedsigner/gui/screens/screen.py
+msgid "I understand"
+msgstr "Tôi hiểu rồi"
+
+#: src/seedsigner/gui/screens/screen.py
+msgid "Classified Info!"
+msgstr "Thông tin bảo mật!"
+
+#: src/seedsigner/gui/screens/screen.py src/seedsigner/views/scan_views.py
+#: src/seedsigner/views/view.py
+msgid "Error"
+msgstr "Lỗi"
+
+#: src/seedsigner/gui/screens/screen.py
+msgid "Restarting"
+msgstr "Khởi động lại"
+
+#: src/seedsigner/gui/screens/screen.py
+msgid ""
+"SeedSigner is restarting.\n"
+"\n"
+"All in-memory data will be wiped."
+msgstr ""
+"SeedSigner đang khởi động lại.\n"
+"\n"
+"Tất cả dữ liệu trong bộ nhớ sẽ bị xóa."
+
+#: src/seedsigner/gui/screens/screen.py
+msgid "Just Unplug It"
+msgstr "Ngắt kết nối với thiết bị"
+
+#: src/seedsigner/gui/screens/screen.py
+msgid "It is safe to disconnect power at any time."
+msgstr "An toàn để ngắt nguồn điện bất cứ lúc nào"
+
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "Finalize Seed"
+msgstr "Hoàn tất cài đặt cụm từ khóa"
+
+#. a label for the shortened Key-id of a BIP-32 master HD wallet
+#: src/seedsigner/gui/screens/seed_screens.py
+#: src/seedsigner/gui/screens/tools_screens.py
+#: src/seedsigner/views/seed_views.py
+msgid "fingerprint"
+msgstr "dấu vân tay"
+
+#. Displays the page number and total: (e.g. page 1 of 6)
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "Seed Words: {}/{}"
+msgstr "Các từ khóa: {}/{}"
+
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "BIP-85 Index"
+msgstr "Chỉ mục BIP-85"
+
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "Verify Backup?"
+msgstr "Xác nhận khôi phục"
+
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "Optionally verify that your mnemonic backup is correct."
+msgstr "Tùy chọn xác nhận rằng các từ khóa dự phòng đúng"
+
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "Derivation Path"
+msgstr "Đường dẫn tạo địa chỉ"
+
+#: src/seedsigner/gui/screens/seed_screens.py
+#: src/seedsigner/views/seed_views.py
+msgid "Export xpub"
+msgstr "Xuất xpub"
+
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "Xpub Details"
+msgstr "Chi tiết Xpub"
+
+#. Short for "BIP-32 Master Fingerprint"
+#. a label for the shortened Key-id of a BIP-32 master HD wallet
+#: src/seedsigner/gui/screens/seed_screens.py
+#: src/seedsigner/gui/screens/tools_screens.py
+msgid "Fingerprint"
+msgstr "Dấu vân tay"
+
+#. Short for "Derivation Path"
+#. a label for the derivation-path into a BIP-32 HD wallet
+#: src/seedsigner/gui/screens/seed_screens.py
+#: src/seedsigner/gui/screens/tools_screens.py
+msgid "Derivation"
+msgstr "Đường dẫn tạo địa chỉ"
+
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "Xpub"
+msgstr "Xpub"
+
+#: src/seedsigner/gui/screens/seed_screens.py
+#: src/seedsigner/models/settings_definition.py
+#: src/seedsigner/views/seed_views.py
+msgid "BIP-39 Passphrase"
+msgstr "Câu mật khẩu theo BIP-39"
+
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "Verify Passphrase"
+msgstr "Xác nhận câu mật khẩu"
+
+#. Describes the effect of applying a BIP-39 passphrase; it changes the seed's
+#. fingerprint
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "changes fingerprint"
+msgstr "thay đổi dấu vân tay"
+
+#. Refers to the SeedQR type: Standard or Compact
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "Standard"
+msgstr "Tiêu chuẩn"
+
+#. Briefly explains the Standard SeedQR data format
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "BIP-39 wordlist indices"
+msgstr "Danh sách từ chỉ mục BIP-39"
+
+#. Refers to the SeedQR type: Standard or Compact
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "Compact"
+msgstr "Mặc định tinh gọn"
+
+#. Briefly explains the Compact SeedQR data format
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "Raw entropy bits"
+msgstr "Đơn vị thô ngẫu nhiên"
+
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "Transcribe SeedQR"
+msgstr "Chuyển thể mã SeedQR"
+
+#. Refers to the QR code size: 21x21, 25x25, or 29x29
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "Begin {}x{}"
+msgstr "Bắt đầu {}x{}"
+
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "click to exit"
+msgstr "Nhấn để thoát"
+
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid ""
+"Optionally scan your transcribed SeedQR to confirm that it reads back "
+"correctly."
+msgstr ""
+"Tùy chọn quét mã SeedQR đã chuyển thể để xác nhận rằng đã nhận diện một cách"
+" chính xác."
+
+#: src/seedsigner/gui/screens/seed_screens.py
+#: src/seedsigner/views/seed_views.py
+msgid "Verify Address"
+msgstr "Xác nhận địa chỉ"
+
+#. Inserts the nth address number (e.g. "Checking address 7")
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "Checking address {}"
+msgstr "Kiểm tra địa chỉ {}"
+
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "Address Verified"
+msgstr "Địa chỉ đã xác nhận"
+
+#. Describes the address index (e.g. "index 7")
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "index {}"
+msgstr "thứ {}"
+
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "Multisig Verification"
+msgstr "Xác nhận đa chữ ký"
+
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid ""
+"Load your multisig wallet descriptor to verify your receive/self-transfer or"
+" change address."
+msgstr ""
+"Tải thông tin ví đa chữ ký của bạn để xác minh các giao dịch nhận/tự chuyển "
+"hay thay đổi địa chỉ."
+
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "Descriptor Loaded"
+msgstr "Thông tin đã tải"
+
+#. Label for the multisig wallet's signing policy (e.g. 2-of-3)
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "Policy"
+msgstr "Chính sách"
+
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "Signing Keys"
+msgstr "Các khóa ký"
+
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "Review Message"
+msgstr "Kiểm tra tin nhắn"
+
+#. Short for "Next step"
+#: src/seedsigner/gui/screens/seed_screens.py
+#: src/seedsigner/views/psbt_views.py src/seedsigner/views/seed_views.py
+#: src/seedsigner/views/tools_views.py
+msgid "Next"
+msgstr "Kế tiếp"
+
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "Confirm Address"
+msgstr "Xác nhận địa chỉ"
+
+#: src/seedsigner/gui/screens/seed_screens.py
+#: src/seedsigner/views/seed_views.py
+msgid "Sign message"
+msgstr "Ký tin nhắn"
+
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "derivation path"
+msgstr "đường dẫn tạo địa chỉ"
+
+#: src/seedsigner/gui/screens/settings_screens.py
+#: src/seedsigner/views/settings_views.py src/seedsigner/views/view.py
+msgid "Settings"
+msgstr "Cài đặt"
+
+#. Short for "Input/Output"; screen to make sure the buttons and camera are
+#. working properly
+#: src/seedsigner/gui/screens/settings_screens.py
+msgid "I/O Test"
+msgstr "Kiểm tra đầu vào/đầu ra"
+
+#. Blank the screen
+#: src/seedsigner/gui/screens/settings_screens.py
+msgid "Clear"
+msgstr "Xóa"
+
+#: src/seedsigner/gui/screens/settings_screens.py
+msgid "Exit"
+msgstr "Thoát"
+
+#: src/seedsigner/gui/screens/settings_screens.py
+#: src/seedsigner/gui/screens/tools_screens.py
+msgid "Capturing image..."
+msgstr "Chụp hình..."
+
+#: src/seedsigner/gui/screens/settings_screens.py
+#: src/seedsigner/views/settings_views.py
+msgid "Donate"
+msgstr "Tài trợ"
+
+#. If your language uses the percent sign ("%"), your translation must also
+#. use
+#. two percent signs ("%%") due to python formatting oddities. "100%%" will be
+#. rendered as "100%".
+#: src/seedsigner/gui/screens/settings_screens.py
+#, python-format
+msgid ""
+"SeedSigner is 100%% free & open source, funded solely by the Bitcoin community.\n"
+"\n"
+"Donate onchain or LN at:"
+msgstr ""
+"SeedSigner là mã nguồn mở và 100%% miễn phí, được tài trợ bởi cộng đồng Bitcoin.\n"
+"\n"
+"Tài trợ trên chuỗi chính hay LN tại:"
+
+#: src/seedsigner/gui/screens/settings_screens.py
+#: src/seedsigner/views/settings_views.py
+msgid "Settings QR"
+msgstr "Cài đặt mã QR"
+
+#: src/seedsigner/gui/screens/settings_screens.py
+msgid "Settings updated..."
+msgstr "Cài đặt đã cập nhật"
+
+#: src/seedsigner/gui/screens/settings_screens.py src/seedsigner/views/view.py
+msgid "Home"
+msgstr "Trang chủ"
+
+#: src/seedsigner/gui/screens/tools_screens.py
+msgid "click a button"
+msgstr "nhấn 1 nút"
+
+#. A prompt to the user to either accept or reshoot the image
+#: src/seedsigner/gui/screens/tools_screens.py
+msgid "reshoot"
+msgstr "chụp lại"
+
+#. A prompt to the user to either accept or reshoot the image
+#: src/seedsigner/gui/screens/tools_screens.py
+msgid "accept"
+msgstr "chấp nhận"
+
+#. current roll number vs total rolls (e.g. roll 7 of 50)
+#: src/seedsigner/gui/screens/tools_screens.py
+msgid "Dice Roll {}/{}"
+msgstr "Chọn số ngẫu nhiên {}/{}"
+
+#. Build the last word in a 12 or 24 word BIP-39 mnemonic seed phrase.
+#: src/seedsigner/gui/screens/tools_screens.py
+msgid "Build Final Word"
+msgstr "Tạo từ khóa cuối"
+
+#. Final word calc. `mnemonic_length` = 12 or 24. `num_bits` = 7 or 3 (bits of
+#. entropy in final word).
+#: src/seedsigner/gui/screens/tools_screens.py
+msgid ""
+"The {mnemonic_length}th word is built from {num_bits} more entropy bits plus"
+" auto-calculated checksum."
+msgstr ""
+"Từ khóa thứ {mnemonic_length} được tạo từ {num_bits} số ngẫu nhiên cùng với "
+"lệnh tính toán tự động."
+
+#. current coin-flip number vs total flips (e.g. flip 3 of 4)
+#: src/seedsigner/gui/screens/tools_screens.py
+msgid "Coin Flip {}/{}"
+msgstr "Thảy đồng xu {}/{}"
+
+#. How we call the "front" side result during a coin toss.
+#: src/seedsigner/gui/screens/tools_screens.py
+msgid "Heads = 1"
+msgstr "Mặt ngửa = 1"
+
+#. How we call the "back" side result during a coin toss.
+#: src/seedsigner/gui/screens/tools_screens.py
+msgid "Tails = 0"
+msgstr "Mặt sấp = 0"
+
+#. The additional entropy the user supplied (e.g. coin flips)
+#: src/seedsigner/gui/screens/tools_screens.py
+msgid "Your input: \"{}\""
+msgstr "Bạn nhập: \"{}\""
+
+#. A function of "x" to be used for detecting errors in "x"
+#: src/seedsigner/gui/screens/tools_screens.py
+msgid "Checksum"
+msgstr "Lệnh tổng kiểm tra"
+
+#. labeled presentation of the last word in a BIP-39 mnemonic seed phrase.
+#: src/seedsigner/gui/screens/tools_screens.py
+msgid "Final Word: \"{}\""
+msgstr "Từ cuối: \"{}\""
+
+#. a label for the last word of a 12-word BIP-39 mnemonic seed phrase
+#: src/seedsigner/gui/screens/tools_screens.py
+msgid "12th Word"
+msgstr "Từ thứ 12"
+
+#. a label for the last word of a 24-word BIP-39 mnemonic seed phrase
+#: src/seedsigner/gui/screens/tools_screens.py
+msgid "24th Word"
+msgstr "Từ thứ 24"
+
+#. a label for the tool to explore public addresses for this seed.
+#: src/seedsigner/gui/screens/tools_screens.py
+#: src/seedsigner/views/seed_views.py src/seedsigner/views/tools_views.py
+msgid "Address Explorer"
+msgstr "Trình duyệt tìm địa chỉ"
+
+#. a label for a BIP-380-ish Output Descriptor
+#: src/seedsigner/gui/screens/tools_screens.py
+msgid "Wallet descriptor"
+msgstr "Thông tin ví"
+
+#. Insert the number of addrs displayed per screen (e.g. "Next 10")
+#: src/seedsigner/gui/screens/tools_screens.py
+msgid "Next {}"
+msgstr "Kế tiếp {}"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Enabled"
+msgstr "Cho phép"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Disabled"
+msgstr "Không cho phép"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Prompt"
+msgstr "Câu lệnh"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Required"
+msgstr "Yêu cầu"
+
+#. QR code format option; "default" = this is the format most wallets use
+#: src/seedsigner/models/settings_definition.py
+msgid "Animated (default)"
+msgstr ""
+
+#. QR code format option (static = single frame, not animated)
+#: src/seedsigner/models/settings_definition.py
+msgid "Static"
+msgstr ""
+
+#. QR code format option: old format that Specter Desktop used to use
+#: src/seedsigner/models/settings_definition.py
+msgid "Specter legacy"
+msgstr ""
+
+#: src/seedsigner/models/settings_definition.py
+msgid "BTC"
+msgstr "BTC"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Threshold at 0.01"
+msgstr "Định mức tại 0.01"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "BTC | sats hybrid"
+msgstr "BTC | sats kết hợp"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "0°"
+msgstr "0°"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "90°"
+msgstr "90°"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "180°"
+msgstr "180°"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "270°"
+msgstr "270°"
+
+#. QR code density option: Low, Medium, High
+#: src/seedsigner/models/settings_definition.py
+msgid "Low"
+msgstr "Thấp"
+
+#. QR code density option: Low, Medium, High
+#: src/seedsigner/models/settings_definition.py
+msgid "Medium"
+msgstr "Trung bình"
+
+#. QR code density option: Low, Medium, High
+#: src/seedsigner/models/settings_definition.py
+msgid "High"
+msgstr "Cao"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Mainnet"
+msgstr "Mainnet"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Testnet"
+msgstr "Testnet"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Regtest"
+msgstr "Regtest"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Store Settings on SD card"
+msgstr "Lưu cài đặt trên thẻ SD"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Insert SD card to enable"
+msgstr "Gắn thẻ SD để cho phép"
+
+#: src/seedsigner/models/settings_definition.py
+#: src/seedsigner/views/seed_views.py
+msgid "Single Sig"
+msgstr "Chữ ký đơn"
+
+#: src/seedsigner/models/settings_definition.py
+#: src/seedsigner/views/seed_views.py
+msgid "Multisig"
+msgstr "Đa chữ ký"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Native Segwit"
+msgstr "Segwit gốc"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Nested Segwit"
+msgstr "Segwit ghép"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Legacy"
+msgstr "Bản truyền thống"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Taproot"
+msgstr "Bản Taproot"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Custom Derivation"
+msgstr "Đường dẫn xuất tùy chỉnh"
+
+#. MicroSD notification duration setting - Display notification for 5 seconds
+#: src/seedsigner/models/settings_definition.py
+msgid "5 seconds"
+msgstr ""
+
+#. MicroSD notification duration setting - Display notification until the SD
+#. card is removed
+#: src/seedsigner/models/settings_definition.py
+msgid "Until SD removed"
+msgstr ""
+
+#. Terminology used by Electrum seeds; equivalent to BIP-39 passphrase
+#: src/seedsigner/models/settings_definition.py
+msgid "Custom Extension"
+msgstr "Mật khẩu mở rộng tùy chỉnh"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Language"
+msgstr "Ngôn ngữ"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Mnemonic language"
+msgstr "Ngôn ngữ cho từ khóa"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Persistent settings"
+msgstr "Cài đặt cố định"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Denomination display"
+msgstr "Đơn vị hiển thị"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Bitcoin network"
+msgstr "Mạng Bitcoin"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "QR code density"
+msgstr "Mật độ mã QR"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Sig types"
+msgstr "Loại chữ ký"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Script types"
+msgstr "Loại lệnh"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Xpub QR format"
+msgstr ""
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Show xpub details"
+msgstr "Hiển thị chi tiết xpub"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "BIP-39 passphrase"
+msgstr "Cụm từ khóa BIP-39"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Camera rotation"
+msgstr "Xoay camera"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Compact SeedQR"
+msgstr "Mã SeedQR tinh gọn"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "BIP-85 child seeds"
+msgstr "Các từ khóa thứ cấp BIP-85"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Electrum seeds"
+msgstr "Các từ khóa Electrum"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Native Segwit only"
+msgstr "Chỉ Segwit gốc"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "MicroSD notification duration"
+msgstr ""
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Message signing"
+msgstr "Ký lời nhắn"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Show privacy warnings"
+msgstr "Hiển thị cảnh báo bảo mật"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Show dire warnings"
+msgstr "Hiển thị cảnh báo nguy hiểm"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Show QR brightness tips"
+msgstr "Hiển thị hướng dẫn tùy chỉnh độ sáng cho mã QR"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Show partner logos"
+msgstr "Hiển thị thương hiệu của đối tác"
+
+#. Hardware settings option to specify the screen driver (e.g. st7789 vs
+#. ili9341)
+#: src/seedsigner/models/settings_definition.py
+msgid "Display type"
+msgstr "Hiển thị loại"
+
+#. Hardware settings option to invert how the screen driver displays colors.
+#: src/seedsigner/models/settings_definition.py
+msgid "Invert colors"
+msgstr "Đảo màu"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "QR background color"
+msgstr "Màu nền mã QR"
+
+#: src/seedsigner/views/psbt_views.py src/seedsigner/views/seed_views.py
+#: src/seedsigner/views/tools_views.py
+msgid "Scan a seed"
+msgstr "Quét một cụm từ khóa"
+
+#: src/seedsigner/views/psbt_views.py src/seedsigner/views/seed_views.py
+#: src/seedsigner/views/tools_views.py
+msgid "Enter 12-word seed"
+msgstr "Nhập 12 từ khóa"
+
+#: src/seedsigner/views/psbt_views.py src/seedsigner/views/seed_views.py
+#: src/seedsigner/views/tools_views.py
+msgid "Enter 24-word seed"
+msgstr "Nhập 24 từ khóa"
+
+#: src/seedsigner/views/psbt_views.py src/seedsigner/views/seed_views.py
+#: src/seedsigner/views/tools_views.py
+msgid "Enter Electrum seed"
+msgstr "Nhập cụm từ khóa Electrum"
+
+#. Inserts fingerprint w/"?" to indicate that this seed can't sign the current
+#. PSBT
+#: src/seedsigner/views/psbt_views.py
+msgid "{} (?)"
+msgstr "{} (?)"
+
+#: src/seedsigner/views/psbt_views.py
+msgid "Select Signer"
+msgstr "Chọn người ký"
+
+#: src/seedsigner/views/psbt_views.py
+msgid "Parsing PSBT..."
+msgstr "Xử lý PSBT..."
+
+#: src/seedsigner/views/psbt_views.py
+msgid "Unsupported Script Type!"
+msgstr "Loại lệnh không được hỗ trợ!"
+
+#: src/seedsigner/views/psbt_views.py
+msgid ""
+"Transaction has unsupported input script type, please verify your change "
+"addresses."
+msgstr ""
+"Giao dịch có loại mã hoá đầu vào không được hỗ trợ, vui lòng kiểm tra lại "
+"địa chỉ đã thay đổi."
+
+#: src/seedsigner/views/psbt_views.py src/seedsigner/views/view.py
+msgid "Continue"
+msgstr "Tiếp tục"
+
+#. User will receive no change back; the inputs to this transaction are fully
+#. spent
+#: src/seedsigner/views/psbt_views.py
+msgid "Full Spend!"
+msgstr "Sử dụng hết!"
+
+#: src/seedsigner/views/psbt_views.py
+msgid ""
+"This transaction spends its entire input value. No change is coming back to "
+"your wallet."
+msgstr ""
+"Giao dịch này sử dụng toàn bộ giá trị đầu vào. Sẽ không có tiền thừa trả về "
+"ví."
+
+#. Future-tense used to indicate that this transaction will send this amount,
+#. as opposed to "Send" on its own which could be misread as an instant
+#. command
+#. (e.g. "Send Now").
+#: src/seedsigner/views/psbt_views.py
+msgid "Will Send"
+msgstr "Sẽ gửi"
+
+#: src/seedsigner/views/psbt_views.py
+msgid "Next recipient"
+msgstr "Người nhận kế tiếp"
+
+#: src/seedsigner/views/psbt_views.py
+msgid "Skip verification"
+msgstr "Bỏ xác nhận"
+
+#: src/seedsigner/views/psbt_views.py
+msgid "Verify multisig change"
+msgstr "Xác nhận thay đổi đa chữ ký"
+
+#. The amount you're receiving back from the transaction
+#: src/seedsigner/views/psbt_views.py
+msgid "Your Change"
+msgstr "Tiền thừa của bạn"
+
+#: src/seedsigner/views/psbt_views.py
+msgid "Self-Transfer"
+msgstr "Tự chuyển"
+
+#: src/seedsigner/views/psbt_views.py
+msgid "Verify multisig addr"
+msgstr "Xác nhận địa chỉ đa chữ ký"
+
+#: src/seedsigner/views/psbt_views.py
+msgid "Verifying Change..."
+msgstr "Xác nhận tiền thừa..."
+
+#: src/seedsigner/views/psbt_views.py
+msgid "Verifying Self-Transfer..."
+msgstr "Xác nhận tự chuyển"
+
+#. Variable is either "change" or "self-transfer".
+#: src/seedsigner/views/psbt_views.py
+msgid "Transaction's {} address could not be verified from wallet descriptor."
+msgstr "Địa chỉ {} của giao dịch không khớp với mô tả của ví."
+
+#. Variable is either "change" or "self-transfer".
+#: src/seedsigner/views/psbt_views.py
+msgid "Transaction's {} address could not be generated from your seed."
+msgstr "Địa chỉ {} của giao dịch không thể tạo bằng cụm từ khoá của bạn."
+
+#: src/seedsigner/views/psbt_views.py
+msgid "Suspicious Transaction"
+msgstr "Giao dịch đáng ngờ"
+
+#: src/seedsigner/views/psbt_views.py
+msgid "Address Verification Failed"
+msgstr "Xác thực địa chỉ thất bại"
+
+#: src/seedsigner/views/psbt_views.py
+msgid "Discard transaction"
+msgstr "Loại bỏ giao dịch"
+
+#: src/seedsigner/views/psbt_views.py
+msgid "Approve transaction"
+msgstr "Chấp nhận giao dịch"
+
+#: src/seedsigner/views/psbt_views.py
+msgid "Select different seed"
+msgstr "Chọn cụm từ khoá khác"
+
+#: src/seedsigner/views/psbt_views.py
+msgid "Transaction Error"
+msgstr "Lỗi giao dịch"
+
+#: src/seedsigner/views/psbt_views.py
+msgid "Signing Failed"
+msgstr "Ký thất bại"
+
+#: src/seedsigner/views/psbt_views.py
+msgid "Signing with this seed did not add a valid signature."
+msgstr "Ký bằng cụm từ khóa này không tạo ra chữ ký hợp lệ."
+
+#: src/seedsigner/views/scan_views.py
+msgid "Scan a QR code"
+msgstr "Quét một mã QR"
+
+#: src/seedsigner/views/scan_views.py
+msgid "QRCode not recognized or not yet supported."
+msgstr "Mã QR không được hỗ trợ hay không nhận được mã QR"
+
+#: src/seedsigner/views/scan_views.py
+msgid "Wrong QR Type"
+msgstr "Sai loại mã QR"
+
+#: src/seedsigner/views/scan_views.py
+msgid "Scan Transaction"
+msgstr "Quét giao dịch"
+
+#: src/seedsigner/views/scan_views.py
+msgid "Expected a transaction"
+msgstr "Đợi một giao dịch"
+
+#: src/seedsigner/views/scan_views.py
+msgid "Scan SeedQR"
+msgstr "Quét SeedQR"
+
+#: src/seedsigner/views/scan_views.py
+msgid "Expected a SeedQR"
+msgstr "Chờ một SeedQR"
+
+#: src/seedsigner/views/scan_views.py src/seedsigner/views/seed_views.py
+msgid "Scan descriptor"
+msgstr "Quét thông tin ví"
+
+#: src/seedsigner/views/scan_views.py
+msgid "Expected a wallet descriptor QR"
+msgstr "Chờ một mã QR thông tin ví"
+
+#: src/seedsigner/views/scan_views.py
+msgid "Scan address QR"
+msgstr "Quét mã QR địa chỉ"
+
+#: src/seedsigner/views/scan_views.py
+msgid "Expected an address QR"
+msgstr "Chờ một mã QR địa chỉ"
+
+#: src/seedsigner/views/scan_views.py
+msgid "Unknown QR Type"
+msgstr "Loại mã QR không nhận diện được"
+
+#: src/seedsigner/views/scan_views.py
+msgid "QRCode is invalid or is a data format not yet supported."
+msgstr "Mã QR không hợp lệ hoặc loại định dạng dữ liệu chưa được hỗ trợ."
+
+#: src/seedsigner/views/scan_views.py src/seedsigner/views/view.py
+msgid "Back to Main Menu"
+msgstr "Trở về danh mục chính"
+
+#. This is on the opening splash screen, displayed above the HRF logo
+#: src/seedsigner/views/screensaver.py
+msgid "With support from:"
+msgstr "Với sự hỗ trợ từ:"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Load a seed"
+msgstr "Tải một cụm từ khóa"
+
+#: src/seedsigner/views/seed_views.py
+msgid "In-Memory Seeds"
+msgstr "Các cụm từ khóa trong bộ nhớ"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Load the seed to verify"
+msgstr "Tải cụm từ khóa để xác nhận"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Select seed to verify"
+msgstr "Chọn cụm từ khóa để xác nhận"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Sign Message"
+msgstr "Ký tin nhắn"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Load the seed to sign with"
+msgstr "Tải cụm từ khóa để ký"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Select seed to sign with"
+msgstr "Chọn cụm từ khóa để ký"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Scan a SeedQR"
+msgstr "Quét mã SeedQR"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Create a seed"
+msgstr "Tạo một cụm từ khóa"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Load a Seed"
+msgstr "Tải một cụm từ khoá"
+
+#. Inserts the word number (e.g. "Seed Word #6")
+#: src/seedsigner/views/seed_views.py
+msgid "Seed Word #{}"
+msgstr "Từ khóa #{}"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Review & edit"
+msgstr "Kiểm tra & Chỉnh sửa"
+
+#: src/seedsigner/views/seed_views.py src/seedsigner/views/tools_views.py
+msgid "Discard"
+msgstr "Hủy"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Invalid Mnemonic!"
+msgstr "Cụm từ khóa không hợp lệ!"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Checksum failure; not a valid seed phrase."
+msgstr "Lỗi kiểm tra tổng; không phải cụm từ khóa hợp lệ."
+
+#: src/seedsigner/views/seed_views.py
+msgid "Done"
+msgstr "Hoàn tất"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Edit passphrase"
+msgstr "Sửa câu mật khẩu"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Discard passphrase"
+msgstr "Hủy câu mật khẩu"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Skip passphrase"
+msgstr "Bỏ qua passphrase"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Discard passphrase?"
+msgstr "Hủy câu mật khẩu?"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Your current passphrase entry will be erased."
+msgstr "Passphrase hiển thị hiện tại sẽ bị xoá."
+
+#: src/seedsigner/views/seed_views.py
+msgid "Skip passphrase?"
+msgstr "Bỏ qua passphrase?"
+
+#: src/seedsigner/views/seed_views.py
+msgid "You have not entered a passphrase yet."
+msgstr "Bạn chưa điền passphrase."
+
+#: src/seedsigner/views/seed_views.py
+msgid "Keep seed"
+msgstr "Giữ lại cụm từ khoá"
+
+#. Inserts the seed fingerprint
+#: src/seedsigner/views/seed_views.py
+msgid "Wipe seed {} from the device?"
+msgstr "Xóa cụm từ khóa {} khỏi thiết bị?"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Discard Seed?"
+msgstr "Hủy cụm từ khóa?"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Electrum Warning"
+msgstr "Cảnh báo Electrum"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Some features are disabled for Electrum seeds."
+msgstr "Một số tính năng bị vô hiệu hóa đối với cụm từ khóa Electrum."
+
+#: src/seedsigner/views/seed_views.py
+msgid "Scan transaction"
+msgstr "Quét giao dịch"
+
+#: src/seedsigner/views/seed_views.py src/seedsigner/views/tools_views.py
+msgid "Address explorer"
+msgstr "Trình duyệt địa chỉ"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Backup seed"
+msgstr "Bảo lưu cụm từ khoá"
+
+#: src/seedsigner/views/seed_views.py
+msgid "BIP-85 child seed"
+msgstr "BIP-85 cụm từ khoá con"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Discard seed"
+msgstr "Bỏ qua cụm từ khoá"
+
+#: src/seedsigner/views/seed_views.py
+msgid "View seed words"
+msgstr "Hiển thị các từ trong cụm từ khoá"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Export as SeedQR"
+msgstr "Xuất dưới dạng mã SeedQR"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Backup Seed"
+msgstr "Khôi phục cụm từ khóa"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Export Xpub"
+msgstr "Xuất Xpub"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Xpub QR Format"
+msgstr ""
+
+#: src/seedsigner/views/seed_views.py
+msgid "Xpub can be used to view all future transactions."
+msgstr "Xpub có thể dùng để xem tất cả các giao dịch trong tương lai."
+
+#: src/seedsigner/views/seed_views.py
+msgid "Generating xpub..."
+msgstr "Khởi tạo xpub..."
+
+#: src/seedsigner/views/seed_views.py
+msgid "You must keep your seed words private & away from all online devices."
+msgstr ""
+"Bạn phải bảo mật các từ khóa của mình và giữ nó tránh xa khỏi mọi thiết bị "
+"kết nối internet."
+
+#. Inserts the child index (e.g. "Child #0")
+#: src/seedsigner/views/seed_views.py
+msgid "Child #{}"
+msgstr "Chỉ mục thứ cấp #{}"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Seed Words"
+msgstr "Các từ khóa"
+
+#: src/seedsigner/views/seed_views.py
+msgid "12 Words"
+msgstr "12 từ"
+
+#: src/seedsigner/views/seed_views.py
+msgid "24 Words"
+msgstr "24 từ"
+
+#: src/seedsigner/views/seed_views.py
+msgid "BIP-85 Num Words"
+msgstr "Số lượng từ BIP-85"
+
+#: src/seedsigner/views/seed_views.py
+msgid "BIP-85 Index Error"
+msgstr "Lỗi chỉ mục BIP-85"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Invalid Child Index"
+msgstr "Chỉ mục thứ cấp không hợp lệ"
+
+#: src/seedsigner/views/seed_views.py
+msgid "BIP-85 Child Index must be between 0 and 2^31-1."
+msgstr "Chỉ mục thứ cấp BIP-85 phải nằm trong khoảng từ 0 đến 2^31-1."
+
+#: src/seedsigner/views/seed_views.py
+msgid "Try again"
+msgstr "Thử lại"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Verify"
+msgstr "Xác nhận"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Skip"
+msgstr "Bỏ qua"
+
+#. Inserts the word number (e.g. "Verify Word #1")
+#: src/seedsigner/views/seed_views.py
+msgid "Verify Word #{}"
+msgstr "Xác nhận từ #{}"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Review seed words"
+msgstr "Kiểm tra các từ trong cụm từ khoá"
+
+#. Inserts the word number and the word (e.g. "Word #1 is not "apple"!")
+#: src/seedsigner/views/seed_views.py
+msgid "Word #{} is not \"{}\"!"
+msgstr "Từ thứ #{} không phải là \"{}\"!"
+
+#. User selected the wrong word during the mnemonic backup test (e.g.
+#. incorrectly said the 5th word was "zoo")
+#: src/seedsigner/views/seed_views.py
+msgid "Wrong Word!"
+msgstr "Từ sai!"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Verification Error"
+msgstr "Lỗi xác thực"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Backup Verified"
+msgstr "Khôi phục đã xác nhận"
+
+#: src/seedsigner/views/seed_views.py
+msgid "All mnemonic backup words were successfully verified!"
+msgstr "Tất cả các từ khóa dự phòng đã được xác nhận thành công!"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Standard: 25x25"
+msgstr "Chuẩn: 25x25"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Compact: 21x21"
+msgstr "Tinh gọn: 21x21"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Standard: 29x29"
+msgstr "Chuẩn: 29x29"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Compact: 25x25"
+msgstr "Tinh gọn: 25x25"
+
+#: src/seedsigner/views/seed_views.py
+msgid "SeedQR Format"
+msgstr "Định dạng mã SeedQR"
+
+#: src/seedsigner/views/seed_views.py
+msgid "SeedQR is your private key!"
+msgstr "SeedQR là khóa riêng!"
+
+#: src/seedsigner/views/seed_views.py
+msgid ""
+"Never photograph or scan it into a device that connects to the internet."
+msgstr "Không chụp hình hoặc quét mã với thiết bị có kết nối internet."
+
+#: src/seedsigner/views/seed_views.py
+msgid "Confirm SeedQR"
+msgstr "Xác nhận mã SeedQR"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Confirm SeedQR?"
+msgstr "Xác nhận mã SeedQR?"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Scan your SeedQR"
+msgstr "Quét mã SeedQR của bạn"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Error!"
+msgstr "Lỗi!"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Your transcribed SeedQR does not match your original seed!"
+msgstr "Mã SeedQR chuyển thể không khớp với cụm từ khóa gốc của bạn!"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Review SeedQR"
+msgstr "Kiểm tra mã SeedQR"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Your transcribed SeedQR could not be read!"
+msgstr "Không đọc được mã SeedQR đã chuyển thể!"
+
+#: src/seedsigner/views/seed_views.py
+msgid ""
+"Your transcribed SeedQR successfully scanned and yielded the same seed."
+msgstr ""
+"Mã SeedQR chuyển thể đã quét thành công và khớp với cụm từ khóa gốc của bạn."
+
+#: src/seedsigner/views/seed_views.py
+msgid "Sig type can't be auto-detected from this address. Please specify:"
+msgstr "Không thể nhận diện loại chữ ký từ địa chỉ này. Vui lòng chỉ rõ:"
+
+#. Option when scanning for a matching address; skips ten addresses ahead
+#: src/seedsigner/views/seed_views.py
+msgid "Skip 10"
+msgstr "Bỏ 10"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Cancel"
+msgstr "Hủy"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Return to transaction"
+msgstr "Quay lại giao dịch"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Verify addr"
+msgstr "Xác minh địa chỉ"
+
+#. Multisig policy. For a "2 of 3" policy, "threshold" = 2; "n" = 3
+#: src/seedsigner/views/seed_views.py
+msgid "{threshold} of {n}"
+msgstr ""
+
+#: src/seedsigner/views/seed_views.py
+msgid "Signing messages for custom derivation paths not supported"
+msgstr "Ký tin nhắn cho đường dẫn xuất tùy chỉnh không được hỗ trợ"
+
+#: src/seedsigner/views/settings_views.py
+msgid "Advanced"
+msgstr "Nâng cao"
+
+#: src/seedsigner/views/settings_views.py
+msgid "Hardware"
+msgstr "Phần cứng"
+
+#: src/seedsigner/views/settings_views.py
+msgid "I/O test"
+msgstr "Kiểm tra đầu vào/đầu ra"
+
+#: src/seedsigner/views/settings_views.py
+msgid "Dev Options"
+msgstr "Tùy chỉnh dành cho lập trình viên"
+
+#. Title of a warning dialog when configuring a setting that requires at least
+#. one option to be selected.
+#: src/seedsigner/views/settings_views.py
+msgid "Selection Required"
+msgstr ""
+
+#. The name of the setting being configured (e.g. "Script types") will be
+#. inserted.
+#: src/seedsigner/views/settings_views.py
+msgid "At least one option must be selected for \"{}\"."
+msgstr ""
+
+#. Text for the button that returns the user to the setting configuration
+#. screen.
+#: src/seedsigner/views/settings_views.py
+msgid "Return to setting"
+msgstr ""
+
+#: src/seedsigner/views/settings_views.py
+msgid "Persistent Settings enabled. Settings saved to SD card."
+msgstr "Đã bật cài đặt cố định. Cài đặt đã được lưu vào thẻ SD."
+
+#: src/seedsigner/views/settings_views.py
+msgid "Settings updated in temporary memory"
+msgstr "Cài đặt đã được cập nhật trong bộ nhớ tạm"
+
+#: src/seedsigner/views/tools_views.py
+msgid "New seed"
+msgstr "Tạo cụm từ khóa mới"
+
+#: src/seedsigner/views/tools_views.py
+msgid "Calc 12th/24th word"
+msgstr "Tính toán từ khóa thứ 12/24"
+
+#: src/seedsigner/views/tools_views.py
+msgid "Verify address"
+msgstr "Xác minh địa chỉ"
+
+#: src/seedsigner/views/tools_views.py src/seedsigner/views/view.py
+msgid "Tools"
+msgstr "Công cụ"
+
+#: src/seedsigner/views/tools_views.py
+msgid "12 words"
+msgstr "12 từ"
+
+#: src/seedsigner/views/tools_views.py
+msgid "24 words"
+msgstr "24 từ"
+
+#: src/seedsigner/views/tools_views.py
+msgid "Mnemonic Length"
+msgstr "Chiều dài từ khóa"
+
+#: src/seedsigner/views/tools_views.py
+msgid "Calculating..."
+msgstr "Đang tính toán..."
+
+#. Inserts the number of dice rolls needed for a 12-word mnemonic
+#: src/seedsigner/views/tools_views.py
+msgid "12 words ({} rolls)"
+msgstr "12 từ ({} lượt tung)"
+
+#. Inserts the number of dice rolls needed for a 24-word mnemonic
+#: src/seedsigner/views/tools_views.py
+msgid "24 words ({} rolls)"
+msgstr "24 từ ({} lượt tung)"
+
+#. Label to gather entropy through coin tosses
+#: src/seedsigner/views/tools_views.py
+msgid "Coin flip entropy"
+msgstr "Độ ngẫu nhiên từ tung đồng xu"
+
+#. Label to gather entropy through user specified BIP-39 word
+#: src/seedsigner/views/tools_views.py
+msgid "Word selection entropy"
+msgstr "Việc chọn từ khóa ngẫu nhiên"
+
+#. Label to allow user to default entropy as all-zeros
+#: src/seedsigner/views/tools_views.py
+msgid "Finalize with zeros"
+msgstr "Hoàn tất với các số không"
+
+#. label to calculate the last word of a BIP-39 mnemonic seed phrase
+#: src/seedsigner/views/tools_views.py
+msgid "Final Word Calc"
+msgstr "Tính toán từ khóa cuối"
+
+#: src/seedsigner/views/tools_views.py
+msgid "Load seed"
+msgstr "Tải các từ khóa"
+
+#: src/seedsigner/views/tools_views.py
+msgid "Scan wallet descriptor"
+msgstr "Quét thông tin ví"
+
+#. label for addresses where others send us incoming payments
+#: src/seedsigner/views/tools_views.py
+msgid "Receive addresses"
+msgstr "Nhận địa chỉ"
+
+#. label for addresses that collect the change from our own outgoing payments
+#: src/seedsigner/views/tools_views.py
+msgid "Change addresses"
+msgstr "Thay đổi địa chỉ"
+
+#. Multisig policy. For a "2 / 3 multisig" policy, "threshold" = 2; "n" = 3
+#: src/seedsigner/views/tools_views.py
+msgid "{threshold} / {n} multisig"
+msgstr ""
+
+#. a status message that our payment addresses are being calculated
+#: src/seedsigner/views/tools_views.py
+msgid "Calculating addrs..."
+msgstr "Tính toán các địa chỉ..."
+
+#: src/seedsigner/views/tools_views.py
+msgid "Custom Derivation address explorer not yet implemented"
+msgstr "Trình duyệt cho địa chỉ dẫn xuất tùy chỉnh chưa được triển khai"
+
+#: src/seedsigner/views/tools_views.py
+msgid "Single sig descriptors not yet supported"
+msgstr "Các ví chữ ký đơn chưa được hỗ trợ"
+
+#: src/seedsigner/views/tools_views.py
+msgid "Receive Addrs"
+msgstr "Nhận các địa chỉ"
+
+#: src/seedsigner/views/tools_views.py
+msgid "Change Addrs"
+msgstr "Thay đổi các địa chỉ"
+
+#: src/seedsigner/views/view.py
+msgid "Scan"
+msgstr "Quét"
+
+#: src/seedsigner/views/view.py
+msgid "Seeds"
+msgstr "Từ khóa"
+
+#: src/seedsigner/views/view.py
+msgid "Restart"
+msgstr "Bật lại"
+
+#: src/seedsigner/views/view.py
+msgid "Power off"
+msgstr "Tắt nguồn"
+
+#: src/seedsigner/views/view.py
+msgid "Reset / Power"
+msgstr "Thiết lập lại / Nguồn"
+
+#: src/seedsigner/views/view.py
+msgid "This is still on our to-do list!"
+msgstr "Vấn đề này còn trong danh sách công việc cần làm!"
+
+#: src/seedsigner/views/view.py
+msgid "Work In Progress"
+msgstr "Công việc đang làm"
+
+#: src/seedsigner/views/view.py
+msgid "Not Yet Implemented"
+msgstr "Chưa triển khai"
+
+#: src/seedsigner/views/view.py
+msgid "Back to main menu"
+msgstr "Trở về danh mục chính"
+
+#. The network setting (mainnet/testnet/regtest) doesn't match the provided
+#. derivation path
+#: src/seedsigner/views/view.py
+msgid "Network Mismatch"
+msgstr "Mạng không tương thích"
+
+#. Button option to alter a setting
+#: src/seedsigner/views/view.py
+msgid "Change Setting"
+msgstr "Thay đổi cài đặt"
+
+#. "network" will be mainnet/testnet/regtest.
+#: src/seedsigner/views/view.py
+msgid "Current network setting ({network}) doesn't match {derivation_path}."
+msgstr ""
+
+#: src/seedsigner/views/view.py
+msgid "System Error"
+msgstr "Lỗi hệ thống"
+
+#: src/seedsigner/views/view.py
+msgid "Hardware Error"
+msgstr "Lỗi thiết bị"
+
+#: src/seedsigner/views/view.py
+msgid "Cannot access camera"
+msgstr "Không thể truy cập camera"
+
+#: src/seedsigner/views/view.py
+msgid "Disconnect power and check for a loose camera connection."
+msgstr "Ngắt nguồn điện và kiểm tra kết nối camera bị lỏng."
+
+#: src/seedsigner/views/view.py
+msgid "Update setting"
+msgstr "Tuỳ chỉnh thiết lập"
+
+#. Inserts the name of a settings option (e.g. "Persistent Settings" is
+#. currently...)
+#: src/seedsigner/views/view.py
+msgid "\"{}\" is currently disabled in Settings."
+msgstr "\"{}\" hiện đã tắt trong Cài đặt"
+
+#: src/seedsigner/views/view.py
+msgid "Option Disabled"
+msgstr "Đã tắt tùy chọn"
+
+#: src/seedsigner/views/view.py
+msgid "Action Required"
+msgstr "Yêu cầu hành động"
+
+#: src/seedsigner/views/view.py
+msgid ""
+"You must remove the\n"
+"MicroSD card to continue."
+msgstr ""
+"Phải tháo \n"
+"thẻ nhớ MicroSD để tiếp tục."
