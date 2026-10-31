@@ -164,7 +164,7 @@ class LoadSeedView(View):
     TYPE_12WORD = ButtonOption("Enter 12-word seed", FontAwesomeIconConstants.KEYBOARD)
     TYPE_24WORD = ButtonOption("Enter 24-word seed", FontAwesomeIconConstants.KEYBOARD)
     TYPE_ELECTRUM = ButtonOption("Enter Electrum seed", FontAwesomeIconConstants.KEYBOARD)
-    ENCRYPTED_SD = ButtonOption("Encrypted SD backup")
+    ENCRYPTED_SD = ButtonOption("Encrypted KEF backup")
     CREATE = ButtonOption("Create a seed", SeedSignerIconConstants.PLUS)
 
     def run(self):
@@ -634,7 +634,7 @@ class SeedOptionsView(View):
 class SeedBackupView(View):
     VIEW_WORDS = ButtonOption("View seed words")
     EXPORT_SEEDQR = ButtonOption("Export as SeedQR")
-    ENCRYPTED_SD = ButtonOption("Encrypted backup to SD")
+    ENCRYPTED_SD = ButtonOption("Encrypted KEF backup")
 
     def __init__(self, seed: Seed):
         super().__init__()

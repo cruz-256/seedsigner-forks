@@ -14,7 +14,6 @@ from seedsigner.gui.components import (GUIConstants,
 from seedsigner.gui.keyboard import Keyboard, TextEntryDisplay
 from seedsigner.hardware.buttons import HardwareButtonsConstants, HardwareButtons
 from seedsigner.hardware.input_select import select_pressed
-from seedsigner.models.encode_qr import BaseQrEncoder
 from seedsigner.models.settings import SettingsConstants
 from seedsigner.models.threads import BaseThread, ThreadsafeCounter
 
@@ -742,10 +741,10 @@ class LargeButtonScreen(BaseTopNavScreen):
 
 @dataclass
 class QRDisplayScreen(BaseScreen):
-    qr_encoder: BaseQrEncoder = None
+    qr_encoder: object = None
 
     class QRDisplayThread(BaseThread):
-        def __init__(self, qr_encoder: BaseQrEncoder, qr_brightness: ThreadsafeCounter, tips_start_time: ThreadsafeCounter):
+        def __init__(self, qr_encoder: object, qr_brightness: ThreadsafeCounter, tips_start_time: ThreadsafeCounter):
             from seedsigner.gui.renderer import Renderer
             super().__init__()
             self.qr_encoder = qr_encoder

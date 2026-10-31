@@ -70,8 +70,8 @@ class Renderer(ConfigurableSingleton):
 
     def show_image(self, image=None, alpha_overlay=None, show_direct=False):
         if show_direct:
-            # Use the incoming image as the canvas and immediately render
-            self.disp.show_image(image, 0, 0)
+            from seedsigner.gui.viewer_mark import stamp_viewer
+            self.disp.show_image(stamp_viewer(image), 0, 0)
             return
 
         if alpha_overlay:
@@ -83,6 +83,8 @@ class Renderer(ConfigurableSingleton):
             # Always write to the current canvas, rather than trying to replace it
             self.canvas.paste(image)
 
+        from seedsigner.gui.viewer_mark import stamp_viewer
+        self.canvas.paste(stamp_viewer(self.canvas))
         self.disp.show_image(self.canvas, 0, 0)
 
 

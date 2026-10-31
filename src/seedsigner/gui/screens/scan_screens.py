@@ -6,7 +6,6 @@ from PIL import Image, ImageDraw
 
 from seedsigner.gui import renderer
 from seedsigner.gui.components import GUIConstants, Fonts, resize_image_to_fill
-from seedsigner.models.decode_qr import DecodeQR
 from seedsigner.models.threads import BaseThread, ThreadsafeCounter
 
 from .screen import BaseScreen
@@ -40,7 +39,7 @@ class ScanScreen(BaseScreen):
     Note: This is quite a lot of important tasks for a Screen to be managing; much of
     this should probably be refactored into the Controller.
     """
-    decoder: DecodeQR = None
+    decoder: object = None
     instructions_text: str = None
     resolution: tuple[int,int] = (480, 480)
     framerate: int = 6  # TODO: alternate optimization for Pi Zero 2W?
@@ -73,7 +72,7 @@ class ScanScreen(BaseScreen):
 
 
     class LivePreviewThread(BaseThread):
-        def __init__(self, decoder: DecodeQR, renderer: renderer.Renderer, instructions_text: str, render_rect: tuple[int,int,int,int], frame_decode_status: ThreadsafeCounter):
+        def __init__(self, decoder, renderer: renderer.Renderer, instructions_text: str, render_rect: tuple[int,int,int,int], frame_decode_status: ThreadsafeCounter):
             from seedsigner.hardware.camera import Camera
 
             self.camera = Camera.get_instance()
@@ -229,7 +228,7 @@ class ScanScreen(BaseScreen):
             _run(). The live preview is an extra-complex case.
         """
         from seedsigner.hardware.buttons import HardwareButtonsConstants
-        from seedsigner.models.decode_qr import DecodeQRStatus
+        from seedsigner.models.qr_type import DecodeQRStatus
 
         num_frames = 0
         start_time = time.time()

@@ -15,24 +15,12 @@ from urtypes.bytes import Bytes
 from base64 import b32encode, b32decode
 
 from seedsigner.helpers.ur2.ur_decoder import URDecoder
-from seedsigner.models.qr_type import QRType
+from seedsigner.models.qr_type import DecodeQRStatus, QRType
 from seedsigner.models.seed import Seed
 from seedsigner.models.settings import SettingsConstants
 
 
 logger = logging.getLogger(__name__)
-
-
-
-class DecodeQRStatus(IntEnum):
-    """
-        Used in DecodeQR to communicate status of adding qr frame/segment
-    """
-    PART_COMPLETE = 1
-    PART_EXISTING = 2
-    COMPLETE = 3
-    FALSE = 4
-    INVALID = 5
 
 
 

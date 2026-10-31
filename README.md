@@ -1,182 +1,90 @@
-# SeedSigner fork: encrypted backup to a second card
+# SeedSigner fork: KEF backups and Seed Viewer
 
-This is a fork of [SeedSigner](https://github.com/SeedSigner/seedsigner) `d8f7956fff56a554f34946e8f5036661172765db` with one added flow: write an **encrypted** copy of a seed to a **second** card, and load it back. The image build is [seedsigner-os](https://github.com/SeedSigner/seedsigner-os) `c4cb767a00ace8edf5e9414450c2849e15958ad7` plus `os-patches/0001-usb-mass-storage-for-encrypted-backup.patch`, which turns USB mass storage back on. Upstream removes USB so a Pi Zero cannot see a card reader.
+Two Pi Zero images are built from this tree.
 
-Nothing is written unless you open **Backup seed → Encrypted backup to SD** and press **Write backup**. The microSD slot that holds the OS (`mmcblk*`, `/mnt/microsd`, `/`, `/boot`) is refused. The app does not add network code.
-
-## Security trade-offs — read this before real funds
-
-This fork **leaves SeedSigner's stateless model**. Stock SeedSigner keeps the seed in RAM and can be run with the OS card removed after boot. This feature, once you confirm it, writes ciphertext to a card you plug in. That is a backup, and it is also a new way for a seed to leave the device.
-
-- **Unaudited fork.** Upstream SeedSigner has not reviewed this change. Read the diff, especially `src/seedsigner/models/encrypted_backup.py` and `src/seedsigner/hardware/backup_volume.py`, before you trust it with a seed that matters. Test the whole export and import path with a **throwaway seed** first.
-- **The OS card is still not a backup target.** The writer refuses `mmcblk*` names, anything mounted at `/`, `/boot`, `/boot/firmware`, or `/mnt/microsd`, and any `root=/dev/...` device from the kernel command line. A USB device that is itself the root disk is refused too. The strongest physical version of the old guarantee is still available: remove the OS card after the splash screen, then do the backup. The app cannot write a card that is not inserted.
-- **Passphrase strength matters.** The KDF is scrypt with **N=2^15, r=8, p=4** (about 32 MiB). That fits a Pi Zero next to the camera and UI. It is a lighter work factor than age's default (N=2^18, ~256 MiB), which would risk locking the Zero up. Use a long passphrase (several diceware words). Eight characters is only the UI floor, not a recommendation. Letter case matters. The encryption passphrase is **not** the BIP-39 passphrase.
-- **Cipher implementation.** On-device encryption is AES-256-GCM (FIPS 197, NIST SP 800-38D) written in that one module, with a known-answer self-test at import (an AES-256 block vector and an all-zero GCM tag). It is small on purpose so the image does not gain a new crypto package. It is not a general-purpose library. The same file decrypts the backup on a laptop.
-- **USB is new attack surface.** The Pi Zero image used to ship with the USB controller compiled out (upstream marks those lines `# KEYBOARD`). This image builds in the USB host controller, SCSI disk, and `usb-storage` / UAS. On that Pi Zero image, HID, USB serial, USB gadget, and USB ethernet stay off. The Zero 2 W defconfig already included HID and USB serial upstream. Buildroot still sets the `CONFIG_NET` symbol for mdev, as upstream images do; IP networking stays off. Do not plug unknown USB devices into the signer.
-- **Remove the card only after "Safe to remove".** The export path mounts read-write with `sync`, fsyncs the file, calls `sync`, then unmounts. If unmount fails the screen says the card is still mounted. Import mounts **read-only**.
-- **The file is not a SeedQR and not a metal plate.** Anyone who later learns the encryption passphrase can restore the seed with the script below. Store the card and the passphrase as two separate secrets.
-
-## What you need for the second card
-
-The Pi Zero (and Zero 2 W) has **one** microSD slot. That slot is the OS card. The backup card is a second SD or microSD in a **USB** reader:
-
-1. Raspberry Pi Zero, Zero W, or Zero 2 W, with the usual SeedSigner display and camera. Use the `pi0` image for Zero and Zero W. Use the `pi02w` image for Zero 2 W (upstream also boots that image on a Pi 3).
-2. The OS microSD, flashed from the image in this repo's build artifacts.
-3. A **micro-USB OTG adapter** (micro-USB plug to USB-A socket) in the Pi's **data** port. On a Zero that is the micro-USB port nearer the middle of the board, marked USB, not the power-only port at the corner.
-4. A USB SD or microSD card reader.
-5. A second card, partitioned MBR, formatted **FAT16 or FAT32**, with a normal filename-safe volume. This software does not partition or format cards. Do not use the OS card.
-
-Power the Pi as usual (the power micro-USB, or the GPIO), with the OTG adapter on the data port.
-
-## Buttons when the joystick does not click
-
-This image defaults to **Select button → Top button** (Settings → Hardware). A real joystick click still types a letter, so a normal five-way stick is not blocked. Hardware with only a directional control plus the three right-hand buttons can do every action. To restore the stock labels (top button switches to ABC, middle button switches to 123), set **Select button** to **Joystick click**.
-
-The three buttons are KEY1 (top), KEY2 (middle), and KEY3 (bottom).
-
-**Menus, warnings, and status screens** (unchanged either way): directions move the highlight. KEY1, KEY2, KEY3, or a joystick click activates it, including Back when the back arrow is highlighted.
-
-**Passphrase keyboard** (encryption and decryption), with Top button selected:
-
-| Control | Action |
+| Image | What it is |
 | --- | --- |
-| Directions | Move the orange highlight |
-| KEY1, labeled **OK** | Type the highlighted letter, space, backspace, or cursor move. On the back arrow, this goes back |
-| KEY2 | Next layout. The label is the layout you will open: `ABC`, then `123`, `!@#`, `*[]`, then `abc` |
-| KEY3, green check | Save the passphrase |
-| Joystick click, if you have one | Same as KEY1 |
+| `seedsigner_os.main.pi0.img` | Full SeedSigner. Dice and camera seed creation, PSBT signing, message signing, and plain SeedQR stay. Encryption is Krux KEF instead of a private format. embit stays. |
+| `seedsigner_os.seed-viewer.pi0.img` | Seed Viewer. It decrypts KEF backups and checks xpubs and addresses. The image build deletes the signing and seed-creation modules. Derivation uses Jimmy Song's buidl library. There is no Taproot. |
 
-**Seed word entry**, with Top button selected:
+Both images keep **Select button → Top button** (KEY1). A joystick click still works if the hardware has one. Menus, the passphrase keyboard, the QR transcription grid, and hold-to-confirm do not require a center click.
 
-| Control | Action |
-| --- | --- |
-| Directions | Move between letters |
-| KEY1 | Type the highlighted letter, or backspace when that key is highlighted. On the back arrow, this goes back |
-| KEY2 | Accept the highlighted matching word |
-| KEY3 | Next matching word. At the bottom of the list it wraps to the first, which replaces the old KEY1 "scroll up" |
-| Joystick click, if you have one | Same as KEY1 |
+The app does not add network code. The encrypted-backup path uses the Pi Zero's built-in microSD slot, not USB.
 
-**Other keyboards** (dice rolls, BIP-85 index, custom derivation): KEY1 or a joystick click types the highlighted key. KEY3 is still the green check when that screen has one. Backspace is a key on the keyboard, activated the same way as a letter.
+## Security trade-offs
 
-With **Joystick click** selected, passphrase KEY1/KEY2 go back to the stock ABC and 123 switches, and seed-word KEY1 scrolls the match list up instead of typing.
+This fork leaves SeedSigner's stateless model once you confirm a backup. Read the diff before a seed that matters. Use a throwaway seed first.
 
-## Using it on the device
+- **KEF, not a private format.** Backups are [Krux Encrypted Format](https://github.com/selfcustody/krux) version 20 (AES-256-GCM, 4-byte tag, PBKDF2-HMAC-SHA256, 100000 iterations). The plaintext is BIP39 entropy, 16 or 32 bytes. The optional label is the KEF id and is visible before decryption. A BIP39 passphrase is not stored inside the envelope. Krux can decrypt these bytes. Electrum seeds are refused.
+- **The encryption passphrase is not the BIP39 passphrase.** It is UTF-8 with no Unicode normalization, matching Krux. Eight characters is only the on-screen floor.
+- **Boot card.** Choosing "This SD card" shows a warning first. Backing out writes nothing. Anyone who later holds that card holds the encrypted backup. A long passphrase is essential.
+- **Swapped card.** The OS runs from RAM. After boot you can remove the OS card and insert a blank FAT card. The bcm2835 SD host polls the slot about once a second. This was checked in the kernel source and the Pi Zero device tree, not on a physical Pi in this build environment.
+- **Wipe is not destruction.** The wipe screen names the file, says it cannot be undone, and asks you to hold KEY1. It overwrites the file and deletes it. SD wear-levelling can keep an older copy. Destroy the card if you need to be certain.
+- **Seed Viewer has no signer.** Its image does not contain the PSBT, message-signing, or seed-creation modules, and it does not install embit. It still shows the seed words and a plain SeedQR so a stock SeedSigner can scan them. That is a display of the secret, not a signature.
+- **buidl and libsecp256k1.** buidl uses libsecp256k1 when its `_libsec` module imports, and its own point code otherwise. This image build vendors the pure-Python path. The boot self-test still refuses to continue if the BIP32, BIP39, BIP49, or BIP84 vectors fail.
+- **Unaudited.** Upstream SeedSigner and Krux have not reviewed this fork.
 
-Export, from a seed that is already in memory:
+## Buttons
 
-1. **Seeds → (fingerprint) → Backup seed → Encrypted backup to SD**
-2. Read the warning. If the seed has a BIP-39 or Electrum passphrase, choose whether the file should include it. Leaving it out restores the mnemonic only.
-3. Enter the **encryption** passphrase on the existing keyboard, then enter it again. They must match. At least 8 characters.
-4. Plug in the reader and choose the USB volume. The boot card is not in the list.
-5. **Write backup**. The screen pauses while scrypt runs (several seconds on a Pi Zero, sometimes longer).
-6. Wait until the screen says **Safe to remove**, then unplug the reader.
+KEY1 is the top side button, KEY2 the middle, KEY3 the bottom. Directions move. KEY1, KEY2, KEY3, or a joystick click activates a highlighted menu row.
 
-The file name is `seedsigner-backup-YYYYMMDDTHHMMSSZ.ssenc` in the card's root. A second backup in the same second does not overwrite the first.
+On the passphrase keyboard, with Top button selected: KEY1 types the highlighted key (the label reads OK), KEY2 changes layout (`abc`, `ABC`, `123`, `!@#`, `*[]`), KEY3 saves. On the QR grid, any of those buttons leaves the zoomed view. Wipe confirms only if KEY1 is held. KEY2 cancels the wipe.
 
-Import:
+## KEF on the device
 
-1. **Seeds → Load a seed → Encrypted SD backup**
-2. Choose the USB card and the `.ssenc` file. The card is mounted read-only, the file is read into RAM, then the card is unmounted.
-3. After **Safe to remove**, enter the encryption passphrase.
-4. Check the fingerprint and whether a seed passphrase was in the file, then **Load seed**.
+Export, from a loaded BIP39 seed: **Backup seed → Encrypted KEF backup**. Optional label, then the encryption passphrase twice, then one of:
 
-## Backup file format (SSENC1)
+1. **KEF QR code.** Byte mode, error correction L. With no label the grid is **29×29** for both 12 and 24 words. A 7-character label keeps 12 words at 29×29 and makes 24 words **33×33**. You step through the grid with row letters and column numbers, then scan the QR back. Success is shown only if it decrypts to the same seed.
+2. **This SD card.** Warning, then a file `seedsigner-backup/<label>.kef` on the boot card.
+3. **Swap SD card.** Instructions, then the same file on the card you inserted. The screen says when it is safe to remove.
 
-The layout is also the docstring of `src/seedsigner/models/encrypted_backup.py`. All multi-byte integers are big-endian.
+Import: **Load a seed → Encrypted KEF backup**, from this card, a swapped card, or a scanned KEF QR. The decrypt screen shows the source and the label. Krux `seeds.json` entries are listed too. The master fingerprint is shown when the seed loads.
 
-| Offset | Size | Field |
-| --- | --- | --- |
-| 0 | 6 | ASCII magic `SSENC1` |
-| 6 | 1 | Version `1` |
-| 7 | 1 | KDF id `1` (scrypt) |
-| 8 | 1 | Cipher id `1` (AES-256-GCM) |
-| 9 | 1 | Flags, must be `0` |
-| 10 | 4 | scrypt N |
-| 14 | 4 | scrypt r |
-| 18 | 4 | scrypt p |
-| 22 | 16 | scrypt salt |
-| 38 | 12 | GCM nonce |
-| 50 | varies | ciphertext |
-| last 16 | 16 | GCM tag |
+Wipe is on that same import menu.
 
-The 50-byte header is GCM additional data, so edited KDF parameters fail authentication instead of being trusted. Files this device writes use N=32768, r=8, p=4, and a 32-byte key. Decryption reads N, r, and p from the header. Imports refuse parameters that would allocate more than 48 MiB (`128 * r * N`) or that are not a power-of-two N.
+Plain SeedQR and CompactSeedQR export are unchanged.
 
-The encryption passphrase is normalized with Unicode **NFKD**, encoded as UTF-8, and passed to scrypt. The plaintext is compact UTF-8 JSON:
+## Seed Viewer
 
-```json
-{"format":"seedsigner-encrypted-backup","include_passphrase":true,"mnemonic":"word1 word2 ...","passphrase":"bip39 passphrase","seed_type":"bip39","version":1,"wordlist":"en"}
-```
+The opening screen says **Seed Viewer**. There is no HRF logo and no SeedSigner logo. Every screen carries a VIEWER mark. The theme is green on black (`#00FF41` on `#000000`). Warnings are red on black. Success is blue (`#4DA3FF`) so it does not blend into the theme. QR modules stay black on white.
 
-`passphrase` is omitted when you chose mnemonic only. `seed_type` is `bip39` or `electrum`. `wordlist` must be `en`. `seed_type` describes the mnemonic; it is not the encryption scheme.
+After a KEF decrypt you can show the words, show a plain SeedQR, set a BIP39 passphrase, and read the master fingerprint. Xpubs cover BIP84 (xpub and zpub), BIP49 (xpub and ypub), and BIP48 multisig (xpub and Zpub/Ypub). Address check steps receive and change indexes and compares a scanned address. Multisig check takes other xpubs, shows a sortedmulti descriptor, and checks receive address 0. Compare decrypts two KEF QRs and says whether they are the same seed.
+
+If the boot self-test fails, the device stops on a red screen.
 
 ## Decrypt off the device
 
-Python 3.10 or newer, no packages to install. From a checkout of this repo, offline:
-
 ```bash
-python3 tools/decrypt_seed_backup.py seedsigner-backup-20261028T120000Z.ssenc
+python3 tools/decrypt_seed_backup.py savings.kef
 ```
 
-The script prompts for the **encryption** passphrase with no echo. It prints the mnemonic and, if the file includes one, the seed passphrase. You can also place `src/seedsigner/models/encrypted_backup.py` beside the script and run it from that directory. A wrong passphrase or a modified file exits 2 and prints no seed.
+The script reads the encryption passphrase with no echo and prints the mnemonic. A wrong passphrase exits 2.
 
-Non-interactive form, which puts the passphrase in your shell history if you are not careful:
-
-```bash
-printf '%s\n' 'the encryption passphrase' | python3 tools/decrypt_seed_backup.py backup.ssenc
-```
-
-## Run the tests
+## Tests
 
 ```bash
 python3 -m venv .venv
 .venv/bin/pip install -r requirements.txt -r tests/requirements.txt -r l10n/requirements-l10n.txt
 PYTHONPATH=src .venv/bin/python setup.py compile_catalog
 PYTHONPATH=src .venv/bin/python -m pytest tests --ignore=tests/screenshot_generator
+PYTHONPATH=src .venv/bin/python tools/render_fork_screens.py
 ```
 
-`tests/test_encrypted_backup.py` covers the encrypt/decrypt round trip, tampering, the scrypt parameter cap, and the standalone script. `tests/test_backup_volume.py` covers boot-device exclusion (onboard `mmcblk`, a USB disk that is `/` or `root=`, a non-USB disk) and checks that a refused device never reaches `mount`. Screenshot generation is the upstream tool and wants `libraqm`; it is not part of the backup tests.
+KEF tests decrypt Krux's published QR vectors. Viewer tests compare buidl xpubs and addresses with embit for several mnemonics, with and without a BIP39 passphrase. `tools/render_fork_screens.py` renders the new screens at 240×240 and 320×240 and fails if text is clipped.
 
-## Build a flashable image
-
-Upstream's Docker path is `docs` in seedsigner-os (`SS_ARGS="--pi0 --app-repo=... --app-branch=main"`). This environment built without Docker, which upstream also documents. Dependencies are the packages in `seedsigner-os/Dockerfile` (make, gcc, g++, patch, bc, libssl-dev, ncurses, rsync, unzip, cpio, dosfstools, mtools, python3, python3-virtualenv, and the rest of that list).
+## Build
 
 ```bash
-git clone https://github.com/SeedSigner/seedsigner-os.git
-cd seedsigner-os
-git checkout c4cb767a00ace8edf5e9414450c2849e15958ad7
-git submodule update --init
-patch -p1 < /path/to/this/repo/os-patches/0001-usb-mass-storage-for-encrypted-backup.patch
-cd opt
-./build.sh --pi0 --app-repo=/path/to/this/repo --app-branch=main
-# optional second image (Pi Zero 2 W / Pi 3). Do not pass --skip-repo;
-# the first build deletes extras out of the copied app tree.
-./build.sh --pi02w --app-repo=/path/to/this/repo --app-branch=main
+tools/build_os_image.sh pi0 signer
+tools/build_os_image.sh pi0 viewer
 ```
 
-`tools/build_os_image.sh` in this repo runs those steps. Images land in `seedsigner-os/images/` as `seedsigner_os.<branch>.pi0.img` and, if you built it, `seedsigner_os.<branch>.pi02w.img`. The patch enables, as built-in (`=y`, because this kernel has `CONFIG_MODULES=n`):
+That checks out seedsigner-os `c4cb767a00ace8edf5e9414450c2849e15958ad7`, applies the existing USB-storage kernel patch (the app no longer offers a USB backup), and builds. The viewer build deletes signing and seed-creation files from the copied tree and turns off `BR2_PACKAGE_PYTHON_EMBIT`.
 
-- Pi Zero: `CONFIG_USB`, `CONFIG_USB_DWCOTG`, `CONFIG_USB_DWC2` host mode, `CONFIG_USB_STORAGE`, `CONFIG_USB_UAS`, `CONFIG_SCSI`, `CONFIG_BLK_DEV_SD`
-- Pi Zero 2 W: storage, UAS, and SCSI (USB and DWC2 were already on for the Pi 3 ports)
-- `dtoverlay=dwc2,dr_mode=host` on both boot configs, so the single OTG port enters host mode even when the adapter does not ground the ID pin
-- ISO-8859-1 so FAT filenames have a code page
+Images are not bit-for-bit reproducible here: the build host, ccache, and the clock affect the rootfs. Checksums in `SHA256SUMS` identify the files that were produced.
 
-On the Pi Zero image the patch does **not** enable USB HID, USB serial, USB gadget mode, or USB ethernet. The Pi Zero 2 W defconfig already had USB, HID, and USB serial (upstream shares that config with the Pi 3); this fork adds mass storage and UAS on top of that. IP, packet sockets, Unix sockets, cfg80211, and Bluetooth stay off. Buildroot's mdev fixup still sets the `CONFIG_NET` symbol, which upstream images do too; there is no IP stack behind it. mdev still auto-mounts only `mmcblk0p1` (the OS card, read-mostly via the existing `nodirty` mount). USB volumes are mounted by the app, and only after you confirm.
+Hot-swap of the SD card was verified from `bcm2835-sdhost` (`MMC_CAP_NEEDS_POLL`) and the Pi Zero device tree (the slot is not marked non-removable, and `sd_poll_once` is not set). It was not verified on a physical Pi.
 
-A full buildroot run needs on the order of 20–30 GB of disk and a long compile. If it cannot finish, the app, the patch, and the commands above are still enough to build the image on another machine.
-
-## Flash
-
-Check the checksum, then write the **uncompressed** image to the OS card. Replace `/dev/sdX` with that card, not your computer's own disk and not the backup card.
-
-```bash
-xz -dk seedsigner_os.main.pi0.img.xz
-sha256sum -c seedsigner_os.main.pi0.img.xz.sha256
-sudo dd if=seedsigner_os.main.pi0.img of=/dev/sdX bs=4M conv=fsync status=progress
-```
-
-Raspberry Pi Imager's "Use custom" can write the `.img` as well. Boot the Pi with the display and camera attached. After the UI is up you may remove the OS card; plug the backup reader in only when you are ready to export or import.
-
-The `pi0` image is the Raspberry Pi Zero and Zero W target (arm1176). The `pi02w` image is the Zero 2 W target upstream also uses for the Pi 3. The Zero 2 W config keeps `dtoverlay=disable-wifi` and `dtoverlay=disable-bt`. Neither image enables `CONFIG_INET`.
 
 ---
 

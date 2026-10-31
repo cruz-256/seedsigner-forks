@@ -1,14 +1,12 @@
-"""Export and import an encrypted seed backup on a second card.
+"""Export and import a Krux KEF backup on the built-in SD slot or as a QR.
 
-The OS microSD is never selected. Mounting happens only after the user
-confirms the export or import action. Secrets stay on ``BackupFlowState``,
-not in logged view arguments.
+Nothing is written until the user confirms. An OS-card write shows a warning
+first; leaving that screen writes nothing. Secrets stay on BackupFlowState.
 """
 
 from __future__ import annotations
 
 import hmac
-import logging
 
 from gettext import gettext as _
 
@@ -18,57 +16,54 @@ from seedsigner.gui.screens import (
     DireWarningScreen,
     LargeIconStatusScreen,
     WarningScreen,
-    ErrorScreen,
     seed_screens,
 )
+from seedsigner.gui.screens.backup_screens import HoldToConfirmScreen
 from seedsigner.gui.screens.screen import ButtonOption
 from seedsigner.hardware.backup_volume import (
     BackupIOError,
-    BootDeviceRefused,
-    NotSafeToRemove,
-    backup_filename,
-    format_volume_label,
-    mounted_backup,
-    scan_volumes,
+    BackupVolumeError,
+    BootCardError,
+    CardDirectory,
+    filename_for_label,
+    inspect_slot,
+    request_slot_rescan,
 )
+from seedsigner.helpers.qr import QR
 from seedsigner.models.backup_seed import load_seed_from_payload
 from seedsigner.models.backup_session import get_backup_flow_state
+from seedsigner.models.bip39_words import mnemonic_to_entropy
 from seedsigner.models.encrypted_backup import (
+    MIN_ENCRYPTION_PASSPHRASE_CHARS,
     DecryptionError,
     EncryptedBackupError,
-    MIN_ENCRYPTION_PASSPHRASE_CHARS,
     PayloadError,
-    _MAX_FILE_BYTES,
     decrypt_seed_backup,
     encrypt_seed_backup,
-    encryption_passphrase_is_acceptable,
-    normalize_encryption_passphrase,
+    preview_kef_label,
 )
+from seedsigner.models.kef_qr import KefQRDecoder, kef_qr_modules
 from seedsigner.models.seed import ElectrumSeed, Seed
 from seedsigner.models.settings import SettingsConstants
-from seedsigner.views.view import Destination, BackStackView, MainMenuView, View
+from seedsigner.views.view import BackStackView, Destination, MainMenuView, View
 
-logger = logging.getLogger(__name__)
+# Tests replace this. The device reads the slot mdev already mounted.
+slot_reader = inspect_slot
 
 
-def _state_or_home():
+def _home_if_empty():
     state = get_backup_flow_state()
-    if state.seed is None and state.file_bytes == b"" and not state.volume_dev_node:
-        return state, Destination(MainMenuView, clear_history=True)
-    return state, None
+    if state.seed is None and not state.file_bytes and not state.encryption_passphrase:
+        return Destination(MainMenuView, clear_history=True)
+    return None
 
 
-def _passphrases_match(left: str, right: str) -> bool:
-    left_bytes = normalize_encryption_passphrase(left).encode("utf-8")
-    right_bytes = normalize_encryption_passphrase(right).encode("utf-8")
-    if len(left_bytes) != len(right_bytes):
-        return False
-    return hmac.compare_digest(left_bytes, right_bytes)
+def _read_slot() -> CardDirectory | None:
+    return slot_reader()
 
 
 class SeedEncryptedBackupIntroView(View):
-    CONTINUE = ButtonOption("I understand")
-    CANCEL = ButtonOption("Cancel")
+    CONTINUE = ButtonOption("Continue")
 
     def __init__(self, seed: Seed):
         super().__init__()
@@ -77,47 +72,74 @@ class SeedEncryptedBackupIntroView(View):
     def run(self):
         state = get_backup_flow_state()
         state.clear()
+        if isinstance(self.seed, ElectrumSeed):
+            self.run_screen(
+                WarningScreen,
+                title=_("KEF backup"),
+                status_headline=_("BIP39 only"),
+                text=_("Krux KEF stores a BIP39 seed. This Electrum seed cannot be exported as KEF."),
+                show_back_button=False,
+                button_data=[ButtonOption("Back")],
+            )
+            return Destination(BackStackView)
         state.seed = self.seed
         selected = self.run_screen(
             DireWarningScreen,
-            title=_("Encrypted backup"),
-            status_headline=_("Writes to a card"),
-            text=_("Saves an encrypted seed file to a second card in a USB reader. The OS card is never written. Use a long passphrase. Test with a throwaway seed first."),
-            button_data=[self.CONTINUE, self.CANCEL],
+            title=_("KEF backup"),
+            status_headline=_("Long passphrase"),
+            text=_("Krux KEF. Hand-copied QR. This SD slot only."),
+            button_data=[self.CONTINUE],
             show_back_button=True,
         )
-        if selected == RET_CODE__BACK_BUTTON or selected is None:
+        if selected == RET_CODE__BACK_BUTTON:
             state.clear()
             return Destination(BackStackView)
-        if [self.CONTINUE, self.CANCEL][selected] == self.CANCEL:
-            state.clear()
-            return Destination(BackStackView)
-        if self.seed.has_passphrase:
-            return Destination(SeedEncryptedBackupIncludePassphraseView)
-        state.include_seed_passphrase = False
-        return Destination(SeedEncryptedBackupPassphraseView)
+        return Destination(SeedEncryptedBackupLabelView)
 
 
-class SeedEncryptedBackupIncludePassphraseView(View):
-    INCLUDE = ButtonOption("Include passphrase")
-    MNEMONIC_ONLY = ButtonOption("Mnemonic only")
+class SeedEncryptedBackupLabelView(View):
+    SKIP = ButtonOption("No label")
+    ADD = ButtonOption("Add a label")
+
+    def __init__(self, editing: bool = False):
+        super().__init__()
+        self.editing = editing
 
     def run(self):
         state = get_backup_flow_state()
         if state.seed is None:
             state.clear()
             return Destination(MainMenuView, clear_history=True)
-        selected = self.run_screen(
-            WarningScreen,
-            title=_("Seed passphrase"),
-            status_headline=_("Optional"),
-            text=_("Include this seed's passphrase in the encrypted file? Without it, the backup restores the mnemonic only."),
-            button_data=[self.INCLUDE, self.MNEMONIC_ONLY],
-            show_back_button=True,
+        if not self.editing:
+            selected = self.run_screen(
+                ButtonListScreen,
+                title=_("Backup label"),
+                button_data=[self.SKIP, self.ADD],
+            )
+            if selected == RET_CODE__BACK_BUTTON:
+                return Destination(BackStackView)
+            if [self.SKIP, self.ADD][selected] == self.SKIP:
+                state.label = ""
+                return Destination(SeedEncryptedBackupPassphraseView)
+        result = self.run_screen(
+            seed_screens.SeedAddPassphraseScreen,
+            passphrase="",
+            custom_title=_("Backup label"),
         )
-        if selected == RET_CODE__BACK_BUTTON:
+        if result.get("is_back_button"):
             return Destination(BackStackView)
-        state.include_seed_passphrase = [self.INCLUDE, self.MNEMONIC_ONLY][selected] == self.INCLUDE
+        label = (result.get("passphrase") or "").strip()
+        if len(label) > 20 or any(ord(ch) < 32 or ord(ch) > 126 for ch in label):
+            self.run_screen(
+                WarningScreen,
+                title=_("Backup label"),
+                status_headline=_("Too long"),
+                text=_("Use up to 20 letters, numbers, or symbols from the keyboard."),
+                show_back_button=False,
+                button_data=[ButtonOption("Try again")],
+            )
+            return Destination(SeedEncryptedBackupLabelView, view_args={"editing": True}, skip_current_view=True)
+        state.label = label
         return Destination(SeedEncryptedBackupPassphraseView)
 
 
@@ -131,11 +153,7 @@ class SeedEncryptedBackupPassphraseView(View):
         if state.seed is None:
             state.clear()
             return Destination(MainMenuView, clear_history=True)
-        if not self.confirm:
-            state.encryption_passphrase = ""
-        elif not state.encryption_passphrase:
-            return Destination(SeedEncryptedBackupPassphraseView, skip_current_view=True)
-        title = "Confirm passphrase" if self.confirm else "Encrypt passphrase"
+        title = _("Confirm phrase") if self.confirm else _("KEF passphrase")
         result = self.run_screen(
             seed_screens.SeedAddPassphraseScreen,
             passphrase="",
@@ -147,43 +165,38 @@ class SeedEncryptedBackupPassphraseView(View):
             return Destination(BackStackView)
         entered = result.get("passphrase") or ""
         if not self.confirm:
-            if not encryption_passphrase_is_acceptable(entered):
-                return Destination(SeedEncryptedBackupPassphraseRejectedView, view_args={"reason": "short"})
-            state.encryption_passphrase = normalize_encryption_passphrase(entered)
+            if len(entered) < MIN_ENCRYPTION_PASSPHRASE_CHARS:
+                self.run_screen(
+                    WarningScreen,
+                    title=_("KEF passphrase"),
+                    status_headline=_("Too short"),
+                    text=_("Use at least {} characters. A short passphrase is easy to guess.").format(
+                        MIN_ENCRYPTION_PASSPHRASE_CHARS
+                    ),
+                    show_back_button=False,
+                    button_data=[ButtonOption("Try again")],
+                )
+                return Destination(SeedEncryptedBackupPassphraseView, skip_current_view=True)
+            state.encryption_passphrase = entered
             return Destination(SeedEncryptedBackupPassphraseView, view_args={"confirm": True})
-        if not _passphrases_match(entered, state.encryption_passphrase):
+        if not hmac.compare_digest(entered.encode("utf-8"), state.encryption_passphrase.encode("utf-8")):
             state.encryption_passphrase = ""
-            return Destination(SeedEncryptedBackupPassphraseRejectedView, view_args={"reason": "mismatch"})
-        return Destination(SeedEncryptedBackupInsertView)
-
-
-class SeedEncryptedBackupPassphraseRejectedView(View):
-    def __init__(self, reason: str):
-        super().__init__()
-        self.reason = reason
-
-    def run(self):
-        if self.reason == "short":
-            text = _("Use at least {} characters. A short passphrase is easy to guess.").format(
-                MIN_ENCRYPTION_PASSPHRASE_CHARS
+            self.run_screen(
+                WarningScreen,
+                title=_("KEF passphrase"),
+                status_headline=_("Mismatch"),
+                text=_("Those entries did not match. Enter the passphrase again."),
+                show_back_button=False,
+                button_data=[ButtonOption("Try again")],
             )
-            headline = _("Too short")
-        else:
-            text = _("Those entries did not match. Enter the encryption passphrase again.")
-            headline = _("Mismatch")
-        self.run_screen(
-            WarningScreen,
-            title=_("Encryption passphrase"),
-            status_headline=headline,
-            text=text,
-            show_back_button=False,
-            button_data=[ButtonOption("Try again")],
-        )
-        return Destination(SeedEncryptedBackupPassphraseView, skip_current_view=True)
+            return Destination(SeedEncryptedBackupPassphraseView, skip_current_view=True)
+        return Destination(SeedEncryptedBackupDestinationView)
 
 
-class SeedEncryptedBackupInsertView(View):
-    SCAN = ButtonOption("Scan for card")
+class SeedEncryptedBackupDestinationView(View):
+    QR = ButtonOption("KEF QR code")
+    OS_CARD = ButtonOption("This SD card")
+    SWAP = ButtonOption("Swap SD card")
 
     def run(self):
         state = get_backup_flow_state()
@@ -191,272 +204,405 @@ class SeedEncryptedBackupInsertView(View):
             state.clear()
             return Destination(MainMenuView, clear_history=True)
         selected = self.run_screen(
-            WarningScreen,
-            title=_("Insert backup card"),
-            status_headline=_("USB reader"),
-            text=_("Plug a USB SD reader into the micro-USB port with an OTG adapter. Use a FAT card that is not the OS card."),
-            button_data=[self.SCAN],
+            ButtonListScreen,
+            title=_("Save KEF"),
+            button_data=[self.QR, self.OS_CARD, self.SWAP],
+        )
+        if selected == RET_CODE__BACK_BUTTON:
+            state.encryption_passphrase = ""
+            return Destination(BackStackView)
+        choice = [self.QR, self.OS_CARD, self.SWAP][selected]
+        if choice == self.QR:
+            state.destination = "qr"
+            return Destination(SeedEncryptedBackupQrWholeView)
+        if choice == self.OS_CARD:
+            state.destination = "os"
+            return Destination(SeedEncryptedBackupOsCardWarningView)
+        state.destination = "swap"
+        return Destination(SeedEncryptedBackupSwapView)
+
+
+class SeedEncryptedBackupOsCardWarningView(View):
+    UNDERSTAND = ButtonOption("I understand")
+
+    def run(self):
+        state = get_backup_flow_state()
+        if state.destination != "os" or state.seed is None:
+            return Destination(BackStackView)
+        selected = self.run_screen(
+            DireWarningScreen,
+            title=_("Boot card"),
+            status_headline=_("Seed stays here"),
+            text=_("Encrypted seed stays on this boot card. Anyone with the card has the backup."),
+            button_data=[self.UNDERSTAND],
             show_back_button=True,
         )
         if selected == RET_CODE__BACK_BUTTON:
             return Destination(BackStackView)
-        return Destination(SeedEncryptedBackupSelectVolumeView)
-
-
-class SeedEncryptedBackupSelectVolumeView(View):
-    RETRY = ButtonOption("Retry")
-    CANCEL = ButtonOption("Cancel")
-
-    def run(self):
-        state = get_backup_flow_state()
-        if state.seed is None:
-            state.clear()
-            return Destination(MainMenuView, clear_history=True)
-        try:
-            scan = scan_volumes()
-        except Exception:
-            logger.exception("backup volume scan failed")
-            scan = None
-        if scan is None or not scan.eligible:
-            if scan is not None and scan.refused_boot and not scan.eligible:
-                text = _("Only the boot card is present, and it will not be written. Plug in a USB reader with a different card.")
-                headline = _("Boot card refused")
-            else:
-                text = _("No USB card was found. Plug in the reader and retry. The OS card is ignored.")
-                headline = _("No backup card")
-            selected = self.run_screen(
-                ErrorScreen,
-                title=_("Encrypted backup"),
-                status_headline=headline,
-                text=text,
-                button_data=[self.RETRY, self.CANCEL],
-                show_back_button=True,
-            )
-            if selected == RET_CODE__BACK_BUTTON or [self.RETRY, self.CANCEL][selected] == self.CANCEL:
-                return Destination(BackStackView)
-            return Destination(SeedEncryptedBackupSelectVolumeView, skip_current_view=True)
-
-        button_data = [ButtonOption(format_volume_label(volume), return_data=volume) for volume in scan.eligible]
-        selected = self.run_screen(
-            ButtonListScreen,
-            title=_("Choose backup card"),
-            button_data=button_data,
-            is_bottom_list=True,
-        )
-        if selected == RET_CODE__BACK_BUTTON:
-            return Destination(BackStackView)
-        volume = button_data[selected].return_data
-        state.volume_dev_node = volume.dev_node
-        state.volume_label = format_volume_label(volume)
         return Destination(SeedEncryptedBackupWriteView)
 
 
-class SeedEncryptedBackupWriteView(View):
-    WRITE = ButtonOption("Write backup")
+class SeedEncryptedBackupSwapView(View):
+    READY = ButtonOption("Card is in")
 
     def run(self):
-        state = get_backup_flow_state()
-        if state.seed is None or not state.volume_dev_node or not state.encryption_passphrase:
-            state.clear()
-            return Destination(MainMenuView, clear_history=True)
         selected = self.run_screen(
             WarningScreen,
-            title=_("Write backup"),
-            status_headline=_("Check the card"),
-            text=_("Write the encrypted file to {}? The screen will pause while the passphrase is stretched. Do not remove the card.").format(state.volume_label),
-            button_data=[self.WRITE],
+            title=_("Swap SD card"),
+            status_headline=_("OS stays in RAM"),
+            text=_("Pull the boot card. Insert a blank FAT card. The slot checks once a second."),
+            button_data=[self.READY],
             show_back_button=True,
         )
         if selected == RET_CODE__BACK_BUTTON:
             return Destination(BackStackView)
-        seed = state.seed
-        try:
-            filename = _write_backup(state)
-        except BootDeviceRefused:
-            logger.warning("refused encrypted backup write to boot or non-USB device")
-            return Destination(
-                SeedEncryptedBackupFailureView,
-                view_args={"headline": "Write refused", "text": "That device is the boot card or is not a USB reader. Nothing was written.", "safe_to_remove": True},
-            )
-        except NotSafeToRemove:
-            logger.error("backup card unmount failed")
-            return Destination(
-                SeedEncryptedBackupFailureView,
-                view_args={"headline": "Still mounted", "text": "The card may still be mounted. Do not remove it. Restart the device, then unplug the reader.", "safe_to_remove": False},
-            )
-        except (BackupIOError, EncryptedBackupError, OSError):
-            logger.exception("encrypted backup write failed")
-            return Destination(
-                SeedEncryptedBackupFailureView,
-                view_args={"headline": "Write failed", "text": "Could not write the backup. If the card uses a format other than FAT, reformat it on another computer and try again.", "safe_to_remove": True},
-            )
-        state.clear()
-        return Destination(
-            SeedEncryptedBackupDoneView,
-            view_args={"filename": filename, "seed": seed},
-            skip_current_view=True,
-        )
+        return Destination(SeedEncryptedBackupScanSlotView)
 
 
-class SeedEncryptedBackupFailureView(View):
-    def __init__(self, headline: str, text: str, safe_to_remove: bool):
+class SeedEncryptedBackupScanSlotView(View):
+    def __init__(self, purpose: str = "export"):
         super().__init__()
-        self.headline = headline
-        self.text = text
-        self.safe_to_remove = safe_to_remove
-
-    def run(self):
-        get_backup_flow_state().clear()
-        self.run_screen(
-            ErrorScreen,
-            title=_("Encrypted backup"),
-            status_headline=_(self.headline),
-            text=_(self.text),
-            button_data=[ButtonOption("OK")],
-            show_back_button=False,
-        )
-        return Destination(MainMenuView, clear_history=True)
-
-
-class SeedEncryptedBackupDoneView(View):
-    def __init__(self, filename: str, seed: Seed):
-        super().__init__()
-        self.filename = filename
-        self.seed = seed
-
-    def run(self):
-        self.run_screen(
-            LargeIconStatusScreen,
-            title=_("Backup written"),
-            status_headline=_("Safe to remove"),
-            text=_("The file was synced and the card was unmounted. You can unplug the reader.\n{}").format(self.filename),
-            button_data=[ButtonOption("Done")],
-            show_back_button=False,
-        )
-        from seedsigner.views.seed_views import SeedOptionsView
-        return Destination(SeedOptionsView, view_args={"seed": self.seed}, clear_history=True)
-
-
-class SeedEncryptedImportIntroView(View):
-    SCAN = ButtonOption("Scan for card")
+        self.purpose = purpose
 
     def run(self):
         state = get_backup_flow_state()
+        request_slot_rescan()
+        try:
+            card = _read_slot()
+        except BackupVolumeError as exc:
+            return _error(str(exc))
+        if card is None:
+            self.run_screen(
+                WarningScreen,
+                title=_("SD slot"),
+                status_headline=_("No card"),
+                text=_("No card is in the slot yet. Insert a FAT card and try again."),
+                show_back_button=False,
+                button_data=[ButtonOption("Try again")],
+            )
+            return Destination(SeedEncryptedBackupScanSlotView, view_args={"purpose": self.purpose}, skip_current_view=True)
+        if self.purpose == "export" and state.destination == "swap" and card.is_os_card():
+            self.run_screen(
+                DireWarningScreen,
+                title=_("SD slot"),
+                status_headline=_("Still boot card"),
+                text=_("This is still the OS card. Remove it and insert the blank card."),
+                show_back_button=True,
+                button_data=[ButtonOption("Try again")],
+            )
+            return Destination(SeedEncryptedBackupSwapView, skip_current_view=True)
+        if self.purpose == "import" and state.destination == "swap" and card.is_os_card():
+            self.run_screen(
+                DireWarningScreen,
+                title=_("SD slot"),
+                status_headline=_("Still boot card"),
+                text=_("This is still the OS card. Insert the card that holds the backup."),
+                show_back_button=True,
+                button_data=[ButtonOption("Try again")],
+            )
+            return Destination(SeedEncryptedImportSwapView, skip_current_view=True)
+        if self.purpose == "export":
+            return Destination(SeedEncryptedBackupWriteView)
+        return Destination(SeedEncryptedImportPickView)
+
+
+class SeedEncryptedBackupWriteView(View):
+    def run(self):
+        state = get_backup_flow_state()
+        if state.seed is None or not state.encryption_passphrase:
+            state.clear()
+            return Destination(MainMenuView, clear_history=True)
+        try:
+            card = _read_slot()
+            if card is None:
+                raise BackupIOError("No card is in the slot")
+            if state.destination == "os" and not card.is_os_card():
+                raise BootCardError("This is not the boot card")
+            if state.destination == "swap" and card.is_os_card():
+                raise BootCardError("Refusing to write the boot card")
+            name = filename_for_label(state.label)
+            envelope = encrypt_seed_backup(
+                mnemonic=state.seed.mnemonic_str,
+                encryption_passphrase=state.encryption_passphrase,
+                label=state.label,
+            )
+            card.write_kef(name, envelope)
+        except (BackupVolumeError, PayloadError, EncryptedBackupError) as exc:
+            state.encryption_passphrase = ""
+            return _error(str(exc))
+        on_os = card.is_os_card()
+        state.encryption_passphrase = ""
+        state.filename = name
+        headline = _("On boot card") if on_os else _("Safe to remove")
+        text = (
+            _("Saved {name} on the boot card. Anyone with the card has the backup.").format(name=name)
+            if on_os
+            else _("Saved {name}. You can remove the card.").format(name=name)
+        )
+        self.run_screen(
+            LargeIconStatusScreen,
+            title=_("KEF saved"),
+            status_headline=headline,
+            text=text,
+            show_back_button=False,
+            button_data=[ButtonOption("Done")],
+        )
         state.clear()
+        return Destination(MainMenuView, clear_history=True)
+
+
+class SeedEncryptedBackupQrWholeView(View):
+    BEGIN = ButtonOption("Zoom in")
+
+    def run(self):
+        state = get_backup_flow_state()
+        if state.seed is None or not state.encryption_passphrase:
+            state.clear()
+            return Destination(MainMenuView, clear_history=True)
+        try:
+            state.file_bytes = encrypt_seed_backup(
+                mnemonic=state.seed.mnemonic_str,
+                encryption_passphrase=state.encryption_passphrase,
+                label=state.label,
+            )
+        except PayloadError as exc:
+            return _error(str(exc))
+        modules = kef_qr_modules(state.file_bytes)
+        selected = self.run_screen(
+            seed_screens.SeedTranscribeSeedQRWholeQRScreen,
+            qr_data=state.file_bytes,
+            num_modules=modules,
+            qr_background="#ffffff",
+            qr_style=QR.STYLE__DEFAULT,
+            screen_title=_("Transcribe KEF"),
+        )
+        if selected == RET_CODE__BACK_BUTTON:
+            return Destination(BackStackView)
+        return Destination(SeedEncryptedBackupQrZoomView, view_args={"num_modules": modules})
+
+
+class SeedEncryptedBackupQrZoomView(View):
+    def __init__(self, num_modules: int):
+        super().__init__()
+        self.num_modules = num_modules
+
+    def run(self):
+        state = get_backup_flow_state()
+        if not state.file_bytes:
+            return Destination(BackStackView)
+        self.run_screen(
+            seed_screens.SeedTranscribeSeedQRZoomedInScreen,
+            qr_data=state.file_bytes,
+            num_modules=self.num_modules,
+            qr_background="#ffffff",
+            qr_style=QR.STYLE__DEFAULT,
+        )
+        return Destination(SeedEncryptedBackupScanBackView)
+
+
+class SeedEncryptedBackupScanBackView(View):
+    SCAN = ButtonOption("Scan KEF QR")
+
+    def run(self):
         selected = self.run_screen(
             WarningScreen,
-            title=_("Load backup"),
-            status_headline=_("Second card"),
-            text=_("Reads an encrypted backup from a USB card reader. The OS card is not used. You will enter the encryption passphrase after the file is read."),
+            title=_("Check the QR"),
+            status_headline=_("Scan it back"),
+            text=_("Scan the KEF QR you copied. It is decrypted and compared to this seed before success."),
             button_data=[self.SCAN],
             show_back_button=True,
         )
         if selected == RET_CODE__BACK_BUTTON:
-            state.clear()
             return Destination(BackStackView)
-        return Destination(SeedEncryptedImportSelectVolumeView)
+        return Destination(SeedEncryptedBackupScanBackCaptureView)
 
 
-class SeedEncryptedImportSelectVolumeView(View):
-    RETRY = ButtonOption("Retry")
-    CANCEL = ButtonOption("Cancel")
-
+class SeedEncryptedBackupScanBackCaptureView(View):
     def run(self):
+        from seedsigner.gui.screens.scan_screens import ScanScreen
+
+        state = get_backup_flow_state()
+        decoder = KefQRDecoder()
+        self.run_screen(ScanScreen, instructions_text=_("Scan KEF QR"), decoder=decoder)
+        if not decoder.complete:
+            return Destination(BackStackView)
         try:
-            scan = scan_volumes()
-        except Exception:
-            logger.exception("backup volume scan failed")
-            scan = None
-        if scan is None or not scan.eligible:
-            text = _("No USB card was found. Plug in the reader and retry. The OS card is ignored.")
-            if scan is not None and scan.refused_boot:
-                text = _("Only the boot card is present, and it will not be read for this. Plug in a USB reader with the backup card.")
-            selected = self.run_screen(
-                ErrorScreen,
-                title=_("Load backup"),
-                status_headline=_("No backup card"),
-                text=text,
-                button_data=[self.RETRY, self.CANCEL],
-                show_back_button=True,
+            payload = decrypt_seed_backup(decoder.payload, state.encryption_passphrase)
+        except (DecryptionError, PayloadError, EncryptedBackupError):
+            self.run_screen(
+                WarningScreen,
+                title=_("Check the QR"),
+                status_headline=_("Did not match"),
+                text=_("That QR did not decrypt to this seed. Check the copy and the passphrase."),
+                show_back_button=False,
+                button_data=[ButtonOption("Back")],
             )
-            if selected == RET_CODE__BACK_BUTTON or [self.RETRY, self.CANCEL][selected] == self.CANCEL:
-                get_backup_flow_state().clear()
-                return Destination(BackStackView)
-            return Destination(SeedEncryptedImportSelectVolumeView, skip_current_view=True)
-        button_data = [ButtonOption(format_volume_label(volume), return_data=volume) for volume in scan.eligible]
+            return Destination(SeedEncryptedBackupScanBackView, skip_current_view=True)
+        try:
+            same = hmac.compare_digest(
+                mnemonic_to_entropy(payload["mnemonic"]),
+                mnemonic_to_entropy(state.seed.mnemonic_str),
+            )
+        except ValueError:
+            same = False
+        if not same:
+            self.run_screen(
+                WarningScreen,
+                title=_("Check the QR"),
+                status_headline=_("Different seed"),
+                text=_("The QR decrypted, but it is not this seed."),
+                show_back_button=False,
+                button_data=[ButtonOption("Back")],
+            )
+            return Destination(SeedEncryptedBackupScanBackView, skip_current_view=True)
+        fingerprint = state.seed.get_fingerprint(self.settings.get_value(SettingsConstants.SETTING__NETWORK))
+        self.run_screen(
+            LargeIconStatusScreen,
+            title=_("QR checked"),
+            status_headline=fingerprint,
+            text=_("The scanned QR decrypts to this seed. Label: {label}").format(
+                label=payload["label"] or _("none")
+            ),
+            show_back_button=False,
+            button_data=[ButtonOption("Done")],
+        )
+        state.clear()
+        return Destination(MainMenuView, clear_history=True)
+
+
+class SeedEncryptedImportIntroView(View):
+    SD = ButtonOption("From this SD")
+    SWAP = ButtonOption("Swap SD card")
+    QR = ButtonOption("Scan KEF QR")
+    WIPE = ButtonOption("Wipe a KEF file")
+
+    def run(self):
+        get_backup_flow_state().clear()
         selected = self.run_screen(
             ButtonListScreen,
-            title=_("Choose backup card"),
-            button_data=button_data,
+            title=_("KEF import"),
+            button_data=[self.SD, self.SWAP, self.QR, self.WIPE],
         )
         if selected == RET_CODE__BACK_BUTTON:
             return Destination(BackStackView)
-        volume = button_data[selected].return_data
+        choice = [self.SD, self.SWAP, self.QR, self.WIPE][selected]
         state = get_backup_flow_state()
-        state.volume_dev_node = volume.dev_node
-        state.volume_label = format_volume_label(volume)
-        return Destination(SeedEncryptedImportSelectFileView)
+        if choice == self.QR:
+            state.source = "qr"
+            return Destination(SeedEncryptedImportScanView)
+        if choice == self.WIPE:
+            state.destination = "os"
+            return Destination(SeedEncryptedWipePickView)
+        if choice == self.SWAP:
+            state.destination = "swap"
+            state.source = "sd"
+            return Destination(SeedEncryptedImportSwapView)
+        state.destination = "os"
+        state.source = "sd"
+        return Destination(SeedEncryptedImportPickView)
 
 
-class SeedEncryptedImportSelectFileView(View):
+class SeedEncryptedImportSwapView(View):
+    READY = ButtonOption("Card is in")
+
+    def run(self):
+        selected = self.run_screen(
+            WarningScreen,
+            title=_("Swap SD card"),
+            status_headline=_("OS stays in RAM"),
+            text=_("Remove the boot card. Insert the FAT card with the backup. The slot is checked about once a second."),
+            button_data=[self.READY],
+            show_back_button=True,
+        )
+        if selected == RET_CODE__BACK_BUTTON:
+            return Destination(BackStackView)
+        return Destination(SeedEncryptedBackupScanSlotView, view_args={"purpose": "import"})
+
+
+class SeedEncryptedImportPickView(View):
     def run(self):
         state = get_backup_flow_state()
-        if not state.volume_dev_node:
-            state.clear()
-            return Destination(MainMenuView, clear_history=True)
         try:
-            with mounted_backup(state.volume_dev_node, read_only=True) as mounted:
-                names = mounted.list_backup_files()
-        except BootDeviceRefused:
-            return _import_io_destination("Boot card refused", "That device is the boot card or is not a USB reader.")
-        except NotSafeToRemove:
-            return _import_io_destination("Still mounted", "The card may still be mounted. Do not remove it. Restart, then unplug the reader.", safe_to_remove=False)
-        except (BackupIOError, OSError):
-            logger.exception("listing encrypted backups failed")
-            return _import_io_destination("Cannot read card", "Could not read the card. It may need to be formatted FAT on another computer.")
-        if not names:
-            return _import_io_destination("No backup file", "No .ssenc file was found on that card.")
-        button_data = [ButtonOption(name, return_data=name) for name in names]
+            card = _read_slot()
+            if card is None:
+                raise BackupIOError("No card is in the slot")
+            choices = [(name, None) for name in card.list_kef()]
+            for label, raw in card.list_krux_entries():
+                choices.append((f"krux:{label}", raw))
+        except BackupVolumeError as exc:
+            return _error(str(exc))
+        if not choices:
+            self.run_screen(
+                WarningScreen,
+                title=_("KEF import"),
+                status_headline=_("None found"),
+                text=_("No .kef file or Krux seeds.json entry is on this card."),
+                show_back_button=False,
+                button_data=[ButtonOption("Back")],
+            )
+            return Destination(BackStackView)
+        buttons = [ButtonOption(label[:24]) for label, _raw in choices]
         selected = self.run_screen(
             ButtonListScreen,
-            title=_("Choose backup file"),
-            button_data=button_data,
+            title=_("Choose backup"),
+            button_data=buttons,
         )
         if selected == RET_CODE__BACK_BUTTON:
             return Destination(BackStackView)
-        filename = button_data[selected].return_data
+        name, raw = choices[selected]
         try:
-            with mounted_backup(state.volume_dev_node, read_only=True) as mounted:
-                state.file_bytes = mounted.read_backup_file(filename, _MAX_FILE_BYTES)
-        except BootDeviceRefused:
-            state.clear()
-            return _import_io_destination("Boot card refused", "That device is the boot card or is not a USB reader.")
-        except NotSafeToRemove:
-            state.clear()
-            return _import_io_destination("Still mounted", "The card may still be mounted. Do not remove it. Restart, then unplug the reader.", safe_to_remove=False)
-        except (BackupIOError, OSError):
-            logger.exception("reading encrypted backup failed")
-            state.clear()
-            return _import_io_destination("Cannot read file", "Could not read that backup file.")
-        state.filename = filename
-        state.volume_dev_node = ""
-        return Destination(SeedEncryptedImportSafeToRemoveView)
+            blob = raw if raw is not None else card.read_kef(name)
+            preview = preview_kef_label(blob)
+        except (BackupVolumeError, EncryptedBackupError) as exc:
+            return _error(str(exc))
+        state.file_bytes = blob
+        state.filename = name
+        state.label = preview["label"]
+        state.source = "sd"
+        return Destination(SeedEncryptedImportPreviewView)
 
 
-class SeedEncryptedImportSafeToRemoveView(View):
+class SeedEncryptedImportScanView(View):
+    def run(self):
+        from seedsigner.gui.screens.scan_screens import ScanScreen
+
+        decoder = KefQRDecoder()
+        self.run_screen(ScanScreen, instructions_text=_("Scan KEF QR"), decoder=decoder)
+        if not decoder.complete:
+            return Destination(BackStackView)
+        try:
+            preview = preview_kef_label(decoder.payload)
+        except EncryptedBackupError as exc:
+            return _error(str(exc))
+        state = get_backup_flow_state()
+        state.file_bytes = decoder.payload
+        state.label = preview["label"]
+        state.source = "qr"
+        state.filename = "QR"
+        return Destination(SeedEncryptedImportPreviewView)
+
+
+class SeedEncryptedImportPreviewView(View):
+    DECRYPT = ButtonOption("Decrypt")
+
     def run(self):
         state = get_backup_flow_state()
         if not state.file_bytes:
-            state.clear()
-            return Destination(MainMenuView, clear_history=True)
-        self.run_screen(
-            LargeIconStatusScreen,
-            title=_("Backup read"),
-            status_headline=_("Safe to remove"),
-            text=_("The file is in memory and the card was unmounted. You can unplug the reader."),
-            button_data=[ButtonOption("Enter passphrase")],
-            show_back_button=False,
+            return Destination(BackStackView)
+        source = _("QR code") if state.source == "qr" else _("SD card")
+        label = state.label or _("none")
+        selected = self.run_screen(
+            WarningScreen,
+            title=_("Decrypt KEF"),
+            status_headline=label[:18],
+            text=_("Source: {source}. Label: {label}.").format(
+                source=source, label=label
+            ),
+            button_data=[self.DECRYPT],
+            show_back_button=True,
         )
+        if selected == RET_CODE__BACK_BUTTON:
+            return Destination(BackStackView)
         return Destination(SeedEncryptedImportPassphraseView)
 
 
@@ -464,115 +610,113 @@ class SeedEncryptedImportPassphraseView(View):
     def run(self):
         state = get_backup_flow_state()
         if not state.file_bytes:
-            state.clear()
-            return Destination(MainMenuView, clear_history=True)
+            return Destination(BackStackView)
         result = self.run_screen(
             seed_screens.SeedAddPassphraseScreen,
             passphrase="",
-            custom_title="Decrypt passphrase",
+            custom_title=_("Decrypt phrase"),
         )
         if result.get("is_back_button"):
-            state.clear()
-            return Destination(MainMenuView, clear_history=True)
-        entered = result.get("passphrase") or ""
+            return Destination(BackStackView)
         try:
-            payload = decrypt_seed_backup(state.file_bytes, entered)
+            payload = decrypt_seed_backup(state.file_bytes, result.get("passphrase") or "")
             seed = load_seed_from_payload(payload)
-        except DecryptionError:
-            return Destination(SeedEncryptedImportDecryptFailedView)
-        except PayloadError:
-            state.clear()
-            return _import_io_destination("Not a valid seed", "The file decrypted, but the seed inside is not valid.")
-        except EncryptedBackupError:
-            state.clear()
-            return _import_io_destination("Not a backup file", "That file is not a readable encrypted backup.")
-        finally:
-            entered = ""
-        include = bool(payload.get("include_passphrase"))
-        state.file_bytes = b""
-        state.encryption_passphrase = ""
-        state.seed = seed
-        state.include_seed_passphrase = include
-        return Destination(SeedEncryptedImportConfirmView)
-
-
-class SeedEncryptedImportDecryptFailedView(View):
-    RETRY = ButtonOption("Try again")
-    CANCEL = ButtonOption("Cancel")
-
-    def run(self):
-        selected = self.run_screen(
-            ErrorScreen,
-            title=_("Load backup"),
-            status_headline=_("Did not decrypt"),
-            text=_("Wrong passphrase, or the file is damaged."),
-            button_data=[self.RETRY, self.CANCEL],
-            show_back_button=False,
-        )
-        if [self.RETRY, self.CANCEL][selected] == self.CANCEL:
-            get_backup_flow_state().clear()
-            return Destination(MainMenuView, clear_history=True)
-        return Destination(SeedEncryptedImportPassphraseView, skip_current_view=True)
-
-
-class SeedEncryptedImportConfirmView(View):
-    LOAD = ButtonOption("Load seed")
-    CANCEL = ButtonOption("Cancel", button_label_color="red")
-
-    def run(self):
-        state = get_backup_flow_state()
-        seed = state.seed
-        if seed is None:
-            state.clear()
-            return Destination(MainMenuView, clear_history=True)
-        network = self.settings.get_value(SettingsConstants.SETTING__NETWORK)
-        fingerprint = seed.get_fingerprint(network)
-        count = len(seed.mnemonic_list)
-        kind = "Electrum" if isinstance(seed, ElectrumSeed) else "BIP-39"
-        if state.include_seed_passphrase:
-            text = _("{}-word {}. The seed passphrase from the file will be loaded too.").format(count, kind)
-        else:
-            text = _("{}-word {}. The file does not include a seed passphrase.").format(count, kind)
-        selected = self.run_screen(
-            WarningScreen,
-            title=_("Load this seed?"),
-            status_headline=fingerprint,
-            text=text,
-            button_data=[self.LOAD, self.CANCEL],
-            show_back_button=False,
-        )
-        if [self.LOAD, self.CANCEL][selected] == self.CANCEL:
-            state.clear()
-            return Destination(MainMenuView, clear_history=True)
+        except (DecryptionError, PayloadError, EncryptedBackupError):
+            self.run_screen(
+                WarningScreen,
+                title=_("Decrypt KEF"),
+                status_headline=_("Failed"),
+                text=_("Wrong passphrase, or the backup is not a valid BIP39 KEF envelope."),
+                show_back_button=False,
+                button_data=[ButtonOption("Try again")],
+            )
+            return Destination(SeedEncryptedImportPassphraseView, skip_current_view=True)
+        fingerprint = seed.get_fingerprint(self.settings.get_value(SettingsConstants.SETTING__NETWORK))
+        source = _("QR code") if state.source == "qr" else _("SD card")
         self.controller.storage.set_pending_seed(seed)
-        loaded = self.controller.storage.finalize_pending_seed()
+        self.run_screen(
+            LargeIconStatusScreen,
+            title=_("Seed loaded"),
+            status_headline=fingerprint,
+            text=_("Source: {source}. Label: {label}.").format(
+                source=source, label=payload["label"] or _("none")
+            ),
+            show_back_button=False,
+            button_data=[ButtonOption("Continue")],
+        )
         state.clear()
-        from seedsigner.views.seed_views import SeedOptionsView
-        return Destination(SeedOptionsView, view_args={"seed": loaded}, clear_history=True)
+        from seedsigner.views.seed_views import SeedFinalizeView
+        return Destination(SeedFinalizeView, skip_current_view=True)
 
 
-def _import_io_destination(headline: str, text: str, safe_to_remove: bool = True):
+class SeedEncryptedWipePickView(View):
+    def run(self):
+        try:
+            card = _read_slot()
+            if card is None:
+                raise BackupIOError("No card is in the slot")
+            names = card.list_kef()
+        except BackupVolumeError as exc:
+            return _error(str(exc))
+        if not names:
+            self.run_screen(
+                WarningScreen,
+                title=_("Wipe backup"),
+                status_headline=_("None found"),
+                text=_("There is no .kef file in seedsigner-backup on this card."),
+                show_back_button=False,
+                button_data=[ButtonOption("Back")],
+            )
+            return Destination(BackStackView)
+        selected = self.run_screen(
+            ButtonListScreen,
+            title=_("Wipe backup"),
+            button_data=[ButtonOption(name) for name in names],
+        )
+        if selected == RET_CODE__BACK_BUTTON:
+            return Destination(BackStackView)
+        return Destination(SeedEncryptedWipeConfirmView, view_args={"filename": names[selected]})
+
+
+class SeedEncryptedWipeConfirmView(View):
+    def __init__(self, filename: str):
+        super().__init__()
+        self.filename = filename
+
+    def run(self):
+        selected = self.run_screen(HoldToConfirmScreen, filename=self.filename)
+        if selected == RET_CODE__BACK_BUTTON:
+            return Destination(BackStackView)
+        try:
+            card = _read_slot()
+            if card is None:
+                raise BackupIOError("No card is in the slot")
+            card.wipe_kef(self.filename)
+        except BackupVolumeError as exc:
+            return _error(str(exc))
+        self.run_screen(
+            LargeIconStatusScreen,
+            title=_("Wipe backup"),
+            status_headline=_("File removed"),
+            text=_("{name} was overwritten and deleted. Wear-levelling can keep a copy. Destroy the card to be certain.").format(
+                name=self.filename
+            ),
+            show_back_button=False,
+            button_data=[ButtonOption("Done")],
+        )
+        return Destination(MainMenuView, clear_history=True)
+
+
+def _error(text: str) -> Destination:
+    from seedsigner.views.view import ErrorView
     return Destination(
-        SeedEncryptedBackupFailureView,
-        view_args={"headline": headline, "text": text, "safe_to_remove": safe_to_remove},
+        ErrorView,
+        view_args={
+            "title": "KEF backup",
+            "status_headline": "Not written",
+            "text": text,
+            "button_text": "Back",
+            "next_destination": Destination(BackStackView, skip_current_view=True),
+        },
     )
 
-
-def _write_backup(state) -> str:
-    seed = state.seed
-    seed_type = "electrum" if isinstance(seed, ElectrumSeed) else "bip39"
-    seed_passphrase = seed.passphrase if state.include_seed_passphrase else ""
-    blob = encrypt_seed_backup(
-        mnemonic=seed.mnemonic_str,
-        seed_type=seed_type,
-        seed_passphrase=seed_passphrase,
-        include_seed_passphrase=state.include_seed_passphrase,
-        encryption_passphrase=state.encryption_passphrase,
-    )
-    filename = backup_filename()
-    dev_node = state.volume_dev_node
-    # Drop the encryption passphrase before the card write so a crash mid-write
-    # does not keep it beside the ciphertext buffer any longer than necessary.
-    state.encryption_passphrase = ""
-    with mounted_backup(dev_node, read_only=False) as mounted:
-        return mounted.write_backup_file(filename, blob)

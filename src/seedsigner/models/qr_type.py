@@ -1,3 +1,16 @@
+from enum import IntEnum
+
+
+class DecodeQRStatus(IntEnum):
+    """Status from adding one camera frame or QR payload."""
+
+    PART_COMPLETE = 1
+    PART_EXISTING = 2
+    COMPLETE = 3
+    FALSE = 4
+    INVALID = 5
+
+
 class QRType:
     """
         Used with DecodeQR and EncodeQR to communicate qr encoding type
@@ -31,5 +44,6 @@ class QRType:
     OUTPUT__UR = "output__ur"
     ACCOUNT__UR = "account__ur"
     BYTES__UR = "bytes__ur"
+    KEF = "kef"
 
     INVALID = "invalid"

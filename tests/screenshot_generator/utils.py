@@ -65,6 +65,8 @@ class ScreenshotRenderer(Renderer):
             # Always write to the current canvas, rather than trying to replace it
             self.canvas.paste(image)
 
+        from seedsigner.gui.viewer_mark import stamp_viewer
+        self.canvas.paste(stamp_viewer(self.canvas))
         self.canvas.save(os.path.join(self.screenshot_path, self.screenshot_filename))
         self.render_count += 1
 

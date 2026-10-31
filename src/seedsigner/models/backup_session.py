@@ -16,15 +16,15 @@ class BackupFlowState:
 
     def clear(self) -> None:
         self.encryption_passphrase = ""
-        self.include_seed_passphrase = False
         self.seed = None
-        self.volume_dev_node = ""
-        self.volume_label = ""
+        self.label = ""
+        self.destination = ""
+        self.filename = ""
+        self.source = ""
         if isinstance(self.__dict__.get("file_bytes"), bytearray):
             for index in range(len(self.file_bytes)):
                 self.file_bytes[index] = 0
         self.file_bytes = b""
-        self.filename = ""
 
 
 _state = BackupFlowState()

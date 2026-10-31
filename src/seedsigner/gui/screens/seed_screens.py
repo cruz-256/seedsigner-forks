@@ -1210,9 +1210,12 @@ class SeedTranscribeSeedQRFormatScreen(ButtonListScreen):
 class SeedTranscribeSeedQRWholeQRScreen(WarningEdgesMixin, ButtonListScreen):
     qr_data: str = None
     num_modules: int = None
+    qr_background: str = "#444"
+    qr_style: int = QR.STYLE__ROUNDED
+    screen_title: str = ""
 
     def __post_init__(self):
-        self.title = _("Transcribe SeedQR")
+        self.title = self.screen_title or _("Transcribe SeedQR")
         # TRANSLATOR_NOTE: Refers to the QR code size: 21x21, 25x25, or 29x29
         button_label = _("Begin {}x{}").format(self.num_modules, self.num_modules)
         self.button_data = [ButtonOption(button_label)]
@@ -1229,7 +1232,8 @@ class SeedTranscribeSeedQRWholeQRScreen(WarningEdgesMixin, ButtonListScreen):
             width=qr_width,
             height=qr_height,
             border=1,
-            style=QR.STYLE__ROUNDED
+            style=self.qr_style,
+            background_color=self.qr_background,
         ).convert("RGBA")
 
         self.paste_images.append((qr_image, (int((self.canvas_width - qr_width)/2), self.top_nav.height)))
@@ -1251,6 +1255,8 @@ class SeedTranscribeSeedQRZoomedInScreen(BaseScreen):
     num_modules: int = None
     initial_zone_x: int = 0
     initial_zone_y: int = 0
+    qr_background: str = "#444"
+    qr_style: int = QR.STYLE__ROUNDED
 
     def __post_init__(self):
         super().__post_init__()
@@ -1274,8 +1280,8 @@ class SeedTranscribeSeedQRZoomedInScreen(BaseScreen):
             width=total_qr_image_width,
             height=total_qr_image_width,  # QR image is always square
             border=self.num_qr_border_modules,
-            style=QR.STYLE__ROUNDED
-        # ).convert("RGBA")
+            style=self.qr_style,
+            background_color=self.qr_background,
         )
 
         # Render gridlines over the QR code but don't draw on its external white border
@@ -1307,7 +1313,7 @@ class SeedTranscribeSeedQRZoomedInScreen(BaseScreen):
             width=1
         )
 
-        msg = _("click to exit")
+        msg = _("button to exit")
         font = Fonts.get_font(GUIConstants.get_body_font_name(), GUIConstants.get_body_font_size())
         (left, top, right, bottom) = font.getbbox(msg, anchor="ls")
         msg_height = -1 * top + GUIConstants.COMPONENT_PADDING
@@ -1335,8 +1341,8 @@ class SeedTranscribeSeedQRZoomedInScreen(BaseScreen):
         # Create overlay for zone labels (e.g. "D-5")
         # TODO: Discuss w/translators if these zone labels need to be translated; would
         # trigger a secondary need to have translated SeedQR printable templates as well. 
-        zone_labels_x = ["1", "2", "3", "4", "5", "6"]
-        zone_labels_y = ["A", "B", "C", "D", "E", "F"]
+        zone_labels_x = ["1", "2", "3", "4", "5", "6", "7", "8"]
+        zone_labels_y = ["A", "B", "C", "D", "E", "F", "G", "H"]
 
         zone_labels = Image.new("RGBA", (self.canvas_width, self.canvas_height), (255,255,255,0))
         zone_labels_draw = ImageDraw.Draw(zone_labels)

@@ -4,7 +4,12 @@ import argparse
 import logging
 import sys
 
-from seedsigner.controller import Controller
+from seedsigner.variant import VARIANT
+
+if VARIANT == "viewer":
+    from seedviewer.controller import Controller
+else:
+    from seedsigner.controller import Controller
 
 logger = logging.getLogger(__name__)
 
