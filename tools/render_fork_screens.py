@@ -37,7 +37,9 @@ from seedsigner.gui.screens import (  # noqa: E402
     WarningScreen,
 )
 from seedsigner.gui.screens.backup_screens import HoldToConfirmScreen  # noqa: E402
-from seedsigner.gui.screens.screen import ButtonOption  # noqa: E402
+from seedsigner.gui.screens.screen import ButtonOption, ErrorScreen  # noqa: E402
+from seedsigner.gui.screens import seed_screens  # noqa: E402
+from seedsigner.gui.screens.settings_screens import SettingsEntryUpdateSelectionScreen  # noqa: E402
 from seedsigner.gui.renderer import Renderer  # noqa: E402
 from seedsigner.models.settings import Settings, SettingsConstants  # noqa: E402
 from seedviewer.theme import apply_viewer_theme  # noqa: E402
@@ -69,21 +71,56 @@ def _resize(width, height):
     return renderer
 
 
+def _keyboard(name, title):
+    return (name, seed_screens.SeedAddPassphraseScreen, dict(passphrase="", custom_title=title))
+
+
 def _screens(viewer: bool):
-    title = "Seed Viewer" if viewer else "KEF backup"
-    return [
+    from seedsigner.helpers.qr import QR
+
+    shared = [
+        ("intro", DireWarningScreen, dict(
+            title="KEF backup" if not viewer else "New KEF",
+            status_headline="Long passphrase",
+            text="Krux KEF. Hand-copied QR. This SD slot only.",
+            button_data=[ButtonOption("Continue")],
+            show_back_button=True,
+        )),
+        ("label_menu", ButtonListScreen, dict(
+            title="Backup label",
+            button_data=[ButtonOption("No label"), ButtonOption("Add a label")],
+        )),
+        _keyboard("keyboard_label", "Backup label"),
+        _keyboard("keyboard_passphrase", "KEF passphrase"),
+        _keyboard("keyboard_confirm", "Confirm phrase"),
+        _keyboard("keyboard_decrypt", "Decrypt phrase"),
+        ("passphrase_short", WarningScreen, dict(
+            title="KEF passphrase",
+            status_headline="Too short",
+            text="Use at least 8 characters. A short passphrase is easy to guess.",
+            show_back_button=False,
+            button_data=[ButtonOption("Try again")],
+        )),
+        ("passphrase_mismatch", WarningScreen, dict(
+            title="KEF passphrase",
+            status_headline="Mismatch",
+            text="Those entries did not match. Enter the passphrase again.",
+            show_back_button=False,
+            button_data=[ButtonOption("Try again")],
+        )),
+        ("destination", ButtonListScreen, dict(
+            title="Save KEF",
+            button_data=[
+                ButtonOption("KEF QR code"),
+                ButtonOption("This SD card"),
+                ButtonOption("Swap SD card"),
+            ],
+        )),
         ("warning_boot_card", DireWarningScreen, dict(
             title="Boot card",
             status_headline="Seed stays here",
             text="Encrypted seed stays on this boot card. Anyone with the card has the backup.",
             button_data=[ButtonOption("I understand")],
-            show_back_button=True,
-        )),
-        ("intro", DireWarningScreen, dict(
-            title=title,
-            status_headline="Long passphrase",
-            text="Krux KEF. Hand-copied QR. This SD slot only.",
-            button_data=[ButtonOption("Continue")],
             show_back_button=True,
         )),
         ("swap", WarningScreen, dict(
@@ -93,7 +130,27 @@ def _screens(viewer: bool):
             button_data=[ButtonOption("Card is in")],
             show_back_button=True,
         )),
-        ("wipe", HoldToConfirmScreen, dict(filename="savings.kef")),
+        ("no_card", WarningScreen, dict(
+            title="SD slot",
+            status_headline="No card",
+            text="No card is in the slot yet. Insert a FAT card and try again.",
+            show_back_button=False,
+            button_data=[ButtonOption("Try again")],
+        )),
+        ("still_boot_card", DireWarningScreen, dict(
+            title="SD slot",
+            status_headline="Still boot card",
+            text="This is still the OS card. Remove it and insert the blank card.",
+            show_back_button=True,
+            button_data=[ButtonOption("Try again")],
+        )),
+        ("saved_os", LargeIconStatusScreen, dict(
+            title="KEF saved",
+            status_headline="On boot card",
+            text="Saved savings.kef on the boot card. Anyone with the card has the backup.",
+            show_back_button=False,
+            button_data=[ButtonOption("Done")],
+        )),
         ("saved", LargeIconStatusScreen, dict(
             title="KEF saved",
             status_headline="Safe to remove",
@@ -101,14 +158,46 @@ def _screens(viewer: bool):
             show_back_button=False,
             button_data=[ButtonOption("Done")],
         )),
-        ("menu", ButtonListScreen, dict(
-            title=title,
+        ("scan_back", WarningScreen, dict(
+            title="Check the QR",
+            status_headline="Scan it back",
+            text="Scan the KEF QR you copied. It is decrypted and compared to this seed before success.",
+            button_data=[ButtonOption("Scan KEF QR")],
+            show_back_button=True,
+        )),
+        ("scan_mismatch", WarningScreen, dict(
+            title="Check the QR",
+            status_headline="Did not match",
+            text="That QR did not decrypt to this seed. Check the copy and the passphrase.",
+            show_back_button=False,
+            button_data=[ButtonOption("Back")],
+        )),
+        ("qr_checked", LargeIconStatusScreen, dict(
+            title="QR checked",
+            status_headline="73c5da0a",
+            text="The scanned QR decrypts to this seed. Label: savings",
+            show_back_button=False,
+            button_data=[ButtonOption("Done")],
+        )),
+        ("import_menu", ButtonListScreen, dict(
+            title="KEF import",
             button_data=[
-                ButtonOption("KEF QR code"),
-                ButtonOption("This SD card"),
+                ButtonOption("From this SD"),
                 ButtonOption("Swap SD card"),
+                ButtonOption("Scan KEF QR"),
                 ButtonOption("Wipe a KEF file"),
             ],
+        )),
+        ("import_none", WarningScreen, dict(
+            title="KEF import",
+            status_headline="None found",
+            text="No .kef file or Krux seeds.json entry is on this card.",
+            show_back_button=False,
+            button_data=[ButtonOption("Back")],
+        )),
+        ("choose_backup", ButtonListScreen, dict(
+            title="Choose backup",
+            button_data=[ButtonOption("savings.kef"), ButtonOption("house.kef")],
         )),
         ("decrypt", WarningScreen, dict(
             title="Decrypt KEF",
@@ -117,7 +206,121 @@ def _screens(viewer: bool):
             button_data=[ButtonOption("Decrypt")],
             show_back_button=True,
         )),
+        ("decrypt_failed", WarningScreen, dict(
+            title="Decrypt KEF",
+            status_headline="Failed",
+            text="Wrong passphrase, or the backup is not a valid BIP39 KEF envelope.",
+            show_back_button=False,
+            button_data=[ButtonOption("Try again")],
+        )),
+        ("seed_loaded", LargeIconStatusScreen, dict(
+            title="Seed loaded",
+            status_headline="73c5da0a",
+            text="Source: SD card. Label: savings.",
+            show_back_button=False,
+            button_data=[ButtonOption("Continue")],
+        )),
+        ("wipe_none", WarningScreen, dict(
+            title="Wipe backup",
+            status_headline="None found",
+            text="There is no .kef file in seedsigner-backup on this card.",
+            show_back_button=False,
+            button_data=[ButtonOption("Back")],
+        )),
+        ("wipe_pick", ButtonListScreen, dict(
+            title="Wipe backup",
+            button_data=[ButtonOption("savings.kef"), ButtonOption("house.kef")],
+        )),
+        ("wipe", HoldToConfirmScreen, dict(filename="savings.kef")),
+        ("wipe_done", LargeIconStatusScreen, dict(
+            title="Wipe backup",
+            status_headline="File removed",
+            text="savings.kef was overwritten and deleted. Wear-levelling can keep a copy. Destroy the card to be certain.",
+            show_back_button=False,
+            button_data=[ButtonOption("Done")],
+        )),
+        ("error", ErrorScreen, dict(
+            title="KEF backup",
+            status_headline="Not written",
+            text="No card is in the slot",
+            button_data=[ButtonOption("Back")],
+            show_back_button=True,
+        )),
+        ("select_button", SettingsEntryUpdateSelectionScreen, dict(
+            display_name="Select button",
+            help_text="Top button types the highlighted letter when the joystick does not click. A real click still works.",
+            button_data=[ButtonOption("Top button"), ButtonOption("Joystick click")],
+            checked_buttons=[0],
+            settings_entry_type="select_1",
+        )),
+        ("backup_menu", ButtonListScreen, dict(
+            title="Backup Seed",
+            is_bottom_list=True,
+            button_data=[
+                ButtonOption("View seed words"),
+                ButtonOption("Export as SeedQR"),
+                ButtonOption("Encrypted KEF backup"),
+            ],
+        )),
+        ("load_menu", ButtonListScreen, dict(
+            title="Load a Seed",
+            is_button_text_centered=False,
+            button_data=[
+                ButtonOption("Scan a SeedQR"),
+                ButtonOption("Enter 12-word seed"),
+                ButtonOption("Enter 24-word seed"),
+                ButtonOption("Encrypted KEF backup"),
+                ButtonOption("Create a seed"),
+            ],
+        )),
+        ("electrum", WarningScreen, dict(
+            title="KEF backup",
+            status_headline="BIP39 only",
+            text="Krux KEF stores a BIP39 seed. This Electrum seed cannot be exported as KEF.",
+            show_back_button=False,
+            button_data=[ButtonOption("Back")],
+        )),
+        ("qr_whole", seed_screens.SeedTranscribeSeedQRWholeQRScreen, dict(
+            qr_data=b"kef-layout-check",
+            num_modules=29,
+            qr_background="#ffffff",
+            qr_style=QR.STYLE__DEFAULT,
+            screen_title="Transcribe KEF",
+        )),
     ]
+    if viewer:
+        from seedviewer.views import SplashScreen
+        shared.extend([
+            ("splash", SplashScreen, dict()),
+            ("viewer_menu", ButtonListScreen, dict(
+                title="Seed Viewer",
+                button_data=[
+                    ButtonOption("Load KEF backup"),
+                    ButtonOption("Show words"),
+                    ButtonOption("Show SeedQR"),
+                    ButtonOption("New KEF backup"),
+                    ButtonOption("Xpubs"),
+                    ButtonOption("Check address"),
+                    ButtonOption("Multisig"),
+                    ButtonOption("BIP39 passphrase"),
+                    ButtonOption("Compare backups"),
+                    ButtonOption("Clear seed"),
+                    ButtonOption("Wipe KEF file"),
+                    ButtonOption("Settings"),
+                ],
+            )),
+            _keyboard("keyboard_bip39", "BIP39 phrase"),
+            ("viewer_settings", ButtonListScreen, dict(
+                title="Settings",
+                button_data=[
+                    ButtonOption("Display 240"),
+                    ButtonOption("Display 320"),
+                    ButtonOption("KEY1 select"),
+                    ButtonOption("Joystick click"),
+                ],
+            )),
+        ])
+    return shared
 
 
 def _overflow(screen, width, height) -> list[str]:
@@ -129,10 +332,12 @@ def _overflow(screen, width, height) -> list[str]:
             problems.append(f"component bottom {bottom} > {height}")
         if right > width + 1:
             problems.append(f"component right {right} > {width}")
-    for button in getattr(screen, "buttons", []) or []:
-        bottom = button.screen_y + button.height
-        if bottom > height + 1:
-            problems.append(f"button bottom {bottom} > {height}")
+    scrolls = bool(getattr(screen, "has_scroll_arrows", False))
+    if not scrolls:
+        for button in getattr(screen, "buttons", []) or []:
+            bottom = button.screen_y + button.height
+            if bottom > height + 1:
+                problems.append(f"button bottom {bottom} > {height}")
     return problems
 
 
@@ -143,7 +348,9 @@ def main() -> int:
     logging.getLogger("seedsigner.gui.components").setLevel(logging.WARNING)
     Settings.get_instance()
     failures = []
+    import seedsigner.variant as variant
     for viewer, theme_name in ((False, "signer"), (True, "viewer")):
+        variant.VARIANT = "viewer" if viewer else "signer"
         if viewer:
             apply_viewer_theme()
         else:
