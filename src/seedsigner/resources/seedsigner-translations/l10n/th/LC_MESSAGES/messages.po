@@ -1,0 +1,1645 @@
+# Translations template for seedsigner.
+# Copyright (C) 2026 ORGANIZATION
+# This file is distributed under the same license as the seedsigner project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+# 
+# Translators:
+# Chailoet Limrotcharoenwong, 2025
+# greedlove, 2026
+# mcy46, 2026
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: seedsigner 0.8.7\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2026-03-05 22:02+0000\n"
+"PO-Revision-Date: 2022-04-29 13:50+0000\n"
+"Last-Translator: mcy46, 2026\n"
+"Language-Team: Thai (https://app.transifex.com/seedsigner/teams/135832/th/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+"Language: th\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#. Testnet bitcoin
+#: src/seedsigner/gui/components.py
+msgid "tBtc"
+msgstr "tBtc"
+
+#. Testnet sats
+#: src/seedsigner/gui/components.py
+msgid "tSats"
+msgstr "tSats"
+
+#: src/seedsigner/gui/components.py src/seedsigner/gui/screens/psbt_screens.py
+msgid "btc"
+msgstr "btc"
+
+#: src/seedsigner/gui/components.py src/seedsigner/gui/screens/psbt_screens.py
+#: src/seedsigner/models/settings_definition.py
+msgid "sats"
+msgstr "sats"
+
+#: src/seedsigner/gui/toast.py
+msgid ""
+"You can remove\n"
+"the SD card now"
+msgstr "ถอดการ์ด SD ได้เลยตอนนี้"
+
+#: src/seedsigner/gui/toast.py
+msgid "SD card removed"
+msgstr "ถอดการ์ด SD แล้ว"
+
+#: src/seedsigner/gui/toast.py
+msgid "SD card inserted"
+msgstr "ใส่การ์ด SD แล้ว"
+
+#: src/seedsigner/gui/screens/psbt_screens.py
+msgid "Review Transaction"
+msgstr "ตรวจสอบธุรกรรม"
+
+#: src/seedsigner/gui/screens/psbt_screens.py
+msgid "Review details"
+msgstr "ตรวจสอบรายละเอียด"
+
+#: src/seedsigner/gui/screens/psbt_screens.py
+msgid "1 input"
+msgstr "1 อินพุต"
+
+#: src/seedsigner/gui/screens/psbt_screens.py
+msgid "input 1"
+msgstr "อินพุต 1"
+
+#: src/seedsigner/gui/screens/psbt_screens.py
+msgid "input 2"
+msgstr "อินพุต 2"
+
+#. Indicates that items have been omitted from a series: e.g. "1, 2, 3, [...],
+#. 8"
+#: src/seedsigner/gui/screens/psbt_screens.py
+msgid "[ ... ]"
+msgstr "[ ... ]"
+
+#. Input number will be inserted (e.g. "input 3")
+#: src/seedsigner/gui/screens/psbt_screens.py
+msgid "input {}"
+msgstr "อินพุต {}"
+
+#. Ellipsis ("...") characters used to truncate an address (e.g. "bc1qabc...")
+#: src/seedsigner/gui/screens/psbt_screens.py
+msgid "..."
+msgstr "..."
+
+#: src/seedsigner/gui/screens/psbt_screens.py
+#: src/seedsigner/views/psbt_views.py
+msgid "self-transfer"
+msgstr "โอนให้ตนเอง"
+
+#: src/seedsigner/gui/screens/psbt_screens.py
+msgid "recipient 1"
+msgstr "ผู้รับ 1"
+
+#. Inserts the recipient number (e.g. the fifth one is: "recipient 5")
+#: src/seedsigner/gui/screens/psbt_screens.py
+msgid "recipient {}"
+msgstr "ผู้รับ {}"
+
+#: src/seedsigner/gui/screens/psbt_screens.py
+msgid "fee"
+msgstr "ค่าโอน"
+
+#. Technical term, should probably NOT be translated in most languages
+#: src/seedsigner/gui/screens/psbt_screens.py
+#: src/seedsigner/views/psbt_views.py
+msgid "OP_RETURN"
+msgstr "OP_RETURN"
+
+#. Label for a change output in the PSBT Overview flow diagram
+#: src/seedsigner/gui/screens/psbt_screens.py
+#: src/seedsigner/views/psbt_views.py
+msgid "change"
+msgstr "เงินทอน"
+
+#: src/seedsigner/gui/screens/psbt_screens.py
+msgid "Transaction Math"
+msgstr "คำนวณธุรกรรม"
+
+#: src/seedsigner/gui/screens/psbt_screens.py
+msgid "Review recipients"
+msgstr "ตรวจดูผู้รับ"
+
+#: src/seedsigner/gui/screens/psbt_screens.py
+msgid "input"
+msgid_plural "inputs"
+msgstr[0] "อินพุต"
+
+#: src/seedsigner/gui/screens/psbt_screens.py
+msgid "recipient"
+msgid_plural "recipients"
+msgstr[0] "ผู้รับ"
+
+#. Denonination is inserted (e.g. your "btc change" or "sats change")
+#: src/seedsigner/gui/screens/psbt_screens.py
+msgid "{} change"
+msgstr "{}เงินทอน"
+
+#. Describes the address type (change or receive)
+#: src/seedsigner/gui/screens/psbt_screens.py
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "change address"
+msgstr "ที่อยู่เงินทอน"
+
+#. Describes the address type (change or receive)
+#: src/seedsigner/gui/screens/psbt_screens.py
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "receive address"
+msgstr "ที่อยู่รับเงิน"
+
+#. Symbol for index number, e.g. "address #3"
+#: src/seedsigner/gui/screens/psbt_screens.py
+msgid "#"
+msgstr "#"
+
+#: src/seedsigner/gui/screens/psbt_screens.py
+msgid "Address verified!"
+msgstr "ตรวจสอบที่อยู่แล้ว!"
+
+#. Shown when displaying OP_RETURN as non-human-readable hexadecimal data
+#: src/seedsigner/gui/screens/psbt_screens.py
+msgid "raw hex data"
+msgstr "ข้อมูลดิบเลขฐาน 16"
+
+#: src/seedsigner/gui/screens/psbt_screens.py
+msgid "Sign Transaction"
+msgstr "เซ็นธุรกรรม"
+
+#: src/seedsigner/gui/screens/psbt_screens.py
+msgid "Click to approve this transaction"
+msgstr ""
+"กดเพื่ออนุมัติ\n"
+"การทำธุรกรรมนี้"
+
+#: src/seedsigner/gui/screens/scan_screens.py
+#: src/seedsigner/gui/screens/tools_screens.py
+msgid "back"
+msgstr "ย้อนกลับ"
+
+#. Inserts the percentage value of the animated QR scan progress
+#: src/seedsigner/gui/screens/scan_screens.py
+msgid "{}%"
+msgstr "{}%"
+
+#. Increase QR code screen brightness
+#: src/seedsigner/gui/screens/screen.py
+msgid "Brighter"
+msgstr "เพิ่มความสว่าง"
+
+#. Decrease QR code screen brightness
+#: src/seedsigner/gui/screens/screen.py
+msgid "Darker"
+msgstr "ลดความสว่าง"
+
+#: src/seedsigner/gui/screens/screen.py
+#: src/seedsigner/gui/screens/seed_screens.py
+#: src/seedsigner/views/seed_views.py
+msgid "Success!"
+msgstr "สำเร็จ !"
+
+#: src/seedsigner/gui/screens/screen.py
+#: src/seedsigner/gui/screens/seed_screens.py
+#: src/seedsigner/views/seed_views.py
+msgid "OK"
+msgstr "ตกลง"
+
+#: src/seedsigner/gui/screens/screen.py
+msgid "Caution"
+msgstr "คำเตือน"
+
+#: src/seedsigner/gui/screens/screen.py src/seedsigner/views/seed_views.py
+msgid "Privacy Leak!"
+msgstr "ข้อมูลส่วนตัวรั่วไหล!"
+
+#: src/seedsigner/gui/screens/screen.py
+msgid "I understand"
+msgstr "ฉันเข้าใจแล้ว"
+
+#: src/seedsigner/gui/screens/screen.py
+msgid "Classified Info!"
+msgstr "ข้อมูลที่เป็นความลับ!"
+
+#: src/seedsigner/gui/screens/screen.py src/seedsigner/views/scan_views.py
+#: src/seedsigner/views/view.py
+msgid "Error"
+msgstr "ข้อผิดพลาด"
+
+#: src/seedsigner/gui/screens/screen.py
+msgid "Restarting"
+msgstr "กำลังรีสตาร์ท"
+
+#: src/seedsigner/gui/screens/screen.py
+msgid ""
+"SeedSigner is restarting.\n"
+"\n"
+"All in-memory data will be wiped."
+msgstr ""
+"SeedSigner กำลังรีสตาร์ท \n"
+"ข้อมูลในหน่วยความจำ\n"
+"จะถูกล้างทั้งหมด"
+
+#: src/seedsigner/gui/screens/screen.py
+msgid "Just Unplug It"
+msgstr "ถอดสายออกได้เลย"
+
+#: src/seedsigner/gui/screens/screen.py
+msgid "It is safe to disconnect power at any time."
+msgstr "ตัดไฟได้ทันที โดยไม่เป็นอันตราย"
+
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "Finalize Seed"
+msgstr "ยืนยัน Seed"
+
+#. a label for the shortened Key-id of a BIP-32 master HD wallet
+#: src/seedsigner/gui/screens/seed_screens.py
+#: src/seedsigner/gui/screens/tools_screens.py
+#: src/seedsigner/views/seed_views.py
+msgid "fingerprint"
+msgstr "รหัสย่อกระเป๋า"
+
+#. Displays the page number and total: (e.g. page 1 of 6)
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "Seed Words: {}/{}"
+msgstr "ชุดคำกู้คืน {}/{}"
+
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "BIP-85 Index"
+msgstr "ลำดับ BIP-85"
+
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "Verify Backup?"
+msgstr "ยืนยันการสำรอง?"
+
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "Optionally verify that your mnemonic backup is correct."
+msgstr ""
+"ตรวจสอบการสำรอง\n"
+"คำกู้คืนของคุณ หากต้องการ"
+
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "Derivation Path"
+msgstr "เส้นทางการสร้างกุญแจ"
+
+#: src/seedsigner/gui/screens/seed_screens.py
+#: src/seedsigner/views/seed_views.py
+msgid "Export xpub"
+msgstr "ส่งออก Xpub"
+
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "Xpub Details"
+msgstr "รายละเอียด Xpub"
+
+#. Short for "BIP-32 Master Fingerprint"
+#. a label for the shortened Key-id of a BIP-32 master HD wallet
+#: src/seedsigner/gui/screens/seed_screens.py
+#: src/seedsigner/gui/screens/tools_screens.py
+msgid "Fingerprint"
+msgstr "รหัสย่อกระเป๋า"
+
+#. Short for "Derivation Path"
+#. a label for the derivation-path into a BIP-32 HD wallet
+#: src/seedsigner/gui/screens/seed_screens.py
+#: src/seedsigner/gui/screens/tools_screens.py
+msgid "Derivation"
+msgstr "การสร้างกุญแจ"
+
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "Xpub"
+msgstr "Xpub"
+
+#: src/seedsigner/gui/screens/seed_screens.py
+#: src/seedsigner/models/settings_definition.py
+#: src/seedsigner/views/seed_views.py
+msgid "BIP-39 Passphrase"
+msgstr "รหัสเสริม BIP-39"
+
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "Verify Passphrase"
+msgstr "ยืนยันรหัสเสริม"
+
+#. Describes the effect of applying a BIP-39 passphrase; it changes the seed's
+#. fingerprint
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "changes fingerprint"
+msgstr "เปลี่ยนค่ารหัสย่อกระเป๋า"
+
+#. Refers to the SeedQR type: Standard or Compact
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "Standard"
+msgstr "แบบมาตรฐาน"
+
+#. Briefly explains the Standard SeedQR data format
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "BIP-39 wordlist indices"
+msgstr "ลำดับคำในรายการ BIP-39"
+
+#. Refers to the SeedQR type: Standard or Compact
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "Compact"
+msgstr "แบบย่อ"
+
+#. Briefly explains the Compact SeedQR data format
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "Raw entropy bits"
+msgstr "บิตข้อมูลสุ่มแบบดิบ"
+
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "Transcribe SeedQR"
+msgstr "แปลงข้อมูลเป็น SeedQR"
+
+#. Refers to the QR code size: 21x21, 25x25, or 29x29
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "Begin {}x{}"
+msgstr "เริ่ม {}x{}"
+
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "click to exit"
+msgstr "กดเพื่อออก"
+
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid ""
+"Optionally scan your transcribed SeedQR to confirm that it reads back "
+"correctly."
+msgstr ""
+"สแกน SeedQR ที่แปลงข้อมูลไว้\n"
+"เพื่อยืนยันความถูกต้อง"
+
+#: src/seedsigner/gui/screens/seed_screens.py
+#: src/seedsigner/views/seed_views.py
+msgid "Verify Address"
+msgstr "ตรวจสอบที่อยู่"
+
+#. Inserts the nth address number (e.g. "Checking address 7")
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "Checking address {}"
+msgstr "กำลังตรวจสอบที่อยู่ {}"
+
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "Address Verified"
+msgstr "ที่อยู่ได้รับการยืนยัน"
+
+#. Describes the address index (e.g. "index 7")
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "index {}"
+msgstr "ลำดับ {}"
+
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "Multisig Verification"
+msgstr "ยืนยันแบบหลายลายเซ็น"
+
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid ""
+"Load your multisig wallet descriptor to verify your receive/self-transfer or"
+" change address."
+msgstr ""
+"โหลดคำอธิบายกระเป๋าเงิน\n"
+"แบบหลายลายเซ็นเพื่อตรวจสอบ\n"
+"ที่อยู่รับเงิน / ส่งหาตัวเอง \n"
+"หรือที่อยู่เงินทอน"
+
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "Descriptor Loaded"
+msgstr "คำอธิบายกระเป๋าเงินถูกโหลดแล้ว"
+
+#. Label for the multisig wallet's signing policy (e.g. 2-of-3)
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "Policy"
+msgstr "เงื่อนไขการเซ็น"
+
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "Signing Keys"
+msgstr "กุญแจลายเซ็น"
+
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "Review Message"
+msgstr "ตรวจสอบข้อความ"
+
+#. Short for "Next step"
+#: src/seedsigner/gui/screens/seed_screens.py
+#: src/seedsigner/views/psbt_views.py src/seedsigner/views/seed_views.py
+#: src/seedsigner/views/tools_views.py
+msgid "Next"
+msgstr "ถัดไป"
+
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "Confirm Address"
+msgstr "ยีนยันที่อยู่กระเป๋า"
+
+#: src/seedsigner/gui/screens/seed_screens.py
+#: src/seedsigner/views/seed_views.py
+msgid "Sign message"
+msgstr "เซ็นข้อความ"
+
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "derivation path"
+msgstr "เส้นทางการสร้างกุญแจ"
+
+#: src/seedsigner/gui/screens/settings_screens.py
+#: src/seedsigner/views/settings_views.py src/seedsigner/views/view.py
+msgid "Settings"
+msgstr "ตั้งค่า"
+
+#. Short for "Input/Output"; screen to make sure the buttons and camera are
+#. working properly
+#: src/seedsigner/gui/screens/settings_screens.py
+msgid "I/O Test"
+msgstr "ทดสอบการรับส่งข้อมูล"
+
+#. Blank the screen
+#: src/seedsigner/gui/screens/settings_screens.py
+msgid "Clear"
+msgstr "ล้าง"
+
+#: src/seedsigner/gui/screens/settings_screens.py
+msgid "Exit"
+msgstr "ออก"
+
+#: src/seedsigner/gui/screens/settings_screens.py
+#: src/seedsigner/gui/screens/tools_screens.py
+msgid "Capturing image..."
+msgstr "กำลังเก็บภาพ"
+
+#: src/seedsigner/gui/screens/settings_screens.py
+#: src/seedsigner/views/settings_views.py
+msgid "Donate"
+msgstr "สนับสนุน"
+
+#. If your language uses the percent sign ("%"), your translation must also
+#. use
+#. two percent signs ("%%") due to python formatting oddities. "100%%" will be
+#. rendered as "100%".
+#: src/seedsigner/gui/screens/settings_screens.py
+#, python-format
+msgid ""
+"SeedSigner is 100%% free & open source, funded solely by the Bitcoin community.\n"
+"\n"
+"Donate onchain or LN at:"
+msgstr ""
+" SeedSigner ฟรีและโอเพนซอร์ส 100%% \n"
+"สนับสนุนโดยชุมชนบิตคอยน์\n"
+"เท่านั้น ร่วมบริจาคผ่าน On-chain หรือ LN ได้ที่:"
+
+#: src/seedsigner/gui/screens/settings_screens.py
+#: src/seedsigner/views/settings_views.py
+msgid "Settings QR"
+msgstr "ตั้งค่า QR"
+
+#: src/seedsigner/gui/screens/settings_screens.py
+msgid "Settings updated..."
+msgstr "การตั้งค่าอัปเดตแล้ว"
+
+#: src/seedsigner/gui/screens/settings_screens.py src/seedsigner/views/view.py
+msgid "Home"
+msgstr "หน้าหลัก"
+
+#: src/seedsigner/gui/screens/tools_screens.py
+msgid "click a button"
+msgstr "กดปุ่ม"
+
+#. A prompt to the user to either accept or reshoot the image
+#: src/seedsigner/gui/screens/tools_screens.py
+msgid "reshoot"
+msgstr "ถ่ายภาพใหม่"
+
+#. A prompt to the user to either accept or reshoot the image
+#: src/seedsigner/gui/screens/tools_screens.py
+msgid "accept"
+msgstr "ยอมรับ"
+
+#. current roll number vs total rolls (e.g. roll 7 of 50)
+#: src/seedsigner/gui/screens/tools_screens.py
+msgid "Dice Roll {}/{}"
+msgstr "ทอยลูกเต๋า  {}/{}"
+
+#. Build the last word in a 12 or 24 word BIP-39 mnemonic seed phrase.
+#: src/seedsigner/gui/screens/tools_screens.py
+msgid "Build Final Word"
+msgstr "สร้างคำสุดท้าย"
+
+#. Final word calc. `mnemonic_length` = 12 or 24. `num_bits` = 7 or 3 (bits of
+#. entropy in final word).
+#: src/seedsigner/gui/screens/tools_screens.py
+msgid ""
+"The {mnemonic_length}th word is built from {num_bits} more entropy bits plus"
+" auto-calculated checksum."
+msgstr ""
+"คำที่ {mnemonic_length} ใช้บิตเอนโทรปีเพิ่มอีก {num_bits} บิต กับ Checksum "
+"อัตโนมัติ"
+
+#. current coin-flip number vs total flips (e.g. flip 3 of 4)
+#: src/seedsigner/gui/screens/tools_screens.py
+msgid "Coin Flip {}/{}"
+msgstr "โยนเหรียญ {}/{}"
+
+#. How we call the "front" side result during a coin toss.
+#: src/seedsigner/gui/screens/tools_screens.py
+msgid "Heads = 1"
+msgstr "หัว = 1"
+
+#. How we call the "back" side result during a coin toss.
+#: src/seedsigner/gui/screens/tools_screens.py
+msgid "Tails = 0"
+msgstr "ก้อย = 0"
+
+#. The additional entropy the user supplied (e.g. coin flips)
+#: src/seedsigner/gui/screens/tools_screens.py
+msgid "Your input: \"{}\""
+msgstr "ผลการโยนเหรียญ: \"{}\""
+
+#. A function of "x" to be used for detecting errors in "x"
+#: src/seedsigner/gui/screens/tools_screens.py
+msgid "Checksum"
+msgstr "Checksum"
+
+#. labeled presentation of the last word in a BIP-39 mnemonic seed phrase.
+#: src/seedsigner/gui/screens/tools_screens.py
+msgid "Final Word: \"{}\""
+msgstr "คำสุดท้าย: \"{}\""
+
+#. a label for the last word of a 12-word BIP-39 mnemonic seed phrase
+#: src/seedsigner/gui/screens/tools_screens.py
+msgid "12th Word"
+msgstr "คำที่ 12"
+
+#. a label for the last word of a 24-word BIP-39 mnemonic seed phrase
+#: src/seedsigner/gui/screens/tools_screens.py
+msgid "24th Word"
+msgstr "คำที่ 24"
+
+#. a label for the tool to explore public addresses for this seed.
+#: src/seedsigner/gui/screens/tools_screens.py
+#: src/seedsigner/views/seed_views.py src/seedsigner/views/tools_views.py
+msgid "Address Explorer"
+msgstr "เครื่องมือดูที่อยู่"
+
+#. a label for a BIP-380-ish Output Descriptor
+#: src/seedsigner/gui/screens/tools_screens.py
+msgid "Wallet descriptor"
+msgstr "คำอธิบายกระเป๋าเงิน"
+
+#. Insert the number of addrs displayed per screen (e.g. "Next 10")
+#: src/seedsigner/gui/screens/tools_screens.py
+msgid "Next {}"
+msgstr "ถัดไป {}"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Enabled"
+msgstr "เปิดการใช้งาน"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Disabled"
+msgstr "ปิดการใช้งาน"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Prompt"
+msgstr "คำสั่ง"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Required"
+msgstr "จำเป็น"
+
+#. QR code format option; "default" = this is the format most wallets use
+#: src/seedsigner/models/settings_definition.py
+msgid "Animated (default)"
+msgstr "แบบเคลื่อนไหว (ค่าเริ่มต้น)"
+
+#. QR code format option (static = single frame, not animated)
+#: src/seedsigner/models/settings_definition.py
+msgid "Static"
+msgstr "คงที่"
+
+#. QR code format option: old format that Specter Desktop used to use
+#: src/seedsigner/models/settings_definition.py
+msgid "Specter legacy"
+msgstr "Specter รูปแบบเดิม"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "BTC"
+msgstr "BTC"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Threshold at 0.01"
+msgstr "เกณฑ์ขั้นต่ำที่ 0.01"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "BTC | sats hybrid"
+msgstr "แบบผสม BTC | sats"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "0°"
+msgstr "0°"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "90°"
+msgstr "90°"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "180°"
+msgstr "180°"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "270°"
+msgstr "270°"
+
+#. QR code density option: Low, Medium, High
+#: src/seedsigner/models/settings_definition.py
+msgid "Low"
+msgstr "ต่ำ"
+
+#. QR code density option: Low, Medium, High
+#: src/seedsigner/models/settings_definition.py
+msgid "Medium"
+msgstr "ปานกลาง"
+
+#. QR code density option: Low, Medium, High
+#: src/seedsigner/models/settings_definition.py
+msgid "High"
+msgstr "สูง"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Mainnet"
+msgstr "เครือข่ายหลัก"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Testnet"
+msgstr "เครือข่ายทดสอบ"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Regtest"
+msgstr "เครือข่ายทดสอบส่วนตัว "
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Store Settings on SD card"
+msgstr "บันทึกการตั้งค่าลงการ์ด SD"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Insert SD card to enable"
+msgstr "ใส่การ์ด SD เพื่อเปิดการใช้งาน"
+
+#: src/seedsigner/models/settings_definition.py
+#: src/seedsigner/views/seed_views.py
+msgid "Single Sig"
+msgstr "ลายเซ็นเดียว"
+
+#: src/seedsigner/models/settings_definition.py
+#: src/seedsigner/views/seed_views.py
+msgid "Multisig"
+msgstr "หลายลายเซ็น"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Native Segwit"
+msgstr "Native Segwit"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Nested Segwit"
+msgstr "Nested Segwit"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Legacy"
+msgstr "Legacy"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Taproot"
+msgstr "Taproot"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Custom Derivation"
+msgstr "เส้นทางกุญแจแบบกำหนดเอง"
+
+#. MicroSD notification duration setting - Display notification for 5 seconds
+#: src/seedsigner/models/settings_definition.py
+msgid "5 seconds"
+msgstr "5 วินาที"
+
+#. MicroSD notification duration setting - Display notification until the SD
+#. card is removed
+#: src/seedsigner/models/settings_definition.py
+msgid "Until SD removed"
+msgstr "มีผลจนกว่าจะถอด SD การ์ด"
+
+#. Terminology used by Electrum seeds; equivalent to BIP-39 passphrase
+#: src/seedsigner/models/settings_definition.py
+msgid "Custom Extension"
+msgstr "ส่วนขยาย แบบกำหนดเอง"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Language"
+msgstr "ภาษา"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Mnemonic language"
+msgstr "ภาษาชุดคำกู้คืน"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Persistent settings"
+msgstr "การตั้งค่าคงอยู่"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Denomination display"
+msgstr "การตั้งค่าหน่วยเงิน"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Bitcoin network"
+msgstr "เครือข่ายบิตคอยน์"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "QR code density"
+msgstr "ความเข้มของ QR code"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Sig types"
+msgstr "ประเภทลายเซ็น"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Script types"
+msgstr "ประเภทสคริปต์"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Xpub QR format"
+msgstr "รูปแบบ QR ของ Xpub"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Show xpub details"
+msgstr "แสดงรายละเอียด xpub"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "BIP-39 passphrase"
+msgstr "รหัสเสริม BIP-39"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Camera rotation"
+msgstr "เปลี่ยนมุมกล้อง"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Compact SeedQR"
+msgstr "Seed QR แบบย่อ"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "BIP-85 child seeds"
+msgstr "Seed ย่อย มาตรฐาน BIP-85"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Electrum seeds"
+msgstr "Seeds ของ Electrum"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Native Segwit only"
+msgstr "Native Segwit เท่านั้น"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "MicroSD notification duration"
+msgstr "ระยะเวลาแจ้งเตือน MicroSD"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Message signing"
+msgstr "เซ็นข้อความ"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Show privacy warnings"
+msgstr ""
+"แสดงคำเตือน\n"
+"เกี่ยวกับข้อมูลส่วนตัว"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Show dire warnings"
+msgstr "แสดงคำเตือนร้ายแรง"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Show QR brightness tips"
+msgstr "แสดงคำแนะนำปรับแสง QR"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Show partner logos"
+msgstr "แสดงโลโก้พันธมิตร"
+
+#. Hardware settings option to specify the screen driver (e.g. st7789 vs
+#. ili9341)
+#: src/seedsigner/models/settings_definition.py
+msgid "Display type"
+msgstr "ประเภทหน้าจอ"
+
+#. Hardware settings option to invert how the screen driver displays colors.
+#: src/seedsigner/models/settings_definition.py
+msgid "Invert colors"
+msgstr "สลับสีหน้าจอ"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "QR background color"
+msgstr "สีพื้นหลังของ QR"
+
+#: src/seedsigner/views/psbt_views.py src/seedsigner/views/seed_views.py
+#: src/seedsigner/views/tools_views.py
+msgid "Scan a seed"
+msgstr "สแกน Seed"
+
+#: src/seedsigner/views/psbt_views.py src/seedsigner/views/seed_views.py
+#: src/seedsigner/views/tools_views.py
+msgid "Enter 12-word seed"
+msgstr "ป้อน Seed แบบ 12 คำ"
+
+#: src/seedsigner/views/psbt_views.py src/seedsigner/views/seed_views.py
+#: src/seedsigner/views/tools_views.py
+msgid "Enter 24-word seed"
+msgstr "ป้อน Seed แบบ 24 คำ"
+
+#: src/seedsigner/views/psbt_views.py src/seedsigner/views/seed_views.py
+#: src/seedsigner/views/tools_views.py
+msgid "Enter Electrum seed"
+msgstr "ป้อน Seed แบบ Electrum"
+
+#. Inserts fingerprint w/"?" to indicate that this seed can't sign the current
+#. PSBT
+#: src/seedsigner/views/psbt_views.py
+msgid "{} (?)"
+msgstr "{} (?)"
+
+#: src/seedsigner/views/psbt_views.py
+msgid "Select Signer"
+msgstr "เลือกผู้เซ็นธุรกรรม"
+
+#: src/seedsigner/views/psbt_views.py
+msgid "Parsing PSBT..."
+msgstr "กำลังประมวลผล PSBT..."
+
+#: src/seedsigner/views/psbt_views.py
+msgid "Unsupported Script Type!"
+msgstr "ไม่รองรับประเภทสคริปต์"
+
+#: src/seedsigner/views/psbt_views.py
+msgid ""
+"Transaction has unsupported input script type, please verify your change "
+"addresses."
+msgstr ""
+"ธุรกรรมมีประเภทสคริปต์อินพุต\n"
+"ที่ไม่รองรับ กรุณาตรวจสอบ\n"
+"ที่อยู่เงินทอนของคุณ"
+
+#: src/seedsigner/views/psbt_views.py src/seedsigner/views/view.py
+msgid "Continue"
+msgstr "ดำเนินการต่อ"
+
+#. User will receive no change back; the inputs to this transaction are fully
+#. spent
+#: src/seedsigner/views/psbt_views.py
+msgid "Full Spend!"
+msgstr "ใช้จำนวนเงินทั้งหมด!"
+
+#: src/seedsigner/views/psbt_views.py
+msgid ""
+"This transaction spends its entire input value. No change is coming back to "
+"your wallet."
+msgstr "ธุรกรรมนี้ใช้จำนวนเงินทั้งหมด ไม่มีเงินทอนกลับเข้ากระเป๋าคุณ"
+
+#. Future-tense used to indicate that this transaction will send this amount,
+#. as opposed to "Send" on its own which could be misread as an instant
+#. command
+#. (e.g. "Send Now").
+#: src/seedsigner/views/psbt_views.py
+msgid "Will Send"
+msgstr "กำลังจะส่ง"
+
+#: src/seedsigner/views/psbt_views.py
+msgid "Next recipient"
+msgstr "ผู้รับถัดไป"
+
+#: src/seedsigner/views/psbt_views.py
+msgid "Skip verification"
+msgstr "ข้ามการตรวจสอบ"
+
+#: src/seedsigner/views/psbt_views.py
+msgid "Verify multisig change"
+msgstr "ตรวจสอบเงินทอนหลายลายเซ็น"
+
+#. The amount you're receiving back from the transaction
+#: src/seedsigner/views/psbt_views.py
+msgid "Your Change"
+msgstr "เงินทอนของคุณ"
+
+#: src/seedsigner/views/psbt_views.py
+msgid "Self-Transfer"
+msgstr "โอนให้ตนเอง"
+
+#: src/seedsigner/views/psbt_views.py
+msgid "Verify multisig addr"
+msgstr "ตรวจสอบที่อยู่หลายลายเซ็น"
+
+#: src/seedsigner/views/psbt_views.py
+msgid "Verifying Change..."
+msgstr "กำลังตรวจสอบเงินทอน"
+
+#: src/seedsigner/views/psbt_views.py
+msgid "Verifying Self-Transfer..."
+msgstr "กำลังตรวจสอบ การโอนให้ตัวเอง"
+
+#. Variable is either "change" or "self-transfer".
+#: src/seedsigner/views/psbt_views.py
+msgid "Transaction's {} address could not be verified from wallet descriptor."
+msgstr ""
+"ที่อยู่{}ของ PSBT นี้\n"
+"ไม่ตรงกับคำอธิบายกระเป๋าเงิน"
+
+#. Variable is either "change" or "self-transfer".
+#: src/seedsigner/views/psbt_views.py
+msgid "Transaction's {} address could not be generated from your seed."
+msgstr ""
+"ไม่สามารถสร้างที่อยู่ \n"
+"{} จาก Seed ได้"
+
+#: src/seedsigner/views/psbt_views.py
+msgid "Suspicious Transaction"
+msgstr "PSBT ต้องสงสัย"
+
+#: src/seedsigner/views/psbt_views.py
+msgid "Address Verification Failed"
+msgstr "ตรวจสอบที่อยู่ล้มเหลว"
+
+#: src/seedsigner/views/psbt_views.py
+msgid "Discard transaction"
+msgstr "ยกเลิกธุรกรรม"
+
+#: src/seedsigner/views/psbt_views.py
+msgid "Approve transaction"
+msgstr "อนุมัติธุรกรรม"
+
+#: src/seedsigner/views/psbt_views.py
+msgid "Select different seed"
+msgstr "เลือก Seed อื่น"
+
+#: src/seedsigner/views/psbt_views.py
+msgid "Transaction Error"
+msgstr "ธุรกรรมผิดพลาด"
+
+#: src/seedsigner/views/psbt_views.py
+msgid "Signing Failed"
+msgstr "การเซ็นล้มเหลว"
+
+#: src/seedsigner/views/psbt_views.py
+msgid "Signing with this seed did not add a valid signature."
+msgstr ""
+"Seed นี้ไม่สามารถ\n"
+"สร้างลายเซ็นที่ถูกต้องได้"
+
+#: src/seedsigner/views/scan_views.py
+msgid "Scan a QR code"
+msgstr "สแกน QR โค้ด"
+
+#: src/seedsigner/views/scan_views.py
+msgid "QRCode not recognized or not yet supported."
+msgstr "ไม่รู้จัก QR Code นี้ หรือยังไม่รองรับ"
+
+#: src/seedsigner/views/scan_views.py
+msgid "Wrong QR Type"
+msgstr "ประเภท QR ไม่ถูกต้อง"
+
+#: src/seedsigner/views/scan_views.py
+msgid "Scan Transaction"
+msgstr "สแกนธุรกรรม"
+
+#: src/seedsigner/views/scan_views.py
+msgid "Expected a transaction"
+msgstr "คาดว่าจะเป็นธุรกรรม"
+
+#: src/seedsigner/views/scan_views.py
+msgid "Scan SeedQR"
+msgstr "สแกน SeedQR"
+
+#: src/seedsigner/views/scan_views.py
+msgid "Expected a SeedQR"
+msgstr "ต้องเป็น SeedQR"
+
+#: src/seedsigner/views/scan_views.py src/seedsigner/views/seed_views.py
+msgid "Scan descriptor"
+msgstr "สแกน คำอธิบายกระเป๋าเงิน"
+
+#: src/seedsigner/views/scan_views.py
+msgid "Expected a wallet descriptor QR"
+msgstr "ต้องเป็นคำอธิบายกระเป๋าเงิน แบบ QR"
+
+#: src/seedsigner/views/scan_views.py
+msgid "Scan address QR"
+msgstr "สแกน ที่อยู่แบบ QR"
+
+#: src/seedsigner/views/scan_views.py
+msgid "Expected an address QR"
+msgstr "ต้องเป็นที่อยู่แบบ QR"
+
+#: src/seedsigner/views/scan_views.py
+msgid "Unknown QR Type"
+msgstr "ไม่รู้จักประเภท QR นี้"
+
+#: src/seedsigner/views/scan_views.py
+msgid "QRCode is invalid or is a data format not yet supported."
+msgstr "QRCode นี้ไม่ถูกต้อง หรือเป็นรูปแบบที่ยังไม่รองรับ"
+
+#: src/seedsigner/views/scan_views.py src/seedsigner/views/view.py
+msgid "Back to Main Menu"
+msgstr "กลับหน้าหลัก"
+
+#. This is on the opening splash screen, displayed above the HRF logo
+#: src/seedsigner/views/screensaver.py
+msgid "With support from:"
+msgstr "ได้รับการสนับสนุนจาก:"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Load a seed"
+msgstr "โหลด Seed"
+
+#: src/seedsigner/views/seed_views.py
+msgid "In-Memory Seeds"
+msgstr "Seed ในหน่วยความจำชั่วคราว"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Load the seed to verify"
+msgstr "โหลด Seed เพื่อตรวจสอบ"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Select seed to verify"
+msgstr "เลือก Seed เพื่อตรวจสอบ"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Sign Message"
+msgstr "เซ็นข้อความ"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Load the seed to sign with"
+msgstr "โหลด seed เพื่อใช้เซ็น"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Select seed to sign with"
+msgstr "เลือก Seed เพื่อใช้เซ็น"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Scan a SeedQR"
+msgstr "สแกน SeedQR"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Create a seed"
+msgstr "สร้าง Seed"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Load a Seed"
+msgstr "โหลด Seed"
+
+#. Inserts the word number (e.g. "Seed Word #6")
+#: src/seedsigner/views/seed_views.py
+msgid "Seed Word #{}"
+msgstr "คำที่ #{}"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Review & edit"
+msgstr "ตรวจสอบและแก้ไข"
+
+#: src/seedsigner/views/seed_views.py src/seedsigner/views/tools_views.py
+msgid "Discard"
+msgstr "ยกเลิก"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Invalid Mnemonic!"
+msgstr "ชุดคำกู้คืนไม่ถูกต้อง"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Checksum failure; not a valid seed phrase."
+msgstr ""
+"ชุดคำกู้คืนไม่ถูกต้อง\n"
+"Checksum ผิดพลาด"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Done"
+msgstr "เสร็จสิ้น"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Edit passphrase"
+msgstr "แก้ไขรหัสเสริม"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Discard passphrase"
+msgstr "ยกเลิกรหัสเสริม"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Skip passphrase"
+msgstr "ข้ามรหัสเสริม"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Discard passphrase?"
+msgstr "ยกเลิก รหัสเสริม?"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Your current passphrase entry will be erased."
+msgstr "รหัสเสริมที่คุณป้อนจะถูกลบ"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Skip passphrase?"
+msgstr "ยกเลิก รหัสเสริม?"
+
+#: src/seedsigner/views/seed_views.py
+msgid "You have not entered a passphrase yet."
+msgstr "ยังไม่ได้ป้อนรหัสเสริม"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Keep seed"
+msgstr "เก็บรักษา Seed ไว้"
+
+#. Inserts the seed fingerprint
+#: src/seedsigner/views/seed_views.py
+msgid "Wipe seed {} from the device?"
+msgstr "ต้องการลบ Seed {} หรือไม่?"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Discard Seed?"
+msgstr "ล้าง Seed ?"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Electrum Warning"
+msgstr "คำเตือน Electrum"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Some features are disabled for Electrum seeds."
+msgstr "ไม่สามารถใช้ฟีเจอร์บางอย่างกับ Seed จาก Electrum ได้"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Scan transaction"
+msgstr "สแกนธุรกรรม"
+
+#: src/seedsigner/views/seed_views.py src/seedsigner/views/tools_views.py
+msgid "Address explorer"
+msgstr "เครื่องมือดูที่อยู่"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Backup seed"
+msgstr "สำรอง Seed"
+
+#: src/seedsigner/views/seed_views.py
+msgid "BIP-85 child seed"
+msgstr "Seed ย่อย BIP-85"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Discard seed"
+msgstr "ยกเลิก Seed"
+
+#: src/seedsigner/views/seed_views.py
+msgid "View seed words"
+msgstr "เรียกดูชุดคำกู้คืน"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Export as SeedQR"
+msgstr "ส่งออกเป็น SeedQR"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Backup Seed"
+msgstr "สำรอง Seed"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Export Xpub"
+msgstr "ส่งออก Xpub"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Xpub QR Format"
+msgstr "รูปแบบ QR ของ Xpub"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Xpub can be used to view all future transactions."
+msgstr ""
+"Xpub ใช้ดูธุรกรรมใหม่\n"
+"ทั้งหมดที่จะเกิดขึ้นได้"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Generating xpub..."
+msgstr "กำลังสร้าง xpub..."
+
+#: src/seedsigner/views/seed_views.py
+msgid "You must keep your seed words private & away from all online devices."
+msgstr "เก็บชุดคำกู้คืนให้เป็นความลับ และห่างจากอุปกรณ์ออนไลน์"
+
+#. Inserts the child index (e.g. "Child #0")
+#: src/seedsigner/views/seed_views.py
+msgid "Child #{}"
+msgstr "ลำดับย่อย #{}"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Seed Words"
+msgstr "ชุดคำกู้คืน"
+
+#: src/seedsigner/views/seed_views.py
+msgid "12 Words"
+msgstr "แบบ 12 คำ"
+
+#: src/seedsigner/views/seed_views.py
+msgid "24 Words"
+msgstr "แบบ 24 คำ"
+
+#: src/seedsigner/views/seed_views.py
+msgid "BIP-85 Num Words"
+msgstr "จำนวนชุดคำกู้คืน ของ BIP-85"
+
+#: src/seedsigner/views/seed_views.py
+msgid "BIP-85 Index Error"
+msgstr "ลำดับ BIP-85 ผิดพลาด"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Invalid Child Index"
+msgstr "ลำดับย่อยไม่ถูกต้อง"
+
+#: src/seedsigner/views/seed_views.py
+msgid "BIP-85 Child Index must be between 0 and 2^31-1."
+msgstr "ลำดับย่อย BIP-85 ต้องอยู่ระหว่าง 0 ถึง 2^31-1 เท่านั้น"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Try again"
+msgstr "ลองอีกครั้ง"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Verify"
+msgstr "ตรวจสอบ"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Skip"
+msgstr "ข้าม"
+
+#. Inserts the word number (e.g. "Verify Word #1")
+#: src/seedsigner/views/seed_views.py
+msgid "Verify Word #{}"
+msgstr "ตรวจสอบ คำที่ #{}"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Review seed words"
+msgstr "ตรวจดูชุดคำกู้คืน"
+
+#. Inserts the word number and the word (e.g. "Word #1 is not "apple"!")
+#: src/seedsigner/views/seed_views.py
+msgid "Word #{} is not \"{}\"!"
+msgstr "คำที่ #{} ไม่ใช่ \"{}\"!"
+
+#. User selected the wrong word during the mnemonic backup test (e.g.
+#. incorrectly said the 5th word was "zoo")
+#: src/seedsigner/views/seed_views.py
+msgid "Wrong Word!"
+msgstr "ใส่คำไม่ถูกต้อง!"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Verification Error"
+msgstr "การตรวจสอบล้มเหลว"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Backup Verified"
+msgstr "ยืนยันการสำรองแล้ว"
+
+#: src/seedsigner/views/seed_views.py
+msgid "All mnemonic backup words were successfully verified!"
+msgstr ""
+"ตรวจสอบคำกู้คืนทั้งหมด\n"
+"เรียบร้อยแล้ว!"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Standard: 25x25"
+msgstr "แบบมาตรฐาน : 25x25"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Compact: 21x21"
+msgstr "แบบย่อ : 21x21"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Standard: 29x29"
+msgstr "แบบมาตรฐาน : 29x29"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Compact: 25x25"
+msgstr "แบบย่อ : 25x25"
+
+#: src/seedsigner/views/seed_views.py
+msgid "SeedQR Format"
+msgstr "รูปแบบ SeedQR"
+
+#: src/seedsigner/views/seed_views.py
+msgid "SeedQR is your private key!"
+msgstr "SeedQR คือกุญแจลับของคุณ!"
+
+#: src/seedsigner/views/seed_views.py
+msgid ""
+"Never photograph or scan it into a device that connects to the internet."
+msgstr ""
+"ห้ามถ่ายรูปหรือสแกน\n"
+"ลงในอุปกรณ์ออนไลน์"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Confirm SeedQR"
+msgstr "ยืนยัน SeedQR"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Confirm SeedQR?"
+msgstr "ยืนยัน SeedQR ?"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Scan your SeedQR"
+msgstr "สแกน SeedQR"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Error!"
+msgstr "ข้อผิดพลาด!"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Your transcribed SeedQR does not match your original seed!"
+msgstr "SeedQR ที่ป้อนไม่ตรงกับ Seed ต้นฉบับของคุณ!"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Review SeedQR"
+msgstr "ตรวจดู SeedQR"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Your transcribed SeedQR could not be read!"
+msgstr "SeedQR ที่ป้อนมา ไม่สามารถอ่านได้!"
+
+#: src/seedsigner/views/seed_views.py
+msgid ""
+"Your transcribed SeedQR successfully scanned and yielded the same seed."
+msgstr ""
+"SeedQR สแกนผ่าน\n"
+"และตรงกับ Seed เดิม"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Sig type can't be auto-detected from this address. Please specify:"
+msgstr "ไม่รู้ประเภทลายเซ็นจากที่อยู่นี้ โปรดระบุ"
+
+#. Option when scanning for a matching address; skips ten addresses ahead
+#: src/seedsigner/views/seed_views.py
+msgid "Skip 10"
+msgstr "ข้ามไป 10"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Cancel"
+msgstr "ยกเลิก"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Return to transaction"
+msgstr "กลับสู่ธุรกรรม"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Verify addr"
+msgstr "ตรวจสอบที่อยู่"
+
+#. Multisig policy. For a "2 of 3" policy, "threshold" = 2; "n" = 3
+#: src/seedsigner/views/seed_views.py
+msgid "{threshold} of {n}"
+msgstr "{threshold} จาก {n}"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Signing messages for custom derivation paths not supported"
+msgstr "ไม่รองรับการเซ็นข้อความ แบบกำหนดเส้นทางเอง"
+
+#: src/seedsigner/views/settings_views.py
+msgid "Advanced"
+msgstr "ขั้นสูง"
+
+#: src/seedsigner/views/settings_views.py
+msgid "Hardware"
+msgstr "ฮาร์ดแวร์"
+
+#: src/seedsigner/views/settings_views.py
+msgid "I/O test"
+msgstr "ทดสอบการรับ/ส่งข้อมูล"
+
+#: src/seedsigner/views/settings_views.py
+msgid "Dev Options"
+msgstr "ตัวเลือกสำหรับนักพัฒนา"
+
+#. Title of a warning dialog when configuring a setting that requires at least
+#. one option to be selected.
+#: src/seedsigner/views/settings_views.py
+msgid "Selection Required"
+msgstr "ต้องเลือกตัวเลือก"
+
+#. The name of the setting being configured (e.g. "Script types") will be
+#. inserted.
+#: src/seedsigner/views/settings_views.py
+msgid "At least one option must be selected for \"{}\"."
+msgstr "ต้องเลือกอย่างน้อยหนึ่งตัวเลือกสำหรับ \"{}\""
+
+#. Text for the button that returns the user to the setting configuration
+#. screen.
+#: src/seedsigner/views/settings_views.py
+msgid "Return to setting"
+msgstr "กลับสู่การตั้งค่า"
+
+#: src/seedsigner/views/settings_views.py
+msgid "Persistent Settings enabled. Settings saved to SD card."
+msgstr ""
+"เปิดใช้งานการตั้งค่าคงที่\n"
+"การตั้งค่าถูกบันทึก ลงในการ์ด SD แล้ว"
+
+#: src/seedsigner/views/settings_views.py
+msgid "Settings updated in temporary memory"
+msgstr ""
+"อัปเดตการตั้งค่า\n"
+"ในหน่วยความจำชั่วคราวแล้ว"
+
+#: src/seedsigner/views/tools_views.py
+msgid "New seed"
+msgstr "สร้าง Seed ใหม่"
+
+#: src/seedsigner/views/tools_views.py
+msgid "Calc 12th/24th word"
+msgstr "คำนวณคำที่ 12/24"
+
+#: src/seedsigner/views/tools_views.py
+msgid "Verify address"
+msgstr "ตรวจสอบที่อยู่"
+
+#: src/seedsigner/views/tools_views.py src/seedsigner/views/view.py
+msgid "Tools"
+msgstr "เครื่องมือ"
+
+#: src/seedsigner/views/tools_views.py
+msgid "12 words"
+msgstr "12 คำ"
+
+#: src/seedsigner/views/tools_views.py
+msgid "24 words"
+msgstr "24 คำ"
+
+#: src/seedsigner/views/tools_views.py
+msgid "Mnemonic Length"
+msgstr "ความยาวของชุดคำกู้คืน"
+
+#: src/seedsigner/views/tools_views.py
+msgid "Calculating..."
+msgstr "กำลังคำนวณที่อยู่..."
+
+#. Inserts the number of dice rolls needed for a 12-word mnemonic
+#: src/seedsigner/views/tools_views.py
+msgid "12 words ({} rolls)"
+msgstr "12 คำ ({}  ครั้ง)"
+
+#. Inserts the number of dice rolls needed for a 24-word mnemonic
+#: src/seedsigner/views/tools_views.py
+msgid "24 words ({} rolls)"
+msgstr "24 คำ ({} ครั้ง)"
+
+#. Label to gather entropy through coin tosses
+#: src/seedsigner/views/tools_views.py
+msgid "Coin flip entropy"
+msgstr "สุ่มจากการโยนเหรียญ"
+
+#. Label to gather entropy through user specified BIP-39 word
+#: src/seedsigner/views/tools_views.py
+msgid "Word selection entropy"
+msgstr "สุ่มจากการเลือกคำ"
+
+#. Label to allow user to default entropy as all-zeros
+#: src/seedsigner/views/tools_views.py
+msgid "Finalize with zeros"
+msgstr "เติมท้ายด้วยศูนย์"
+
+#. label to calculate the last word of a BIP-39 mnemonic seed phrase
+#: src/seedsigner/views/tools_views.py
+msgid "Final Word Calc"
+msgstr "คำนวณคำสุดท้าย"
+
+#: src/seedsigner/views/tools_views.py
+msgid "Load seed"
+msgstr "โหลด Seed"
+
+#: src/seedsigner/views/tools_views.py
+msgid "Scan wallet descriptor"
+msgstr "สแกน คำอธิบายกระเป๋าเงิน"
+
+#. label for addresses where others send us incoming payments
+#: src/seedsigner/views/tools_views.py
+msgid "Receive addresses"
+msgstr "ที่อยู่รับเงิน"
+
+#. label for addresses that collect the change from our own outgoing payments
+#: src/seedsigner/views/tools_views.py
+msgid "Change addresses"
+msgstr "ที่อยู่เงินทอน"
+
+#. Multisig policy. For a "2 / 3 multisig" policy, "threshold" = 2; "n" = 3
+#: src/seedsigner/views/tools_views.py
+msgid "{threshold} / {n} multisig"
+msgstr "Multisig {threshold} จาก {n}"
+
+#. a status message that our payment addresses are being calculated
+#: src/seedsigner/views/tools_views.py
+msgid "Calculating addrs..."
+msgstr "กำลังคำนวณที่อยู่..."
+
+#: src/seedsigner/views/tools_views.py
+msgid "Custom Derivation address explorer not yet implemented"
+msgstr "ฟีเจอร์สำรวจที่อยู่ แบบกำหนดเส้นทางเอง ยังไม่พร้อมใช้งาน"
+
+#: src/seedsigner/views/tools_views.py
+msgid "Single sig descriptors not yet supported"
+msgstr "ยังไม่รองรับ คำอธิบายกระเป๋าเงิน แบบลายเซ็นเดียว"
+
+#: src/seedsigner/views/tools_views.py
+msgid "Receive Addrs"
+msgstr "ที่อยู่รับเงิน"
+
+#: src/seedsigner/views/tools_views.py
+msgid "Change Addrs"
+msgstr "ที่อยู่เงินทอน"
+
+#: src/seedsigner/views/view.py
+msgid "Scan"
+msgstr "สแกน"
+
+#: src/seedsigner/views/view.py
+msgid "Seeds"
+msgstr "Seeds"
+
+#: src/seedsigner/views/view.py
+msgid "Restart"
+msgstr "เริ่มต้นใหม่"
+
+#: src/seedsigner/views/view.py
+msgid "Power off"
+msgstr "ปิดเครื่อง"
+
+#: src/seedsigner/views/view.py
+msgid "Reset / Power"
+msgstr "รีเซ็ต / ปิดเครื่อง"
+
+#: src/seedsigner/views/view.py
+msgid "This is still on our to-do list!"
+msgstr "รายการนี้ ยังอยู่ในแผนงานของเรา!"
+
+#: src/seedsigner/views/view.py
+msgid "Work In Progress"
+msgstr "อยู่ระหว่างดำเนินการ"
+
+#: src/seedsigner/views/view.py
+msgid "Not Yet Implemented"
+msgstr "ยังไม่พร้อมใช้งาน"
+
+#: src/seedsigner/views/view.py
+msgid "Back to main menu"
+msgstr "กลับหน้าหลัก"
+
+#. The network setting (mainnet/testnet/regtest) doesn't match the provided
+#. derivation path
+#: src/seedsigner/views/view.py
+msgid "Network Mismatch"
+msgstr "เครือข่ายไม่ตรง"
+
+#. Button option to alter a setting
+#: src/seedsigner/views/view.py
+msgid "Change Setting"
+msgstr "เปลี่ยนการตั้งค่า"
+
+#. "network" will be mainnet/testnet/regtest.
+#: src/seedsigner/views/view.py
+msgid "Current network setting ({network}) doesn't match {derivation_path}."
+msgstr "เครือข่ายที่ตั้งค่าอยู่ ({network}) ไม่ตรงกับ {derivation_path}"
+
+#: src/seedsigner/views/view.py
+msgid "System Error"
+msgstr "ระบบเกิดข้อผิดพลาด"
+
+#: src/seedsigner/views/view.py
+msgid "Hardware Error"
+msgstr "ฮาร์ดแวร์ขัดข้อง"
+
+#: src/seedsigner/views/view.py
+msgid "Cannot access camera"
+msgstr "ไม่สามารถเข้าถึงกล้องได้"
+
+#: src/seedsigner/views/view.py
+msgid "Disconnect power and check for a loose camera connection."
+msgstr ""
+"ปิดเครื่องแล้วตรวจสอบ\n"
+"สายกล้องหลวมหรือไม่"
+
+#: src/seedsigner/views/view.py
+msgid "Update setting"
+msgstr "อัปเดตการตั้งค่า"
+
+#. Inserts the name of a settings option (e.g. "Persistent Settings" is
+#. currently...)
+#: src/seedsigner/views/view.py
+msgid "\"{}\" is currently disabled in Settings."
+msgstr "\"{}\" ถูกปิดใช้งาน ในเมนูตั้งค่า"
+
+#: src/seedsigner/views/view.py
+msgid "Option Disabled"
+msgstr "ตัวเลือกนี้ ถูกปิดใช้งาน"
+
+#: src/seedsigner/views/view.py
+msgid "Action Required"
+msgstr "ต้องดำเนินการ"
+
+#: src/seedsigner/views/view.py
+msgid ""
+"You must remove the\n"
+"MicroSD card to continue."
+msgstr ""
+"ต้องถอดการ์ด MicroSD ออก\n"
+"ก่อนจึงจะดำเนินการต่อได้"

@@ -1,0 +1,1625 @@
+# Translations template for seedsigner.
+# Copyright (C) 2026 ORGANIZATION
+# This file is distributed under the same license as the seedsigner project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+# 
+# Translators:
+# Sitting Duck, 2022
+# Gazelle, 2026
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: seedsigner 0.8.7\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2026-03-05 22:02+0000\n"
+"PO-Revision-Date: 2022-04-29 13:50+0000\n"
+"Last-Translator: Gazelle, 2026\n"
+"Language-Team: Persian (https://app.transifex.com/seedsigner/teams/135832/fa/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+"Language: fa\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. Testnet bitcoin
+#: src/seedsigner/gui/components.py
+msgid "tBtc"
+msgstr "بیت‌کوین آزمایشی"
+
+#. Testnet sats
+#: src/seedsigner/gui/components.py
+msgid "tSats"
+msgstr "ساتوشی آزمایشی"
+
+#: src/seedsigner/gui/components.py src/seedsigner/gui/screens/psbt_screens.py
+msgid "btc"
+msgstr "بیت‌کوین"
+
+#: src/seedsigner/gui/components.py src/seedsigner/gui/screens/psbt_screens.py
+#: src/seedsigner/models/settings_definition.py
+msgid "sats"
+msgstr "ساتوشی"
+
+#: src/seedsigner/gui/toast.py
+msgid ""
+"You can remove\n"
+"the SD card now"
+msgstr "می‌توانید کارت حافظه را از دستگاه خارج کنید!"
+
+#: src/seedsigner/gui/toast.py
+msgid "SD card removed"
+msgstr "کارت حافظه خارج شد."
+
+#: src/seedsigner/gui/toast.py
+msgid "SD card inserted"
+msgstr "کارت حافظه شناسایی شد!"
+
+#: src/seedsigner/gui/screens/psbt_screens.py
+msgid "Review Transaction"
+msgstr "بازبینی تراکنش"
+
+#: src/seedsigner/gui/screens/psbt_screens.py
+msgid "Review details"
+msgstr "بازبینی جزئيات"
+
+#: src/seedsigner/gui/screens/psbt_screens.py
+msgid "1 input"
+msgstr "1 ورودی"
+
+#: src/seedsigner/gui/screens/psbt_screens.py
+msgid "input 1"
+msgstr "ورودی 1"
+
+#: src/seedsigner/gui/screens/psbt_screens.py
+msgid "input 2"
+msgstr "ورودی 2"
+
+#. Indicates that items have been omitted from a series: e.g. "1, 2, 3, [...],
+#. 8"
+#: src/seedsigner/gui/screens/psbt_screens.py
+msgid "[ ... ]"
+msgstr "[ ... ]"
+
+#. Input number will be inserted (e.g. "input 3")
+#: src/seedsigner/gui/screens/psbt_screens.py
+msgid "input {}"
+msgstr "ورودی شماره {}"
+
+#. Ellipsis ("...") characters used to truncate an address (e.g. "bc1qabc...")
+#: src/seedsigner/gui/screens/psbt_screens.py
+msgid "..."
+msgstr "..."
+
+#: src/seedsigner/gui/screens/psbt_screens.py
+#: src/seedsigner/views/psbt_views.py
+msgid "self-transfer"
+msgstr "انتقال به خود"
+
+#: src/seedsigner/gui/screens/psbt_screens.py
+msgid "recipient 1"
+msgstr "گیرنده 1"
+
+#. Inserts the recipient number (e.g. the fifth one is: "recipient 5")
+#: src/seedsigner/gui/screens/psbt_screens.py
+msgid "recipient {}"
+msgstr "گیرنده {}"
+
+#: src/seedsigner/gui/screens/psbt_screens.py
+msgid "fee"
+msgstr "کارمزد"
+
+#. Technical term, should probably NOT be translated in most languages
+#: src/seedsigner/gui/screens/psbt_screens.py
+#: src/seedsigner/views/psbt_views.py
+msgid "OP_RETURN"
+msgstr "OP_RETURN"
+
+#. Label for a change output in the PSBT Overview flow diagram
+#: src/seedsigner/gui/screens/psbt_screens.py
+#: src/seedsigner/views/psbt_views.py
+msgid "change"
+msgstr "باقی‌مانده"
+
+#: src/seedsigner/gui/screens/psbt_screens.py
+msgid "Transaction Math"
+msgstr "مشخصات تراکنش"
+
+#: src/seedsigner/gui/screens/psbt_screens.py
+msgid "Review recipients"
+msgstr "بازبینی گیرندگان"
+
+#: src/seedsigner/gui/screens/psbt_screens.py
+msgid "input"
+msgid_plural "inputs"
+msgstr[0] "ورودی"
+msgstr[1] "ورودی ها"
+
+#: src/seedsigner/gui/screens/psbt_screens.py
+msgid "recipient"
+msgid_plural "recipients"
+msgstr[0] "گیرنده"
+msgstr[1] "گیرنده ها"
+
+#. Denonination is inserted (e.g. your "btc change" or "sats change")
+#: src/seedsigner/gui/screens/psbt_screens.py
+msgid "{} change"
+msgstr "واحد پول باقی‌مانده {}"
+
+#. Describes the address type (change or receive)
+#: src/seedsigner/gui/screens/psbt_screens.py
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "change address"
+msgstr "آدرس دریافتی باقی‌مانده"
+
+#. Describes the address type (change or receive)
+#: src/seedsigner/gui/screens/psbt_screens.py
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "receive address"
+msgstr "آدرس دریافتی"
+
+#. Symbol for index number, e.g. "address #3"
+#: src/seedsigner/gui/screens/psbt_screens.py
+msgid "#"
+msgstr "شماره"
+
+#: src/seedsigner/gui/screens/psbt_screens.py
+msgid "Address verified!"
+msgstr "آدرس تأیید شد!"
+
+#. Shown when displaying OP_RETURN as non-human-readable hexadecimal data
+#: src/seedsigner/gui/screens/psbt_screens.py
+msgid "raw hex data"
+msgstr "نمایش هگزادسیمال داده"
+
+#: src/seedsigner/gui/screens/psbt_screens.py
+msgid "Sign Transaction"
+msgstr "امضا‌ی تراکنش"
+
+#: src/seedsigner/gui/screens/psbt_screens.py
+msgid "Click to approve this transaction"
+msgstr "برای تأیید این تراکنش کلیک کنید"
+
+#: src/seedsigner/gui/screens/scan_screens.py
+#: src/seedsigner/gui/screens/tools_screens.py
+msgid "back"
+msgstr "بازگشت"
+
+#. Inserts the percentage value of the animated QR scan progress
+#: src/seedsigner/gui/screens/scan_screens.py
+msgid "{}%"
+msgstr "{}‌ درصد"
+
+#. Increase QR code screen brightness
+#: src/seedsigner/gui/screens/screen.py
+msgid "Brighter"
+msgstr "افزایش روشنایی"
+
+#. Decrease QR code screen brightness
+#: src/seedsigner/gui/screens/screen.py
+msgid "Darker"
+msgstr "کاهش روشنایی"
+
+#: src/seedsigner/gui/screens/screen.py
+#: src/seedsigner/gui/screens/seed_screens.py
+#: src/seedsigner/views/seed_views.py
+msgid "Success!"
+msgstr "با موفقیت انجام شد!"
+
+#: src/seedsigner/gui/screens/screen.py
+#: src/seedsigner/gui/screens/seed_screens.py
+#: src/seedsigner/views/seed_views.py
+msgid "OK"
+msgstr "تأیید"
+
+#: src/seedsigner/gui/screens/screen.py
+msgid "Caution"
+msgstr "احتیاط"
+
+#: src/seedsigner/gui/screens/screen.py src/seedsigner/views/seed_views.py
+msgid "Privacy Leak!"
+msgstr "امکان افشای اطلاعت حریم خصوصی!"
+
+#: src/seedsigner/gui/screens/screen.py
+msgid "I understand"
+msgstr "تایید و ادامه"
+
+#: src/seedsigner/gui/screens/screen.py
+msgid "Classified Info!"
+msgstr "اطلاعات طبقه بندی شده!"
+
+#: src/seedsigner/gui/screens/screen.py src/seedsigner/views/scan_views.py
+#: src/seedsigner/views/view.py
+msgid "Error"
+msgstr "خطا"
+
+#: src/seedsigner/gui/screens/screen.py
+msgid "Restarting"
+msgstr "راه اندازی مجدد"
+
+#: src/seedsigner/gui/screens/screen.py
+msgid ""
+"SeedSigner is restarting.\n"
+"\n"
+"All in-memory data will be wiped."
+msgstr ""
+"دستگاه در حال راه اندازی مجدد است. تمام اطلاعات موجود در حافظه پاک خواهند "
+"شد."
+
+#: src/seedsigner/gui/screens/screen.py
+msgid "Just Unplug It"
+msgstr "دستگاه را از برق خارج کنید."
+
+#: src/seedsigner/gui/screens/screen.py
+msgid "It is safe to disconnect power at any time."
+msgstr "می‌توانید دستگاه را از برق خارج کنید."
+
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "Finalize Seed"
+msgstr "نهایی کردن عبارت بازیابی"
+
+#. a label for the shortened Key-id of a BIP-32 master HD wallet
+#: src/seedsigner/gui/screens/seed_screens.py
+#: src/seedsigner/gui/screens/tools_screens.py
+#: src/seedsigner/views/seed_views.py
+msgid "fingerprint"
+msgstr "اثر انگشت"
+
+#. Displays the page number and total: (e.g. page 1 of 6)
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "Seed Words: {}/{}"
+msgstr "کلمات عبارت‌ بازیابی: {}/{}"
+
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "BIP-85 Index"
+msgstr "شاخص BIP-85"
+
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "Verify Backup?"
+msgstr "نسخه پشتیبان را تأیید می کنید؟"
+
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "Optionally verify that your mnemonic backup is correct."
+msgstr ""
+"می توانید جهت اطمینان، صحت نسخه پشتیبانی تهیه شده از کلمات عبارت بازیابی را "
+"بررسی کنید."
+
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "Derivation Path"
+msgstr "مسیر تولید کلید"
+
+#: src/seedsigner/gui/screens/seed_screens.py
+#: src/seedsigner/views/seed_views.py
+msgid "Export xpub"
+msgstr "گرفتن خروجی از xpub"
+
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "Xpub Details"
+msgstr "جزئیات Xpub"
+
+#. Short for "BIP-32 Master Fingerprint"
+#. a label for the shortened Key-id of a BIP-32 master HD wallet
+#: src/seedsigner/gui/screens/seed_screens.py
+#: src/seedsigner/gui/screens/tools_screens.py
+msgid "Fingerprint"
+msgstr "اثر انگشت"
+
+#. Short for "Derivation Path"
+#. a label for the derivation-path into a BIP-32 HD wallet
+#: src/seedsigner/gui/screens/seed_screens.py
+#: src/seedsigner/gui/screens/tools_screens.py
+msgid "Derivation"
+msgstr "مسیر تولید"
+
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "Xpub"
+msgstr "Xpub"
+
+#: src/seedsigner/gui/screens/seed_screens.py
+#: src/seedsigner/models/settings_definition.py
+#: src/seedsigner/views/seed_views.py
+msgid "BIP-39 Passphrase"
+msgstr "گذرواژه BIP-39"
+
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "Verify Passphrase"
+msgstr "تأیید گذرواژه"
+
+#. Describes the effect of applying a BIP-39 passphrase; it changes the seed's
+#. fingerprint
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "changes fingerprint"
+msgstr "این عملیات اثرانگشت عبارت بازیابی را تغییر می‌دهد."
+
+#. Refers to the SeedQR type: Standard or Compact
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "Standard"
+msgstr "استاندارد"
+
+#. Briefly explains the Standard SeedQR data format
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "BIP-39 wordlist indices"
+msgstr "شماره در لیست کلمات BIP-39"
+
+#. Refers to the SeedQR type: Standard or Compact
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "Compact"
+msgstr "فشرده"
+
+#. Briefly explains the Compact SeedQR data format
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "Raw entropy bits"
+msgstr "بیت های انتروپی خام"
+
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "Transcribe SeedQR"
+msgstr "SeedQR را بنویسید."
+
+#. Refers to the QR code size: 21x21, 25x25, or 29x29
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "Begin {}x{}"
+msgstr "شروع کنید {}x{}"
+
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "click to exit"
+msgstr "برای خروج کلیک کنید."
+
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid ""
+"Optionally scan your transcribed SeedQR to confirm that it reads back "
+"correctly."
+msgstr ""
+"برای اطمینان می توانید SeedQR نوشته شده را اسکن کنید تا مطمئن شوید درست "
+"خوانده می شود."
+
+#: src/seedsigner/gui/screens/seed_screens.py
+#: src/seedsigner/views/seed_views.py
+msgid "Verify Address"
+msgstr "تأیید آدرس"
+
+#. Inserts the nth address number (e.g. "Checking address 7")
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "Checking address {}"
+msgstr "در حال چک کردن آدرس {}"
+
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "Address Verified"
+msgstr "آدرس تأیید شد."
+
+#. Describes the address index (e.g. "index 7")
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "index {}"
+msgstr "شماره‌‌ {}"
+
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "Multisig Verification"
+msgstr "تأیید چند امضایی"
+
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid ""
+"Load your multisig wallet descriptor to verify your receive/self-transfer or"
+" change address."
+msgstr ""
+"توصیفگر کیف پول چند امضایی خود را برای صحت سنجی آدرس دریافتی عادی/انتقال به "
+"خود یا آدرس دریافتی باقی‌مانده وارد کنید."
+
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "Descriptor Loaded"
+msgstr "توصیفگر بارگذاری شد."
+
+#. Label for the multisig wallet's signing policy (e.g. 2-of-3)
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "Policy"
+msgstr "قوانین"
+
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "Signing Keys"
+msgstr "کلیدهای امضا کننده"
+
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "Review Message"
+msgstr "بازبینی پیام"
+
+#. Short for "Next step"
+#: src/seedsigner/gui/screens/seed_screens.py
+#: src/seedsigner/views/psbt_views.py src/seedsigner/views/seed_views.py
+#: src/seedsigner/views/tools_views.py
+msgid "Next"
+msgstr "بعدی"
+
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "Confirm Address"
+msgstr "تایید آدرس"
+
+#: src/seedsigner/gui/screens/seed_screens.py
+#: src/seedsigner/views/seed_views.py
+msgid "Sign message"
+msgstr "امضا‌ کردن پیام"
+
+#: src/seedsigner/gui/screens/seed_screens.py
+msgid "derivation path"
+msgstr "مسیر تولید کلید"
+
+#: src/seedsigner/gui/screens/settings_screens.py
+#: src/seedsigner/views/settings_views.py src/seedsigner/views/view.py
+msgid "Settings"
+msgstr "تنظیمات"
+
+#. Short for "Input/Output"; screen to make sure the buttons and camera are
+#. working properly
+#: src/seedsigner/gui/screens/settings_screens.py
+msgid "I/O Test"
+msgstr "تست ورودی/خروجی‌های دستگاه"
+
+#. Blank the screen
+#: src/seedsigner/gui/screens/settings_screens.py
+msgid "Clear"
+msgstr "پاک کردن"
+
+#: src/seedsigner/gui/screens/settings_screens.py
+msgid "Exit"
+msgstr "خروج"
+
+#: src/seedsigner/gui/screens/settings_screens.py
+#: src/seedsigner/gui/screens/tools_screens.py
+msgid "Capturing image..."
+msgstr "در حال عکس گرفتن ..."
+
+#: src/seedsigner/gui/screens/settings_screens.py
+#: src/seedsigner/views/settings_views.py
+msgid "Donate"
+msgstr "اهدای پول"
+
+#. If your language uses the percent sign ("%"), your translation must also
+#. use
+#. two percent signs ("%%") due to python formatting oddities. "100%%" will be
+#. rendered as "100%".
+#: src/seedsigner/gui/screens/settings_screens.py
+#, python-format
+msgid ""
+"SeedSigner is 100%% free & open source, funded solely by the Bitcoin community.\n"
+"\n"
+"Donate onchain or LN at:"
+msgstr ""
+" SeedSigner به صورت 100%% رایگان و منبع باز است و تنها توسط جامعه ی بیتکوین "
+"تأمین مالی می شود.  از طریق بیتکوین یا لایتنینگ پول اهدا کنید:"
+
+#: src/seedsigner/gui/screens/settings_screens.py
+#: src/seedsigner/views/settings_views.py
+msgid "Settings QR"
+msgstr "تنظیمات QR"
+
+#: src/seedsigner/gui/screens/settings_screens.py
+msgid "Settings updated..."
+msgstr "تنظیمات بروزرسانی شد."
+
+#: src/seedsigner/gui/screens/settings_screens.py src/seedsigner/views/view.py
+msgid "Home"
+msgstr "خانه"
+
+#: src/seedsigner/gui/screens/tools_screens.py
+msgid "click a button"
+msgstr "روی یک دکمه کلیک کنید."
+
+#. A prompt to the user to either accept or reshoot the image
+#: src/seedsigner/gui/screens/tools_screens.py
+msgid "reshoot"
+msgstr "گرفتن دوباره عکس"
+
+#. A prompt to the user to either accept or reshoot the image
+#: src/seedsigner/gui/screens/tools_screens.py
+msgid "accept"
+msgstr "تایید عکس"
+
+#. current roll number vs total rolls (e.g. roll 7 of 50)
+#: src/seedsigner/gui/screens/tools_screens.py
+msgid "Dice Roll {}/{}"
+msgstr "پرتاب {} تاس از {}"
+
+#. Build the last word in a 12 or 24 word BIP-39 mnemonic seed phrase.
+#: src/seedsigner/gui/screens/tools_screens.py
+msgid "Build Final Word"
+msgstr "ساخت آخرین کلمه"
+
+#. Final word calc. `mnemonic_length` = 12 or 24. `num_bits` = 7 or 3 (bits of
+#. entropy in final word).
+#: src/seedsigner/gui/screens/tools_screens.py
+msgid ""
+"The {mnemonic_length}th word is built from {num_bits} more entropy bits plus"
+" auto-calculated checksum."
+msgstr ""
+"{mnemonic_length}‌ین کلمه‌ از {num_bits}‌ بیت بیشتر تولید شده‌است (این عمل "
+"به همراه کد‌صحت سنجی‌ای می‌باشد که به صورت خودکار محاسبه شده‌است)."
+
+#. current coin-flip number vs total flips (e.g. flip 3 of 4)
+#: src/seedsigner/gui/screens/tools_screens.py
+msgid "Coin Flip {}/{}"
+msgstr "پرتاب {} از {} سکه"
+
+#. How we call the "front" side result during a coin toss.
+#: src/seedsigner/gui/screens/tools_screens.py
+msgid "Heads = 1"
+msgstr "شیر = 1"
+
+#. How we call the "back" side result during a coin toss.
+#: src/seedsigner/gui/screens/tools_screens.py
+msgid "Tails = 0"
+msgstr "خط = 0"
+
+#. The additional entropy the user supplied (e.g. coin flips)
+#: src/seedsigner/gui/screens/tools_screens.py
+msgid "Your input: \"{}\""
+msgstr "ورودی شما: {}"
+
+#. A function of "x" to be used for detecting errors in "x"
+#: src/seedsigner/gui/screens/tools_screens.py
+msgid "Checksum"
+msgstr "کد صحت‌سنجی"
+
+#. labeled presentation of the last word in a BIP-39 mnemonic seed phrase.
+#: src/seedsigner/gui/screens/tools_screens.py
+msgid "Final Word: \"{}\""
+msgstr "آخرین کلمه:‌ {}"
+
+#. a label for the last word of a 12-word BIP-39 mnemonic seed phrase
+#: src/seedsigner/gui/screens/tools_screens.py
+msgid "12th Word"
+msgstr "کلمه شماره 12"
+
+#. a label for the last word of a 24-word BIP-39 mnemonic seed phrase
+#: src/seedsigner/gui/screens/tools_screens.py
+msgid "24th Word"
+msgstr "کلمه شماره 24"
+
+#. a label for the tool to explore public addresses for this seed.
+#: src/seedsigner/gui/screens/tools_screens.py
+#: src/seedsigner/views/seed_views.py src/seedsigner/views/tools_views.py
+msgid "Address Explorer"
+msgstr "مرورگر آدرس"
+
+#. a label for a BIP-380-ish Output Descriptor
+#: src/seedsigner/gui/screens/tools_screens.py
+msgid "Wallet descriptor"
+msgstr "توصیفگر کیف‌پول"
+
+#. Insert the number of addrs displayed per screen (e.g. "Next 10")
+#: src/seedsigner/gui/screens/tools_screens.py
+msgid "Next {}"
+msgstr "{} مورد بعدی"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Enabled"
+msgstr "فعال"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Disabled"
+msgstr "غیرفعال"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Prompt"
+msgstr "پرسش"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Required"
+msgstr "الزامی"
+
+#. QR code format option; "default" = this is the format most wallets use
+#: src/seedsigner/models/settings_definition.py
+msgid "Animated (default)"
+msgstr "متحرک (فرمت پیش‌فرض)"
+
+#. QR code format option (static = single frame, not animated)
+#: src/seedsigner/models/settings_definition.py
+msgid "Static"
+msgstr "ثابت"
+
+#. QR code format option: old format that Specter Desktop used to use
+#: src/seedsigner/models/settings_definition.py
+msgid "Specter legacy"
+msgstr "فرمت قدیمی‌(Specter Desktop)"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "BTC"
+msgstr "بیت‌کوین"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Threshold at 0.01"
+msgstr "آستانه 0.01 است."
+
+#: src/seedsigner/models/settings_definition.py
+msgid "BTC | sats hybrid"
+msgstr "ترکیب بیت کوین | ساتوشی"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "0°"
+msgstr "0°"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "90°"
+msgstr "90°"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "180°"
+msgstr "180°"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "270°"
+msgstr "270°"
+
+#. QR code density option: Low, Medium, High
+#: src/seedsigner/models/settings_definition.py
+msgid "Low"
+msgstr "پایین"
+
+#. QR code density option: Low, Medium, High
+#: src/seedsigner/models/settings_definition.py
+msgid "Medium"
+msgstr "متوسط"
+
+#. QR code density option: Low, Medium, High
+#: src/seedsigner/models/settings_definition.py
+msgid "High"
+msgstr "بالا"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Mainnet"
+msgstr "شبکه اصلی"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Testnet"
+msgstr "شبکه تست"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Regtest"
+msgstr "شبکه داخلی تست"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Store Settings on SD card"
+msgstr "ذخیره تنظیمات در کارت حافظه"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Insert SD card to enable"
+msgstr "کارت حافظه را برای فعالسازی وارد کنید."
+
+#: src/seedsigner/models/settings_definition.py
+#: src/seedsigner/views/seed_views.py
+msgid "Single Sig"
+msgstr "تک امضایی"
+
+#: src/seedsigner/models/settings_definition.py
+#: src/seedsigner/views/seed_views.py
+msgid "Multisig"
+msgstr "چند امضایی"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Native Segwit"
+msgstr "Native Segwit"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Nested Segwit"
+msgstr "Nested Segwit"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Legacy"
+msgstr "Legacy"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Taproot"
+msgstr "Taproot"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Custom Derivation"
+msgstr "Custom Derivation"
+
+#. MicroSD notification duration setting - Display notification for 5 seconds
+#: src/seedsigner/models/settings_definition.py
+msgid "5 seconds"
+msgstr "5 ثانیه"
+
+#. MicroSD notification duration setting - Display notification until the SD
+#. card is removed
+#: src/seedsigner/models/settings_definition.py
+msgid "Until SD removed"
+msgstr "تا خروج کارت حافظه"
+
+#. Terminology used by Electrum seeds; equivalent to BIP-39 passphrase
+#: src/seedsigner/models/settings_definition.py
+msgid "Custom Extension"
+msgstr "عبارت تکمیلی اختصاصی"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Language"
+msgstr "زبان"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Mnemonic language"
+msgstr "زبان کلمات دانه"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Persistent settings"
+msgstr "تنظیمات ماندگار"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Denomination display"
+msgstr "نمایش واحد پول"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Bitcoin network"
+msgstr "شبکه بیت‌کوین"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "QR code density"
+msgstr "تراکم کد QR"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Sig types"
+msgstr "انواع امضا"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Script types"
+msgstr "انواع اسکریپت"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Xpub QR format"
+msgstr "فرمت کد QR برای Xpub"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Show xpub details"
+msgstr "نمایش جزئیات xpub"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "BIP-39 passphrase"
+msgstr "رمز عبور BIP-39"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Camera rotation"
+msgstr "چرخش دوربین"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Compact SeedQR"
+msgstr "SeedQR فشرده"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "BIP-85 child seeds"
+msgstr "عبارات بازیابی مرتبط با فرزند‌های تولید شده طبق BIP-85"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Electrum seeds"
+msgstr "عبارات بازیابی الکتروم"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Native Segwit only"
+msgstr "فقط Native Segwit"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "MicroSD notification duration"
+msgstr "مدت زمان نمایش اعلان"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Message signing"
+msgstr " امضا پیام"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Show privacy warnings"
+msgstr "نمایش هشدارهای حریم خصوصی"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Show dire warnings"
+msgstr "نمایش هشدارهای حیاتی"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Show QR brightness tips"
+msgstr "نمایش راهنمای روشنایی QR"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "Show partner logos"
+msgstr "نمایش لوگوی همکاران"
+
+#. Hardware settings option to specify the screen driver (e.g. st7789 vs
+#. ili9341)
+#: src/seedsigner/models/settings_definition.py
+msgid "Display type"
+msgstr "نوع نمایش صفحه"
+
+#. Hardware settings option to invert how the screen driver displays colors.
+#: src/seedsigner/models/settings_definition.py
+msgid "Invert colors"
+msgstr "معکوس کردن رنگ‌ها"
+
+#: src/seedsigner/models/settings_definition.py
+msgid "QR background color"
+msgstr "رنگ پس زمینه QR"
+
+#: src/seedsigner/views/psbt_views.py src/seedsigner/views/seed_views.py
+#: src/seedsigner/views/tools_views.py
+msgid "Scan a seed"
+msgstr "اسکن عبارت بازیابی"
+
+#: src/seedsigner/views/psbt_views.py src/seedsigner/views/seed_views.py
+#: src/seedsigner/views/tools_views.py
+msgid "Enter 12-word seed"
+msgstr "وارد کردن عبارت بازیابی 12 کلمه ای"
+
+#: src/seedsigner/views/psbt_views.py src/seedsigner/views/seed_views.py
+#: src/seedsigner/views/tools_views.py
+msgid "Enter 24-word seed"
+msgstr "وارد کردن عبارت بازیابی 24 کلمه ای"
+
+#: src/seedsigner/views/psbt_views.py src/seedsigner/views/seed_views.py
+#: src/seedsigner/views/tools_views.py
+msgid "Enter Electrum seed"
+msgstr "وارد کردن عبارت بازیابی الکتروم"
+
+#. Inserts fingerprint w/"?" to indicate that this seed can't sign the current
+#. PSBT
+#: src/seedsigner/views/psbt_views.py
+msgid "{} (?)"
+msgstr "اثر انگشت {}‌(؟)"
+
+#: src/seedsigner/views/psbt_views.py
+msgid "Select Signer"
+msgstr "انتخاب امضا کننده"
+
+#: src/seedsigner/views/psbt_views.py
+msgid "Parsing PSBT..."
+msgstr "در حال پردازش PSBT..."
+
+#: src/seedsigner/views/psbt_views.py
+msgid "Unsupported Script Type!"
+msgstr "نوع اسکریپت پشتیبانی نشده!"
+
+#: src/seedsigner/views/psbt_views.py
+msgid ""
+"Transaction has unsupported input script type, please verify your change "
+"addresses."
+msgstr ""
+"اسکریپت ورودی تراکنش پشتیبانی نشده‌است. لطفا آدرس‌های دریافتی باقی‌مانده‌ی "
+"خود را بررسی کنید."
+
+#: src/seedsigner/views/psbt_views.py src/seedsigner/views/view.py
+msgid "Continue"
+msgstr "ادامه"
+
+#. User will receive no change back; the inputs to this transaction are fully
+#. spent
+#: src/seedsigner/views/psbt_views.py
+msgid "Full Spend!"
+msgstr "خرج کردن تمامی ورودی!"
+
+#: src/seedsigner/views/psbt_views.py
+msgid ""
+"This transaction spends its entire input value. No change is coming back to "
+"your wallet."
+msgstr ""
+"تراکنش تمام مقدار ورودی را خرج می‌کند. باقی‌مانده ای به کیف‌پول "
+"باز‌نمی‌گردد."
+
+#. Future-tense used to indicate that this transaction will send this amount,
+#. as opposed to "Send" on its own which could be misread as an instant
+#. command
+#. (e.g. "Send Now").
+#: src/seedsigner/views/psbt_views.py
+msgid "Will Send"
+msgstr "فرستاده خواهد شد."
+
+#: src/seedsigner/views/psbt_views.py
+msgid "Next recipient"
+msgstr "گیرنده بعدی"
+
+#: src/seedsigner/views/psbt_views.py
+msgid "Skip verification"
+msgstr " رد مرحله تایید"
+
+#: src/seedsigner/views/psbt_views.py
+msgid "Verify multisig change"
+msgstr "تایید مبلغ باقی‌مانده چند‌ امضایی"
+
+#. The amount you're receiving back from the transaction
+#: src/seedsigner/views/psbt_views.py
+msgid "Your Change"
+msgstr "مبلغ بازگشتی به کیف پول شما"
+
+#: src/seedsigner/views/psbt_views.py
+msgid "Self-Transfer"
+msgstr "انتقال به خود"
+
+#: src/seedsigner/views/psbt_views.py
+msgid "Verify multisig addr"
+msgstr "تأیید آدرس چند امضایی"
+
+#: src/seedsigner/views/psbt_views.py
+msgid "Verifying Change..."
+msgstr "تأیید مبلغ باقی‌مانده دریافتی ..."
+
+#: src/seedsigner/views/psbt_views.py
+msgid "Verifying Self-Transfer..."
+msgstr "تأیید انتقال به خود..."
+
+#. Variable is either "change" or "self-transfer".
+#: src/seedsigner/views/psbt_views.py
+msgid "Transaction's {} address could not be verified from wallet descriptor."
+msgstr "آدرس {} تراکنش توسط توصیفگر کیف‌پول قابل تایید نمی‌باشد."
+
+#. Variable is either "change" or "self-transfer".
+#: src/seedsigner/views/psbt_views.py
+msgid "Transaction's {} address could not be generated from your seed."
+msgstr "آدرس {}‌ از عبارت بازیابی شما تولید نشده است."
+
+#: src/seedsigner/views/psbt_views.py
+msgid "Suspicious Transaction"
+msgstr "تراکنش مشکوک"
+
+#: src/seedsigner/views/psbt_views.py
+msgid "Address Verification Failed"
+msgstr "آدرس تأیید نشد."
+
+#: src/seedsigner/views/psbt_views.py
+msgid "Discard transaction"
+msgstr "لغو تراکنش"
+
+#: src/seedsigner/views/psbt_views.py
+msgid "Approve transaction"
+msgstr "تایید تراکنش"
+
+#: src/seedsigner/views/psbt_views.py
+msgid "Select different seed"
+msgstr "عبارت بازیابی دیگری انتخاب کنید."
+
+#: src/seedsigner/views/psbt_views.py
+msgid "Transaction Error"
+msgstr "خطا در تراکنش"
+
+#: src/seedsigner/views/psbt_views.py
+msgid "Signing Failed"
+msgstr "عملیات امضا ناموفق بود."
+
+#: src/seedsigner/views/psbt_views.py
+msgid "Signing with this seed did not add a valid signature."
+msgstr "امضای مرتبط با عبارت بازیابی مشخص شده معتبر نمی‌باشد."
+
+#: src/seedsigner/views/scan_views.py
+msgid "Scan a QR code"
+msgstr "اسکن کد QR"
+
+#: src/seedsigner/views/scan_views.py
+msgid "QRCode not recognized or not yet supported."
+msgstr "کد QR قابل شناسایی/ پشتیبانی نمی‌باشد."
+
+#: src/seedsigner/views/scan_views.py
+msgid "Wrong QR Type"
+msgstr "نوع کد QR اشتباه است."
+
+#: src/seedsigner/views/scan_views.py
+msgid "Scan Transaction"
+msgstr "اسکن تراکنش"
+
+#: src/seedsigner/views/scan_views.py
+msgid "Expected a transaction"
+msgstr "این عملیات نیازمند یک تراکنش است."
+
+#: src/seedsigner/views/scan_views.py
+msgid "Scan SeedQR"
+msgstr "اسکن کد SeedQR"
+
+#: src/seedsigner/views/scan_views.py
+msgid "Expected a SeedQR"
+msgstr "این عملیات نیزمند یک SeedQR می‌باشد."
+
+#: src/seedsigner/views/scan_views.py src/seedsigner/views/seed_views.py
+msgid "Scan descriptor"
+msgstr "اسکن توصیفگر"
+
+#: src/seedsigner/views/scan_views.py
+msgid "Expected a wallet descriptor QR"
+msgstr "این عملیات نیازمند یک کد QR مرتبط با توصیفگر کیف پول می‌باشد."
+
+#: src/seedsigner/views/scan_views.py
+msgid "Scan address QR"
+msgstr "اسکن کد QR آدرس"
+
+#: src/seedsigner/views/scan_views.py
+msgid "Expected an address QR"
+msgstr "این عملیات نیازمند یک کد QR مرتبط با یک آدرس می‌باشد. "
+
+#: src/seedsigner/views/scan_views.py
+msgid "Unknown QR Type"
+msgstr "نوع کد QR ناشناخته می‌باشد."
+
+#: src/seedsigner/views/scan_views.py
+msgid "QRCode is invalid or is a data format not yet supported."
+msgstr "کد QR نامعتبر بوده یا فرمت ارائه شده پشتیبانی نمی‌شود."
+
+#: src/seedsigner/views/scan_views.py src/seedsigner/views/view.py
+msgid "Back to Main Menu"
+msgstr "بازگشت به منوی اصلی"
+
+#. This is on the opening splash screen, displayed above the HRF logo
+#: src/seedsigner/views/screensaver.py
+msgid "With support from:"
+msgstr "با پشتیبانی از سوی:"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Load a seed"
+msgstr "بارگذاری عبارت بازیابی"
+
+#: src/seedsigner/views/seed_views.py
+msgid "In-Memory Seeds"
+msgstr "عبارات بازیابی در حافظه"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Load the seed to verify"
+msgstr "عبارت بازیابی را برای تأیید بارگذاری کنید."
+
+#: src/seedsigner/views/seed_views.py
+msgid "Select seed to verify"
+msgstr "عبارت بازیابی را برای تأیید انتخاب کنید."
+
+#: src/seedsigner/views/seed_views.py
+msgid "Sign Message"
+msgstr "امضا‌ کردن پیام"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Load the seed to sign with"
+msgstr "عبارت بازیابی خود  را برای امضا بارگذاری کنید."
+
+#: src/seedsigner/views/seed_views.py
+msgid "Select seed to sign with"
+msgstr "عبارت بازیابی مورد نظر را برای امضا انتخاب کنید."
+
+#: src/seedsigner/views/seed_views.py
+msgid "Scan a SeedQR"
+msgstr "اسکن یک SeedQR"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Create a seed"
+msgstr "ایجاد عبارت بازیابی جدید"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Load a Seed"
+msgstr "بارگذاری عبارت بازیابی"
+
+#. Inserts the word number (e.g. "Seed Word #6")
+#: src/seedsigner/views/seed_views.py
+msgid "Seed Word #{}"
+msgstr "کلمه عبارت بازیابی شماره {}"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Review & edit"
+msgstr "بازبینی و ویرایش"
+
+#: src/seedsigner/views/seed_views.py src/seedsigner/views/tools_views.py
+msgid "Discard"
+msgstr "دور انداختن"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Invalid Mnemonic!"
+msgstr "کلمات عبارت بازیابی غیر قابل قبول است!"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Checksum failure; not a valid seed phrase."
+msgstr "صحت سنجی ناموفق بود; عبارت بازیابی صحیح نیست."
+
+#: src/seedsigner/views/seed_views.py
+msgid "Done"
+msgstr "انجام شد"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Edit passphrase"
+msgstr "ویرایش رمز عبور"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Discard passphrase"
+msgstr "حذف رمز عبور"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Skip passphrase"
+msgstr "ردکردن ایجاد رمز عبور"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Discard passphrase?"
+msgstr "حذف رمز عبور؟"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Your current passphrase entry will be erased."
+msgstr "رمز عبور فعلی شما حذف خواهد‌شد."
+
+#: src/seedsigner/views/seed_views.py
+msgid "Skip passphrase?"
+msgstr "ردکردن ایجاد رمز عبور؟"
+
+#: src/seedsigner/views/seed_views.py
+msgid "You have not entered a passphrase yet."
+msgstr "هنوز رمز عبوری مشخص نکرده‌اید."
+
+#: src/seedsigner/views/seed_views.py
+msgid "Keep seed"
+msgstr "نگه‌داشتن عبارت بازیابی"
+
+#. Inserts the seed fingerprint
+#: src/seedsigner/views/seed_views.py
+msgid "Wipe seed {} from the device?"
+msgstr "عبارت بازیابی با اثر انگشت {} از این دستگاه پاک شود؟"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Discard Seed?"
+msgstr "دور انداختن عبارت بازیابی؟"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Electrum Warning"
+msgstr "هشدار مرتبط با الکتروم"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Some features are disabled for Electrum seeds."
+msgstr ""
+"برخی از قابلیت‌ها برای عبارات بازیابی مرتبط با الکتروم غیرفعال می‌باشد."
+
+#: src/seedsigner/views/seed_views.py
+msgid "Scan transaction"
+msgstr "اسکن تراکنش"
+
+#: src/seedsigner/views/seed_views.py src/seedsigner/views/tools_views.py
+msgid "Address explorer"
+msgstr "مرورگر آدرس"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Backup seed"
+msgstr "تهیه نسخه پشتیبان از عبارت بازیابی"
+
+#: src/seedsigner/views/seed_views.py
+msgid "BIP-85 child seed"
+msgstr "عبارت بازیابی مرتبط با فرزند تولید شده طبق BIP-85"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Discard seed"
+msgstr "حذف عبارت بازیابی"
+
+#: src/seedsigner/views/seed_views.py
+msgid "View seed words"
+msgstr "مشاهده کلمات عبارت بازیابی"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Export as SeedQR"
+msgstr "گرفتن خروجی به صورت SeedQR"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Backup Seed"
+msgstr "تهیه ی نسخه‌ی پشتیبان از عبارت بازیابی"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Export Xpub"
+msgstr "گرفتن خروجی از xpub"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Xpub QR Format"
+msgstr "فرمت کد QR برای Xpub"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Xpub can be used to view all future transactions."
+msgstr ""
+"با Xpub می توان تمام تراکنش های آینده در آدرس های مربوطه را مشاهده کرد."
+
+#: src/seedsigner/views/seed_views.py
+msgid "Generating xpub..."
+msgstr "در حال تولید xpub..."
+
+#: src/seedsigner/views/seed_views.py
+msgid "You must keep your seed words private & away from all online devices."
+msgstr ""
+"شما می بایست کلمات عبارت بازیابی خود را امن و از تمام ابزارهای متصل به "
+"اینترنت دور نگه دارید."
+
+#. Inserts the child index (e.g. "Child #0")
+#: src/seedsigner/views/seed_views.py
+msgid "Child #{}"
+msgstr "فرزند شماره‌ی {}"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Seed Words"
+msgstr "عبارات بازیابی"
+
+#: src/seedsigner/views/seed_views.py
+msgid "12 Words"
+msgstr "12 کلمه"
+
+#: src/seedsigner/views/seed_views.py
+msgid "24 Words"
+msgstr "24 کلمه"
+
+#: src/seedsigner/views/seed_views.py
+msgid "BIP-85 Num Words"
+msgstr "تعداد کلمات BIP-85"
+
+#: src/seedsigner/views/seed_views.py
+msgid "BIP-85 Index Error"
+msgstr "خطا در شاخص BIP-85"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Invalid Child Index"
+msgstr "شاخص فرزند نامعتبراست"
+
+#: src/seedsigner/views/seed_views.py
+msgid "BIP-85 Child Index must be between 0 and 2^31-1."
+msgstr "شاخص فرزند تولید شده طبق BIP-85باید بین 0 و 2^31-1 باشد."
+
+#: src/seedsigner/views/seed_views.py
+msgid "Try again"
+msgstr "دوباره تلاش کنید."
+
+#: src/seedsigner/views/seed_views.py
+msgid "Verify"
+msgstr "تأیید"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Skip"
+msgstr "رد کردن"
+
+#. Inserts the word number (e.g. "Verify Word #1")
+#: src/seedsigner/views/seed_views.py
+msgid "Verify Word #{}"
+msgstr "کلمه شماره {} را تأیید کنید."
+
+#: src/seedsigner/views/seed_views.py
+msgid "Review seed words"
+msgstr "بازبینی عبارت بازیابی"
+
+#. Inserts the word number and the word (e.g. "Word #1 is not "apple"!")
+#: src/seedsigner/views/seed_views.py
+msgid "Word #{} is not \"{}\"!"
+msgstr "کلمه شماره {}، \"{}\" نیست!"
+
+#. User selected the wrong word during the mnemonic backup test (e.g.
+#. incorrectly said the 5th word was "zoo")
+#: src/seedsigner/views/seed_views.py
+msgid "Wrong Word!"
+msgstr "کلمه اشتباه!"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Verification Error"
+msgstr "خطا در تأیید"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Backup Verified"
+msgstr "نسخه پشتیبانی تأیید شد."
+
+#: src/seedsigner/views/seed_views.py
+msgid "All mnemonic backup words were successfully verified!"
+msgstr "تمام کلمات عبارت بازیابی پشتیبانی شده با موفقیت تأیید شدند!"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Standard: 25x25"
+msgstr "استاندارد: 25x25"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Compact: 21x21"
+msgstr "فشرده: 21x21"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Standard: 29x29"
+msgstr "استاندارد: 29x29"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Compact: 25x25"
+msgstr "فشرده: 25x25"
+
+#: src/seedsigner/views/seed_views.py
+msgid "SeedQR Format"
+msgstr "فرمت SeedQR"
+
+#: src/seedsigner/views/seed_views.py
+msgid "SeedQR is your private key!"
+msgstr "SeedQR کلید خصوصی شماست!"
+
+#: src/seedsigner/views/seed_views.py
+msgid ""
+"Never photograph or scan it into a device that connects to the internet."
+msgstr ""
+"هیچگاه از آن عکس نگرفته یا آن را با وسیله‌ای با دسترسی به اینترنت اسکن "
+"نکنید."
+
+#: src/seedsigner/views/seed_views.py
+msgid "Confirm SeedQR"
+msgstr "تأیید SeedQR"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Confirm SeedQR?"
+msgstr "SeedQR را تأیید می کنید؟"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Scan your SeedQR"
+msgstr "SeedQR خودتان را اسکن کنید."
+
+#: src/seedsigner/views/seed_views.py
+msgid "Error!"
+msgstr "خطا!"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Your transcribed SeedQR does not match your original seed!"
+msgstr "SeedQR نوشته شده با عبارت بازیابی اصلی مطابقت ندارد!"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Review SeedQR"
+msgstr "بازبینی SeedQR"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Your transcribed SeedQR could not be read!"
+msgstr "SeedQR نوشته شده قابل خواندن نیست!"
+
+#: src/seedsigner/views/seed_views.py
+msgid ""
+"Your transcribed SeedQR successfully scanned and yielded the same seed."
+msgstr "SeedQR نوشته شده با موفقیت اسکن و با عبارت بازیابی تایید شد."
+
+#: src/seedsigner/views/seed_views.py
+msgid "Sig type can't be auto-detected from this address. Please specify:"
+msgstr ""
+"امکان تشخیص خودکار امضا برای این آدرس وجود ندارد. لطفا نوع امضا را مشخص "
+"کنید:"
+
+#. Option when scanning for a matching address; skips ten addresses ahead
+#: src/seedsigner/views/seed_views.py
+msgid "Skip 10"
+msgstr "رد کردن 10 مورد"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Cancel"
+msgstr "لغو"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Return to transaction"
+msgstr "بازگشت به تراکنش"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Verify addr"
+msgstr "تأیید آدرس"
+
+#. Multisig policy. For a "2 of 3" policy, "threshold" = 2; "n" = 3
+#: src/seedsigner/views/seed_views.py
+msgid "{threshold} of {n}"
+msgstr "{threshold} از {n} امضا"
+
+#: src/seedsigner/views/seed_views.py
+msgid "Signing messages for custom derivation paths not supported"
+msgstr "امضا پیام برای مسیرهای تولید کلید اختصاصی پشتیبانی نشده است."
+
+#: src/seedsigner/views/settings_views.py
+msgid "Advanced"
+msgstr "پیشرفته"
+
+#: src/seedsigner/views/settings_views.py
+msgid "Hardware"
+msgstr "سخت‌افزار"
+
+#: src/seedsigner/views/settings_views.py
+msgid "I/O test"
+msgstr "تست ورودی/خروجی"
+
+#: src/seedsigner/views/settings_views.py
+msgid "Dev Options"
+msgstr "گزینه های مرتبط با توسعه دهندگان"
+
+#. Title of a warning dialog when configuring a setting that requires at least
+#. one option to be selected.
+#: src/seedsigner/views/settings_views.py
+msgid "Selection Required"
+msgstr "نیاز به انتخاب یک گزینه"
+
+#. The name of the setting being configured (e.g. "Script types") will be
+#. inserted.
+#: src/seedsigner/views/settings_views.py
+msgid "At least one option must be selected for \"{}\"."
+msgstr "حداقل یک گزینه باید برای تنظیمات {} ‌انتخاب شود."
+
+#. Text for the button that returns the user to the setting configuration
+#. screen.
+#: src/seedsigner/views/settings_views.py
+msgid "Return to setting"
+msgstr "بازگشت به تنظیمات"
+
+#: src/seedsigner/views/settings_views.py
+msgid "Persistent Settings enabled. Settings saved to SD card."
+msgstr "تنظیمات دائمی فعال و در کارت حافظه ذخیره شد."
+
+#: src/seedsigner/views/settings_views.py
+msgid "Settings updated in temporary memory"
+msgstr "تنظیمات در حافظه موقت بروزرسانی شد."
+
+#: src/seedsigner/views/tools_views.py
+msgid "New seed"
+msgstr "عبارت بازیابی جدید"
+
+#: src/seedsigner/views/tools_views.py
+msgid "Calc 12th/24th word"
+msgstr "محاسبه کلمه ی شماره 12 از24 کلمه"
+
+#: src/seedsigner/views/tools_views.py
+msgid "Verify address"
+msgstr "تأیید آدرس"
+
+#: src/seedsigner/views/tools_views.py src/seedsigner/views/view.py
+msgid "Tools"
+msgstr "ابزارها"
+
+#: src/seedsigner/views/tools_views.py
+msgid "12 words"
+msgstr "12 کلمه"
+
+#: src/seedsigner/views/tools_views.py
+msgid "24 words"
+msgstr "24 کلمه"
+
+#: src/seedsigner/views/tools_views.py
+msgid "Mnemonic Length"
+msgstr "تعداد کلمات دانه"
+
+#: src/seedsigner/views/tools_views.py
+msgid "Calculating..."
+msgstr "در حال محاسبه ..."
+
+#. Inserts the number of dice rolls needed for a 12-word mnemonic
+#: src/seedsigner/views/tools_views.py
+msgid "12 words ({} rolls)"
+msgstr "12 کلمه ( {} بار تاس انداختن)"
+
+#. Inserts the number of dice rolls needed for a 24-word mnemonic
+#: src/seedsigner/views/tools_views.py
+msgid "24 words ({} rolls)"
+msgstr "24 کلمه ( {} بار تاس انداختن)"
+
+#. Label to gather entropy through coin tosses
+#: src/seedsigner/views/tools_views.py
+msgid "Coin flip entropy"
+msgstr "منبع تصادفی با پرتاب سکه"
+
+#. Label to gather entropy through user specified BIP-39 word
+#: src/seedsigner/views/tools_views.py
+msgid "Word selection entropy"
+msgstr "منبع تصادفی با انتخاب کلمات"
+
+#. Label to allow user to default entropy as all-zeros
+#: src/seedsigner/views/tools_views.py
+msgid "Finalize with zeros"
+msgstr "صفر کردن مقدار"
+
+#. label to calculate the last word of a BIP-39 mnemonic seed phrase
+#: src/seedsigner/views/tools_views.py
+msgid "Final Word Calc"
+msgstr "محاسبه آخرین کلمه"
+
+#: src/seedsigner/views/tools_views.py
+msgid "Load seed"
+msgstr "بارگذاری عبارت بازیابی"
+
+#: src/seedsigner/views/tools_views.py
+msgid "Scan wallet descriptor"
+msgstr "اسکن توصیفگر کیف‌پول"
+
+#. label for addresses where others send us incoming payments
+#: src/seedsigner/views/tools_views.py
+msgid "Receive addresses"
+msgstr "آدرس‌های دریافتی"
+
+#. label for addresses that collect the change from our own outgoing payments
+#: src/seedsigner/views/tools_views.py
+msgid "Change addresses"
+msgstr "آدرس‌های دریافتی باقی‌مانده"
+
+#. Multisig policy. For a "2 / 3 multisig" policy, "threshold" = 2; "n" = 3
+#: src/seedsigner/views/tools_views.py
+msgid "{threshold} / {n} multisig"
+msgstr "{threshold} از {n} امضای چندامضایی"
+
+#. a status message that our payment addresses are being calculated
+#: src/seedsigner/views/tools_views.py
+msgid "Calculating addrs..."
+msgstr "در حال محاسبه آدرس‌ها"
+
+#: src/seedsigner/views/tools_views.py
+msgid "Custom Derivation address explorer not yet implemented"
+msgstr "مرورگری برای آدرس‌های تولید شده به صورت اختصاصی پیاده‌سازی نشده‌است."
+
+#: src/seedsigner/views/tools_views.py
+msgid "Single sig descriptors not yet supported"
+msgstr "توصیفگر‌های تک امضایی پشتیبانی نشده‌اند."
+
+#: src/seedsigner/views/tools_views.py
+msgid "Receive Addrs"
+msgstr "آدرس‌های دریافتی"
+
+#: src/seedsigner/views/tools_views.py
+msgid "Change Addrs"
+msgstr "آدرس‌های دریافتی باقی‌مانده"
+
+#: src/seedsigner/views/view.py
+msgid "Scan"
+msgstr "اسکن"
+
+#: src/seedsigner/views/view.py
+msgid "Seeds"
+msgstr "عبارات بازیابی"
+
+#: src/seedsigner/views/view.py
+msgid "Restart"
+msgstr "راه اندازی مجدد"
+
+#: src/seedsigner/views/view.py
+msgid "Power off"
+msgstr "خاموش کردن"
+
+#: src/seedsigner/views/view.py
+msgid "Reset / Power"
+msgstr "خاموش / راه اندازی مجدد"
+
+#: src/seedsigner/views/view.py
+msgid "This is still on our to-do list!"
+msgstr "این مورد هنوز در لیست کارهایی که باید انجام دهیم قرار دارد!"
+
+#: src/seedsigner/views/view.py
+msgid "Work In Progress"
+msgstr "کار در دست انجام"
+
+#: src/seedsigner/views/view.py
+msgid "Not Yet Implemented"
+msgstr "هنوز پیاده سازی نشده است"
+
+#: src/seedsigner/views/view.py
+msgid "Back to main menu"
+msgstr "بازگشت به منوی اصلی"
+
+#. The network setting (mainnet/testnet/regtest) doesn't match the provided
+#. derivation path
+#: src/seedsigner/views/view.py
+msgid "Network Mismatch"
+msgstr "عدم تطابق شبکه"
+
+#. Button option to alter a setting
+#: src/seedsigner/views/view.py
+msgid "Change Setting"
+msgstr "تغییر تنظيمات"
+
+#. "network" will be mainnet/testnet/regtest.
+#: src/seedsigner/views/view.py
+msgid "Current network setting ({network}) doesn't match {derivation_path}."
+msgstr ""
+"تنظیمات فعلی شبکه ({network}) با مسیر تولید کلید {derivation_path} مطابقت "
+"ندارد."
+
+#: src/seedsigner/views/view.py
+msgid "System Error"
+msgstr "خطای سیستمی"
+
+#: src/seedsigner/views/view.py
+msgid "Hardware Error"
+msgstr "خطا در سخت‌افزار"
+
+#: src/seedsigner/views/view.py
+msgid "Cannot access camera"
+msgstr "دوربین غیرقابل دسترسی می‌باشد."
+
+#: src/seedsigner/views/view.py
+msgid "Disconnect power and check for a loose camera connection."
+msgstr "دستگاه را از برق خارج کرده و اتصالات دوربین را بررسی کنید."
+
+#: src/seedsigner/views/view.py
+msgid "Update setting"
+msgstr "بروزرسانی تنظيمات"
+
+#. Inserts the name of a settings option (e.g. "Persistent Settings" is
+#. currently...)
+#: src/seedsigner/views/view.py
+msgid "\"{}\" is currently disabled in Settings."
+msgstr "{} در تنظیمات فعلی غیرفعال می‌باشد."
+
+#: src/seedsigner/views/view.py
+msgid "Option Disabled"
+msgstr "گزینه غیرفعال شد."
+
+#: src/seedsigner/views/view.py
+msgid "Action Required"
+msgstr "نیاز به اقدام فوری"
+
+#: src/seedsigner/views/view.py
+msgid ""
+"You must remove the\n"
+"MicroSD card to continue."
+msgstr "برای ادامه، کارت حافظه را از دستگاه خارج کنید."

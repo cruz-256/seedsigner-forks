@@ -1,0 +1,5 @@
+.DS_Store
+
+# Only check in *.po files since *.mo
+# files can be generated from from them
+*.mo

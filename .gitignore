@@ -1,0 +1,14 @@
+.DS_Store
+__pycache__/
+src/seedsigner.egg-info/
+.nova
+.vscode
+src/seedsigner/version.json
+src/seedsigner/models/settings_definition.json
+.idea
+.coverage*
+
+*.po
+*.mo
+# Translation catalogs are vendored in this fork (upstream kept them in a submodule).
+!src/seedsigner/resources/seedsigner-translations/**/*.po
