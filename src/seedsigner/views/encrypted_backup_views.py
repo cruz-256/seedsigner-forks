@@ -43,7 +43,6 @@ from seedsigner.models.encrypted_backup import (
     preview_kef_label,
 )
 from seedsigner.models.kef_qr import KefQRDecoder, kef_qr_modules
-from seedsigner.models.seed import ElectrumSeed, Seed
 from seedsigner.models.settings import SettingsConstants
 from seedsigner.views.view import BackStackView, Destination, MainMenuView, View
 
@@ -65,11 +64,13 @@ def _read_slot() -> CardDirectory | None:
 class SeedEncryptedBackupIntroView(View):
     CONTINUE = ButtonOption("Continue")
 
-    def __init__(self, seed: Seed):
+    def __init__(self, seed):
         super().__init__()
         self.seed = seed
 
     def run(self):
+        from seedsigner.models.seed import ElectrumSeed
+
         state = get_backup_flow_state()
         state.clear()
         if isinstance(self.seed, ElectrumSeed):
@@ -396,24 +397,30 @@ class SeedEncryptedBackupQrZoomView(View):
             num_modules=self.num_modules,
             qr_background="#ffffff",
             qr_style=QR.STYLE__DEFAULT,
+            # Side buttons leave the grid. A joystick click is accepted and not required.
+            exit_hint=_("Press any button to exit"),
         )
         return Destination(SeedEncryptedBackupScanBackView)
 
 
 class SeedEncryptedBackupScanBackView(View):
     SCAN = ButtonOption("Scan KEF QR")
+    CANCEL = ButtonOption("Cancel export")
 
     def run(self):
         selected = self.run_screen(
             WarningScreen,
             title=_("Check the QR"),
             status_headline=_("Scan it back"),
-            text=_("Scan the KEF QR you copied. It is decrypted and compared to this seed before success."),
-            button_data=[self.SCAN],
+            text=_("Scan the copied KEF QR. It must decrypt to this seed."),
+            button_data=[self.SCAN, self.CANCEL],
             show_back_button=True,
         )
         if selected == RET_CODE__BACK_BUTTON:
             return Destination(BackStackView)
+        if [self.SCAN, self.CANCEL][selected] == self.CANCEL:
+            get_backup_flow_state().clear()
+            return Destination(MainMenuView, clear_history=True)
         return Destination(SeedEncryptedBackupScanBackCaptureView)
 
 

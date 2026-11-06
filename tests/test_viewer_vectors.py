@@ -40,11 +40,28 @@ def test_boot_selftest_passes():
 def test_viewer_import_does_not_load_embit():
     script_path = r"""
 import sys
-import seedviewer.derive
-import seedviewer.selftest
+from unittest.mock import MagicMock
+gpio = MagicMock()
+gpio.RPI_INFO = {"P1_REVISION": 3}
+gpio.IN = 1
+gpio.PUD_UP = 1
+gpio.LOW = 0
+gpio.HIGH = 1
+gpio.BOARD = 1
+rpi = MagicMock()
+rpi.GPIO = gpio
+sys.modules["RPi"] = rpi
+sys.modules["RPi.GPIO"] = gpio
+sys.modules["spidev"] = MagicMock()
+import seedviewer.controller
+import seedviewer.views
+import seedsigner.models.backup_seed
+import seedsigner.models.seed_storage
+import seedsigner.views.encrypted_backup_views
 import seedsigner.models.kef
 import seedsigner.models.encrypted_backup
-assert seedviewer.selftest.run_selftest() == []
+assert "seedviewer.selftest" not in sys.modules
+assert "seedsigner.models.seed" not in sys.modules
 assert "embit" not in sys.modules
 assert "seedsigner.models.psbt_parser" not in sys.modules
 assert "seedsigner.views.seed_views" not in sys.modules

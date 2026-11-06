@@ -1257,6 +1257,7 @@ class SeedTranscribeSeedQRZoomedInScreen(BaseScreen):
     initial_zone_y: int = 0
     qr_background: str = "#444"
     qr_style: int = QR.STYLE__ROUNDED
+    exit_hint: str = ""
 
     def __post_init__(self):
         super().__post_init__()
@@ -1313,9 +1314,15 @@ class SeedTranscribeSeedQRZoomedInScreen(BaseScreen):
             width=1
         )
 
-        msg = _("button to exit")
-        font = Fonts.get_font(GUIConstants.get_body_font_name(), GUIConstants.get_body_font_size())
+        msg = self.exit_hint or _("button to exit")
+        font_size = GUIConstants.get_body_font_size()
+        font = Fonts.get_font(GUIConstants.get_body_font_name(), font_size)
         (left, top, right, bottom) = font.getbbox(msg, anchor="ls")
+        # Keep the hint on the glass at 240 and 320. Shrink only if the line would clip.
+        while right + 2 * GUIConstants.COMPONENT_PADDING > self.canvas_width and font_size > GUIConstants.BODY_FONT_MIN_SIZE:
+            font_size -= 1
+            font = Fonts.get_font(GUIConstants.get_body_font_name(), font_size)
+            (left, top, right, bottom) = font.getbbox(msg, anchor="ls")
         msg_height = -1 * top + GUIConstants.COMPONENT_PADDING
         msg_width = right + 2*GUIConstants.COMPONENT_PADDING
         zone_mask_draw.rectangle(

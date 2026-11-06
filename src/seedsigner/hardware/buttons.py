@@ -70,9 +70,14 @@ class HardwareButtons(Singleton):
 
         Optionally override the wait by calling `trigger_override()`.
         """
-        # TODO: Refactor to keep control in the Controller and not here
-        from seedsigner.controller import Controller
-        controller = Controller.get_instance()
+        # TODO: Refactor to keep control in the Controller and not here.
+        # The viewer image deletes seedsigner.controller. Buttons still have to work.
+        try:
+            from seedsigner.controller import Controller
+        except ImportError:
+            controller = None
+        else:
+            controller = Controller.get_instance()
         self.override_ind = False
 
         while True:
@@ -82,7 +87,11 @@ class HardwareButtons(Singleton):
                 return HardwareButtonsConstants.OVERRIDE
 
             cur_time = int(time.time() * 1000)
-            if cur_time - self.last_input_time > controller.screensaver_activation_ms and controller.is_screensaver_start_allowed:
+            if (
+                controller is not None
+                and cur_time - self.last_input_time > controller.screensaver_activation_ms
+                and controller.is_screensaver_start_allowed
+            ):
                 # Start the screensaver. Will block execution until input detected.
                 controller.start_screensaver()
 

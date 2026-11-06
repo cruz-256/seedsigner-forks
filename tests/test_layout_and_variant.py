@@ -44,6 +44,39 @@ def test_viewer_tree_drops_signing_code(tmp_path):
     assert 'VARIANT = "signer"' in (root / "src/seedsigner/variant.py").read_text(encoding="utf-8")
 
 
+def test_viewer_tree_drops_unused_fonts_and_locales(tmp_path):
+    prepare = _prepare()
+    root = tmp_path / "app"
+    kept = [
+        "src/seedsigner/variant.py",
+        "src/seedsigner/resources/fonts/OpenSans-Regular.ttf",
+        "src/seedsigner/resources/fonts/OpenSans-SemiBold.ttf",
+        "src/seedsigner/resources/fonts/Inconsolata-Regular.ttf",
+        "src/seedsigner/resources/fonts/seedsigner-icons.otf",
+    ]
+    dropped = [
+        "src/seedsigner/resources/fonts/NotoSansDevanagari-Regular.ttf",
+        "src/seedsigner/resources/seedsigner-translations/fonts/NotoSansSC-Regular.ttf",
+        "src/seedsigner/resources/seedsigner-translations/fonts/NotoSansJP-Regular.ttf",
+        "src/seedsigner/resources/seedsigner-translations/fonts/NotoSansKR-Regular.ttf",
+        "src/seedsigner/resources/seedsigner-translations/l10n/ja/LC_MESSAGES/messages.po",
+        "src/seedsigner/resources/seedsigner-translations/l10n/zh_Hans_CN/LC_MESSAGES/messages.mo",
+    ]
+    for relative in kept + dropped:
+        path = root / relative
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes(b"font")
+    prepare(root, "signer")
+    assert (root / dropped[0]).exists()
+    assert (root / dropped[-1]).exists()
+    prepare(root, "viewer")
+    for relative in kept:
+        assert (root / relative).exists()
+    for relative in dropped:
+        assert not (root / relative).exists()
+    assert 'VARIANT = "viewer"' in (root / "src/seedsigner/variant.py").read_text(encoding="utf-8")
+
+
 def test_screens_do_not_clip():
     env = os.environ.copy()
     env["PYTHONPATH"] = "/workspace/src:."

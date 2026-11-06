@@ -1,5 +1,6 @@
+from __future__ import annotations
+
 from typing import List
-from seedsigner.models.seed import Seed, ElectrumSeed, InvalidSeedException
 from seedsigner.models.settings_definition import SettingsConstants
 
 
@@ -34,6 +35,8 @@ class SeedStorage:
 
 
     def validate_mnemonic(self, mnemonic: List[str]) -> bool:
+        from seedsigner.models.seed import InvalidSeedException, Seed
+
         try:
             Seed(mnemonic=mnemonic)
         except InvalidSeedException as e:
@@ -80,6 +83,8 @@ class SeedStorage:
     
 
     def get_pending_mnemonic_fingerprint(self, network: str = SettingsConstants.MAINNET) -> str:
+        from seedsigner.models.seed import ElectrumSeed, InvalidSeedException, Seed
+
         try:
             if self._pending_is_electrum:
                 seed = ElectrumSeed(self._pending_mnemonic)
@@ -91,6 +96,8 @@ class SeedStorage:
 
 
     def convert_pending_mnemonic_to_pending_seed(self):
+        from seedsigner.models.seed import ElectrumSeed, Seed
+
         if self._pending_is_electrum:
             self.pending_seed = ElectrumSeed(self._pending_mnemonic)
         else:

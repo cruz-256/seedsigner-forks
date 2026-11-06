@@ -21,7 +21,7 @@ This fork leaves SeedSigner's stateless model once you confirm a backup. Read th
 - **Swapped card.** The OS runs from RAM. After boot you can remove the OS card and insert a blank FAT card. The bcm2835 SD host polls the slot about once a second. This was checked in the kernel source and the Pi Zero device tree, not on a physical Pi in this build environment.
 - **Wipe is not destruction.** The wipe screen names the file, says it cannot be undone, and asks you to hold KEY1. It overwrites the file and deletes it. SD wear-levelling can keep an older copy. Destroy the card if you need to be certain.
 - **Seed Viewer has no signer.** Its image does not contain the PSBT, message-signing, or seed-creation modules, and it does not install embit. It still shows the seed words and a plain SeedQR so a stock SeedSigner can scan them. That is a display of the secret, not a signature.
-- **buidl and libsecp256k1.** buidl uses libsecp256k1 when its `_libsec` module imports, and its own point code otherwise. This image build vendors the pure-Python path. The boot self-test still refuses to continue if the BIP32, BIP39, BIP49, or BIP84 vectors fail.
+- **buidl and libsecp256k1.** buidl uses libsecp256k1 when its `_libsec` module imports, and its own point code otherwise. This image build vendors the pure-Python path. BIP32, BIP39, BIP49, and BIP84 vectors are checked in the test suite before a release, not on every boot.
 - **Unaudited.** Upstream SeedSigner and Krux have not reviewed this fork.
 
 ## Buttons
@@ -34,7 +34,7 @@ On the passphrase keyboard, with Top button selected: KEY1 types the highlighted
 
 Export, from a loaded BIP39 seed: **Backup seed → Encrypted KEF backup**. Optional label, then the encryption passphrase twice, then one of:
 
-1. **KEF QR code.** Byte mode, error correction L. With no label the grid is **29×29** for both 12 and 24 words. A 7-character label keeps 12 words at 29×29 and makes 24 words **33×33**. You step through the grid with row letters and column numbers, then scan the QR back. Success is shown only if it decrypts to the same seed.
+1. **KEF QR code.** Byte mode, error correction L. With no label the grid is **29×29** for both 12 and 24 words. A 7-character label keeps 12 words at 29×29 and makes 24 words **33×33**. You step through the grid with row letters and column numbers. The hint is **Press any button to exit** (the three side buttons; a joystick click still works and is not required). The next screen scans the QR back or **Cancel export**. Success is shown only if it decrypts to the same seed.
 2. **This SD card.** Warning, then a file `seedsigner-backup/<label>.kef` on the boot card.
 3. **Swap SD card.** Instructions, then the same file on the card you inserted. The screen says when it is safe to remove.
 
@@ -50,7 +50,7 @@ The opening screen says **Seed Viewer**. There is no HRF logo and no SeedSigner 
 
 After a KEF decrypt you can show the words, show a plain SeedQR, set a BIP39 passphrase, and read the master fingerprint. Xpubs cover BIP84 (xpub and zpub), BIP49 (xpub and ypub), and BIP48 multisig (xpub and Zpub/Ypub). Address check steps receive and change indexes and compares a scanned address. Multisig check takes other xpubs, shows a sortedmulti descriptor, and checks receive address 0. Compare decrypts two KEF QRs and says whether they are the same seed.
 
-If the boot self-test fails, the device stops on a red screen.
+The viewer image does not run a derivation self-test before the splash. Its build also drops the CJK, Arabic, Thai, and Devanagari fonts and the unused locale catalogs. English OpenSans, Inconsolata, and the icon fonts stay.
 
 ## Decrypt off the device
 
