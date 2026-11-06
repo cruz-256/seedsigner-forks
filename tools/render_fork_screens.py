@@ -161,8 +161,8 @@ def _screens(viewer: bool):
         ("scan_back", WarningScreen, dict(
             title="Check the QR",
             status_headline="Scan it back",
-            text="Scan the KEF QR you copied. It is decrypted and compared to this seed before success.",
-            button_data=[ButtonOption("Scan KEF QR")],
+            text="Scan the copied KEF QR. It must decrypt to this seed.",
+            button_data=[ButtonOption("Scan KEF QR"), ButtonOption("Cancel export")],
             show_back_button=True,
         )),
         ("scan_mismatch", WarningScreen, dict(
@@ -288,6 +288,14 @@ def _screens(viewer: bool):
             screen_title="Transcribe KEF",
         )),
     ]
+    if not viewer:
+        shared.append(("qr_zoom", seed_screens.SeedTranscribeSeedQRZoomedInScreen, dict(
+            qr_data=b"kef-layout-check",
+            num_modules=29,
+            qr_background="#ffffff",
+            qr_style=QR.STYLE__DEFAULT,
+            exit_hint="Press any button to exit",
+        )))
     if viewer:
         from seedviewer.views import SplashScreen
         shared.extend([

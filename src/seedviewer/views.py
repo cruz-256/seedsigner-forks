@@ -96,25 +96,6 @@ class SplashScreen(BaseScreen):
         return 0
 
 
-class SelfTestFailedView(ViewerView):
-    def __init__(self, failures: list[str]):
-        super().__init__()
-        self.failures = failures
-
-    def run(self):
-        self.run_screen(
-            DireWarningScreen,
-            title=_("Self-test"),
-            status_headline=_("Stopped"),
-            text=_("A derivation check failed ({name}). This device will not continue.").format(
-                name=self.failures[0][:18]
-            ),
-            show_back_button=False,
-            button_data=[ButtonOption("Stop")],
-        )
-        return self
-
-
 class MainView(ViewerView):
     def run(self):
         buttons = [ButtonOption("Load KEF backup")]

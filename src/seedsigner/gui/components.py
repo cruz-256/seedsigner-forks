@@ -112,6 +112,11 @@ class GUIConstants:
 
     @staticmethod
     def get_body_font_name(locale=None):
+        # The viewer image ships the Latin UI fonts only. A saved locale must not
+        # ask for a font that prepare_variant deleted.
+        from seedsigner.variant import is_viewer
+        if is_viewer():
+            return GUIConstants.BODY_FONT_NAME["default"]
         if not locale:
             locale = Settings.get_instance().get_value(SettingsConstants.SETTING__LOCALE)
         if locale in GUIConstants.BODY_FONT_NAME:
@@ -132,6 +137,9 @@ class GUIConstants:
 
     @staticmethod
     def get_top_nav_title_font_name():
+        from seedsigner.variant import is_viewer
+        if is_viewer():
+            return GUIConstants.TOP_NAV_TITLE_FONT_NAME["default"]
         locale = Settings.get_instance().get_value(SettingsConstants.SETTING__LOCALE)
         if locale in GUIConstants.TOP_NAV_TITLE_FONT_NAME:
             return GUIConstants.TOP_NAV_TITLE_FONT_NAME[locale]
@@ -150,6 +158,9 @@ class GUIConstants:
 
     @staticmethod
     def get_button_font_name(locale=None):
+        from seedsigner.variant import is_viewer
+        if is_viewer():
+            return GUIConstants.BUTTON_FONT_NAME["default"]
         if not locale:
             locale = Settings.get_instance().get_value(SettingsConstants.SETTING__LOCALE)
         if locale in GUIConstants.BUTTON_FONT_NAME:

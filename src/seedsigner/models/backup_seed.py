@@ -7,10 +7,12 @@ can be imported by the standalone decrypt script.
 from __future__ import annotations
 
 from seedsigner.models.encrypted_backup import PayloadError
-from seedsigner.models.seed import ElectrumSeed, InvalidSeedException, Seed
 
 
-def load_seed_from_payload(payload: dict) -> Seed:
+def load_seed_from_payload(payload: dict):
+    # Imported here so the viewer image can load this module after seed.py is removed.
+    from seedsigner.models.seed import ElectrumSeed, InvalidSeedException, Seed
+
     mnemonic = str(payload.get("mnemonic", "")).split()
     include = bool(payload.get("include_passphrase"))
     passphrase = payload.get("passphrase", "") if include else ""

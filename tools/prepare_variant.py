@@ -45,6 +45,18 @@ VIEWER_FORBIDDEN_NAMES = {
     "encode_qr.py",
 }
 
+# The viewer UI is English on OpenSans and Inconsolata. These files are the
+# CJK, Arabic, Thai, and Devanagari faces (~22 MB before subsetting) plus the
+# locale catalogs the viewer settings screen never offers.
+VIEWER_UNUSED_FONTS = [
+    "src/seedsigner/resources/fonts/NotoSansDevanagari-Regular.ttf",
+    "src/seedsigner/resources/seedsigner-translations/fonts/NotoSansAR-Regular.ttf",
+    "src/seedsigner/resources/seedsigner-translations/fonts/NotoSansJP-Regular.ttf",
+    "src/seedsigner/resources/seedsigner-translations/fonts/NotoSansKR-Regular.ttf",
+    "src/seedsigner/resources/seedsigner-translations/fonts/NotoSansSC-Regular.ttf",
+    "src/seedsigner/resources/seedsigner-translations/fonts/NotoSansTH-Regular.ttf",
+]
+
 
 def _rm(path: Path) -> None:
     if not path.exists():
@@ -53,6 +65,15 @@ def _rm(path: Path) -> None:
         shutil.rmtree(path)
     else:
         path.unlink()
+
+
+def _trim_viewer_resources(root: Path) -> None:
+    for relative in VIEWER_UNUSED_FONTS:
+        _rm(root / relative)
+    l10n = root / "src" / "seedsigner" / "resources" / "seedsigner-translations" / "l10n"
+    if l10n.is_dir():
+        for child in l10n.iterdir():
+            _rm(child)
 
 
 def prepare(root: Path, variant: str) -> None:
@@ -71,6 +92,7 @@ def prepare(root: Path, variant: str) -> None:
         for path in src.rglob("*"):
             if path.name in VIEWER_FORBIDDEN_NAMES:
                 _rm(path)
+        _trim_viewer_resources(root)
     elif variant == "signer":
         for relative in SIGNER_DELETE:
             _rm(root / relative)
